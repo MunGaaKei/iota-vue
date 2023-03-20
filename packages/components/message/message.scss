@@ -1,0 +1,25 @@
+.i-messages {
+	position: fixed;
+	pointer-events: none;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	z-index: 10000;
+	transition: var(--transition);
+}
+
+.i-message {
+	position: absolute;
+	pointer-events: all;
+	opacity: 0;
+	transition: var(--transition);
+	transform: translate(80px, 0) scale(0.86) skew(-40deg);
+	background: var(--color-main);
+	color: var(--color-main-reverse);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow);
+	&.active {
+		opacity: 1;
+		transform: translate(0, 0);
+	}
+}

@@ -1,0 +1,52 @@
+.i-tab-navs {
+    position: relative;
+    display: flex;
+    overflow: auto;
+    user-select: none;
+    scroll-behavior: unset;
+}
+.i-tab-nav {
+    --color: var(--color-2);
+    position: relative;
+    padding: 0 .8em;
+    line-height: 2.5;
+    user-select: none;
+    flex-shrink: 0;
+    border-radius: var(--radius);
+    color: var(--color);
+    &:hover {
+        background: var(--color-slight);
+        --color: var(--color-main);
+    }
+    &:active,
+    &.i-tab-active {
+        --color: var(--color-main);
+    }
+}
+.i-tab-navs-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: var(--color-main);
+    pointer-events: none;
+    transition: var(--transition);
+    border-radius: var(--radius);
+}
+.flex-column > .i-tab-navs-bar {
+    width: 3px;
+    left: unset;
+    bottom: unset;
+    right: 0;
+    top: 0;
+}
+.i-tab-contents {
+    position: relative;
+    flex: 1;
+}
+.i-tab-content {
+    display: none;
+    &.i-tab-active {
+        display: block;
+    }
+}
