@@ -6,7 +6,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0 .8em;
+    padding: 0 0.8em;
     line-height: 2;
     border-radius: var(--radius);
     border: 2px solid transparent;
@@ -14,24 +14,28 @@
     user-select: none;
     cursor: pointer;
     align-self: center;
-    vertical-align: middle;
     white-space: nowrap;
     outline: none;
     font-weight: 500;
     background: var(--background);
     color: var(--color);
+    font-size: 0.875em;
 }
 .i-btn-block {
     width: 100%;
 }
 .i-btn-thin {
-    padding: 0 .4em;
+    padding: 0 0.4em;
 }
 .i-btn-large {
-    font-size: 1.2em;
+    font-size: 1em;
+}
+.i-btn-extreme {
+    font-size: 1.5em;
 }
 .i-btn-small {
-    font-size: .8em;
+    font-size: 0.6em;
+    padding: 0 0.5em;
 }
 .i-btn:hover {
     --background: var(--background-hover);

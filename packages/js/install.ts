@@ -1,16 +1,16 @@
-import type { App, Plugin } from "vue"
+import type { App, Plugin } from "vue";
 
-type FCWithInstall<T> = T&Plugin 
+type FCWithInstall<T> = T & Plugin;
 
 const componentInstall = <T>(component: T) => {
-    const c = component as any
-    (c as FCWithInstall<T>).install = (app: App) => {
-        app.component(c.name, c);
-    }
+  const c = component as any;
+  console.log(c, c.name);
 
-    return c as FCWithInstall<T>
-}
+  (c as FCWithInstall<T>).install = (app: App) => {
+    app.component(c.name, c);
+  };
 
-export {
-    componentInstall
-}
+  return c as FCWithInstall<T>;
+};
+
+export { componentInstall };

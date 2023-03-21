@@ -20,7 +20,7 @@
                     :to="item.to"
                     :href="item.href"
                     @click="handleClick(item)"
-                    v-ripple
+                    i-ripple
                 >
                     <span class="i-menu-item-icon" :style="IconStyle">
                         <i-icon :icon="item.icon"></i-icon>
@@ -57,7 +57,7 @@ import { iIcon } from "@p/components";
 import { KeyboardArrowDownRound } from "@vicons/material";
 import { withDefaults, computed } from "vue";
 import { TypeMenuItem } from "./types";
-import { vRipple } from "@p/directives";
+import { iRipple } from "@p/directives";
 import Tag from "./tag-name.vue";
 
 const props = withDefaults(
