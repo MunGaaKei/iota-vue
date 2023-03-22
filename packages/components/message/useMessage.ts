@@ -1,4 +1,4 @@
-import { render, h, ref, reactive, nextTick } from 'vue';
+import { render, h, ref, reactive } from 'vue';
 import { useState } from '@p/js/useState';
 import Container from './container.vue';
 import './message.scss';
@@ -12,14 +12,14 @@ const defaultConfig: TypeMessageConfig = {
 	fromStart: true,
 	align: 'center',
 	offset: '12px',
-	max: 0,
+	max: 0
 };
 const [align, setAlign] = useState<string>(defaultConfig.align);
 const [offset, setOffset] = useState<string>(defaultConfig.offset);
 const alignMap = {
 	left: 'flex-start',
 	center: 'center',
-	right: 'flex-end',
+	right: 'flex-end'
 };
 
 function useMessage(config?: TypeMessageConfig) {
@@ -86,7 +86,7 @@ function mixinMessage(item: string | TypeMessage): TypeMessage {
 		Object.assign({}, defaultConfig, item, {
 			active: false,
 			id: uuid(4),
-			close,
+			close
 		})
 	);
 }
@@ -120,7 +120,7 @@ render(
 	h(Container, {
 		items: queue.value,
 		align,
-		offset,
+		offset
 	}),
 	document.body
 );

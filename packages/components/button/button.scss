@@ -1,75 +1,78 @@
 .i-btn {
-    --background: var(--color-main);
-    --background-hover: var(--color-main-1);
-    --color: var(--color-main-reverse);
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 0.8em;
-    line-height: 2;
-    border-radius: var(--radius);
-    border: 2px solid transparent;
-    transition: var(--transition);
-    user-select: none;
-    cursor: pointer;
-    align-self: center;
-    white-space: nowrap;
-    outline: none;
-    font-weight: 500;
-    background: var(--background);
-    color: var(--color);
-    font-size: 0.875em;
+	--background: var(--color-main);
+	--background-hover: var(--color-main-1);
+	--color: var(--color-main-reverse);
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 0.8em;
+	line-height: 2;
+	border-radius: var(--radius);
+	border: 2px solid transparent;
+	transition: var(--transition);
+	user-select: none;
+	cursor: pointer;
+	align-self: center;
+	white-space: nowrap;
+	outline: none;
+	font-weight: 500;
+	background: var(--background);
+	color: var(--color);
+	font-size: 0.875em;
+	.i-ripple-container {
+		inset: -2px;
+	}
 }
 .i-btn-block {
-    width: 100%;
+	width: 100%;
 }
 .i-btn-thin {
-    padding: 0 0.4em;
+	padding: 0 0.4em;
 }
 .i-btn-large {
-    font-size: 1em;
+	font-size: 1em;
 }
 .i-btn-extreme {
-    font-size: 1.5em;
+	font-size: 1.5em;
 }
 .i-btn-small {
-    font-size: 0.6em;
-    padding: 0 0.5em;
+	font-size: 0.6em;
+	padding: 0 0.5em;
 }
 .i-btn:hover {
-    --background: var(--background-hover);
+	--background: var(--background-hover);
 }
 .i-btn:active {
-    --background: var(--color-main);
+	--background: var(--color-main);
 }
 .i-btn-flat {
-    --background-hover: var(--color-main-slight);
-    --color: var(--color-main);
-    &.i-btn {
-        --background: transparent;
-        border-color: var(--background);
-    }
+	--background-hover: var(--color-main-slight);
+	--color: var(--color-main);
+	&.i-btn {
+		--background: transparent;
+		border-color: var(--background);
+	}
 }
 .i-btn-outline {
-    --background-hover: var(--color-main-slight);
-    --color: var(--color-main);
-    &.i-btn {
-        --background: transparent;
-        border-color: var(--color);
-    }
+	--background-hover: var(--color-main-slight);
+	--color: var(--color-main);
+	&.i-btn {
+		--background: transparent;
+		border-color: var(--color);
+	}
 }
 .i-btn.i-btn-outline:hover,
 .i-btn.i-btn-flat:hover {
-    --background: var(--background-hover);
+	--background: var(--background-hover);
 }
 .i-btn-content {
-    align-self: center;
+	align-self: center;
 }
 .i-btn-loading {
-    color: transparent !important;
-    > .i-loading-icon {
-        opacity: 1;
-        animation: loading 1s linear infinite;
-    }
+	color: transparent !important;
+	> .i-loading-icon {
+		opacity: 1;
+		animation: loading 1s linear infinite;
+	}
 }

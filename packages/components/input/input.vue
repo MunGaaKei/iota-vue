@@ -1,5 +1,7 @@
 <template>
-  <input type="text" />
+	<input type="text" />
 </template>
 
-<script lang="ts" setup name="i-input"></script>
+<script lang="ts" setup name="i-input">
+import './input.scss';
+</script>

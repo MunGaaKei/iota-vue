@@ -2,13 +2,13 @@
 	<i-container
 		layout="menu"
 		sider-width="300px"
-		i-model="collapsed"
+		v-model="collapsed"
 		@sider-toggle="setCollapsed"
 		breakpoint="940px"
 	>
 		<template #sider>
 			<div class="px-4 py-12">
-				<h2 class="px-12 mb-20">IVORY</h2>
+				<h2 class="px-12 mb-20">IOTA V</h2>
 
 				<i-menu
 					:items="menus"
@@ -41,7 +41,7 @@
 			<i
 				@click="post('post by iann')"
 				class="py-8 px-12 slight"
-				>codes by iann</i
+				>CODES BY @IANN</i
 			>
 		</template>
 
@@ -53,7 +53,7 @@
 
 <script lang="ts" setup>
 import { MenuFilled, NightsStayRound } from '@vicons/material';
-import { vContainer, vButton, vIcon, vMenu, vCheckbox } from '@p/components';
+import { iContainer, iButton, iIcon, iMenu, iCheckbox } from '@p/components';
 import { useState } from '@p/js/useState';
 import { ref } from 'vue';
 import menu from '@d/config/menu';

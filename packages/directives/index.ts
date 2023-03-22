@@ -1,5 +1,3 @@
-import iRipple from "./ripple";
+import vRipple from './ripple';
 
-export {
-    iRipple,
-}
+export { vRipple };
