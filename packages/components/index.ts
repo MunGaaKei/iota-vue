@@ -1,6 +1,7 @@
 import iButton from "./button";
 import iCheckbox from "./checkbox";
 import iContainer from "./container";
+import iDropdown from "./dropdown";
 import iGrid from "./grid";
 import iIcon from "./icon";
 import iInput from "./input";
@@ -11,10 +12,10 @@ import iPopup from "./popup";
 import iTab, { iTabItem } from "./tab";
 
 export {
-  useMessage,
   iButton,
   iCheckbox,
   iContainer,
+  iDropdown,
   iGrid,
   iIcon,
   iInput,
@@ -25,4 +26,5 @@ export {
   iPopup,
   iTab,
   iTabItem,
+  useMessage,
 };

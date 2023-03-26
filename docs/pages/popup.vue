@@ -4,12 +4,9 @@
     <Demo>
         <i-popup>
             <template #trigger>
-                <!-- 12 -->
-                <i-button>
-                    HOVER <span>1</span>
-                </i-button>
+                <i-button> HOVER ME</i-button>
             </template>
-            <div class="pd-12 bg-blue">hover 1</div>
+            <div class="pd-12 bg-blue">👋👋</div>
         </i-popup>
     </Demo>
 
@@ -19,10 +16,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useState } from '@p/js/useState';
+import { useState } from "@p/js/useState";
 import { iButton, iPopup } from "@p/components";
 import Demo from "@d/components/Demo.vue";
 
-const [active, setActive] = useState<boolean>(false)
-
+const [active, setActive] = useState<boolean>(false);
 </script>

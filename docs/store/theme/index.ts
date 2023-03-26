@@ -1,19 +1,20 @@
-import { watchEffect } from 'vue';
-import { useState } from '@p/js/useState';
-import { defineStore } from "pinia"
+import { watchEffect } from "vue";
+import { useState } from "@p/js/useState";
+import { defineStore } from "pinia";
 
-const themeStore = defineStore('theme', () => {
-    const [theme, setTheme] = useState<boolean>(false);
+const themeStore = defineStore("theme", () => {
+  const [theme, setTheme] = useState<string>();
 
-    watchEffect(() => {
-        const $html = document.documentElement as HTMLHtmlElement;
-        $html.classList[theme.value? 'add': 'remove']('theme-dark');
-    })
+  watchEffect(() => {
+    const $html = document.documentElement as HTMLHtmlElement;
 
-    return {
-        theme,
-        setTheme
-    }
-})
+    $html.classList.toggle("theme-dark");
+  });
 
-export default themeStore
+  return {
+    theme,
+    setTheme,
+  };
+});
+
+export default themeStore;
