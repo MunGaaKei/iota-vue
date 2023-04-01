@@ -1,5 +1,5 @@
 <template>
-    <i-popup v-bind="props">
+    <i-popup v-bind="props" ref="$popup">
         <template #trigger>
             <Trigger></Trigger>
         </template>
@@ -8,15 +8,14 @@
 </template>
 
 <script setup lang="ts" name="i-dropdown">
-import "./dropdown.scss";
-import { withDefaults, useSlots, VNode, h } from "vue";
+import { VNode, defineExpose, h, ref, useSlots, withDefaults } from "vue";
 import { iPopup } from "..";
+import "./dropdown.scss";
 
 type TypePosition = "left" | "top" | "right" | "bottom";
-type TypeTrigger = "hover" | "click" | "focus" | "manual";
-type TypeProps = {
+type TypeTrigger = "hover" | "click" | "focus";
+type IProps = {
     trigger?: TypeTrigger;
-    modelValue?: boolean;
     position?: TypePosition;
     touchable?: boolean;
     gap?: number;
@@ -24,8 +23,9 @@ type TypeProps = {
 };
 
 const slots = useSlots();
+const $popup = ref();
 
-const props = withDefaults(defineProps<TypeProps>(), {
+const props = withDefaults(defineProps<IProps>(), {
     trigger: "click",
     position: "bottom",
     touchable: true,
@@ -42,4 +42,10 @@ const Trigger = (): VNode | undefined => {
 
     return undefined;
 };
+
+defineExpose({
+    toggle: (show?: boolean) => {
+        $popup.value.toggle(show);
+    },
+});
 </script>

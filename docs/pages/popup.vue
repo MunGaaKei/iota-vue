@@ -16,9 +16,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useState } from "@p/js/useState";
-import { iButton, iPopup } from "@p/components";
 import Demo from "@d/components/Demo.vue";
+import { iButton, iPopup } from "@p/components";
+import { useState } from "@p/js/useState";
 
-const [active, setActive] = useState<boolean>(false);
+const [active, setActive] = useState<boolean>(true);
 </script>

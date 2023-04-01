@@ -9,7 +9,7 @@
         </i-dropdown>
     </Demo>
 
-    <a ref="target">123</a>
+    <!-- <a ref="target" v-clickoutside="bar">123</a> -->
 
     <div style="height: 2000px"></div>
 </template>
@@ -17,15 +17,11 @@
 <script lang="ts" setup>
 import Demo from "@d/components/Demo.vue";
 import { iDropdown, iButton } from "@p/components";
-import useClickoutside from "@p/js/useClickoutside";
 import { onMounted, ref } from "vue";
 
 const target = ref<HTMLElement | null>(null);
 
 onMounted(() => {
-    useClickoutside(target.value, function () {
-        console.log("call back");
-    });
     console.log(target.value);
 });
 </script>

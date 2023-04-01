@@ -1,41 +1,59 @@
 .i-list-title {
-  list-style: none;
-  font-weight: 600;
-  font-style: italic;
-  margin-bottom: 0.5em;
+    list-style: none;
+    font-weight: 600;
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
 }
 
 .i-list-item {
-  margin: 0.4em 0;
-  display: flex;
-  align-items: baseline;
-  flex-shrink: 0;
-  &:before {
-    margin: 0 0.5em 0 0;
-  }
+    display: flex;
+    align-items: baseline;
+    flex-shrink: 0;
+    margin: 0.4em 0;
+    border-radius: var(--radius);
+    &:before {
+        margin: 0 0.5em 0 0;
+    }
+}
+
+.i-list-option {
+    .i-list-item {
+        margin: 0;
+        padding: var(--padding);
+        cursor: pointer;
+        transition: var(--transition);
+        color: var(--color-2);
+        &:hover {
+            background: var(--background-opacity-1);
+            color: var(--color-main-1);
+        }
+        &.active {
+            color: var(--color-main);
+        }
+    }
 }
 
 .i-list-circle {
-  .i-list-item {
-    position: relative;
-    &:before {
-      display: inline-block;
-      content: "●";
+    .i-list-item {
+        position: relative;
+        &:before {
+            display: inline-block;
+            content: "●";
+        }
     }
-  }
 }
 .i-list-number {
-  counter-reset: count;
-  .i-list-item {
-    counter-increment: count;
-    &:before {
-      content: counter(count);
+    counter-reset: count;
+    .i-list-item {
+        counter-increment: count;
+        &:before {
+            content: counters(count, ".", decimal-leading-zero);
+        }
     }
-  }
 }
 
 .i-list-label {
-  margin-right: 1em;
-  width: var(--label-width);
-  flex-shrink: 0;
+    margin-right: 1em;
+    width: var(--label-width);
+    flex-shrink: 0;
 }

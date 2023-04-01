@@ -3,9 +3,10 @@
     left: 0;
     top: 0;
     z-index: 1;
-    transition: opacity .16s;
+    transition: opacity 0.16s;
     pointer-events: none;
     border-radius: var(--radius);
     overflow-x: hidden;
     opacity: 0;
+    box-shadow: var(--shadow);
 }

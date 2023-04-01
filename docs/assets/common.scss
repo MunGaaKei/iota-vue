@@ -1,27 +1,27 @@
 @font-face {
-  font-family: "fredoka";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("./fredoka.woff2") format("woff2");
+    font-family: "varela";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("./varela.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "long-cang";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("./Long-Cang.woff2") format("woff2");
+    font-family: "long-cang";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("./Long-Cang.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: "noto";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("./noto.otf") format("otf");
+    font-family: "noto";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("./noto.otf") format("otf");
 }
 
 html body {
-  font-family: "fredoka";
+    font-family: "varela";
 }

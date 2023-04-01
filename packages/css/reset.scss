@@ -83,7 +83,8 @@ h3 {
 h4 {
     font-size: 1.2rem;
 }
-h5, h6 {
+h5,
+h6 {
     font-size: 1rem;
 }
 label {
@@ -94,12 +95,12 @@ label {
     color: #212121 !important;
 }
 .os-windows ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
-    border-radius: var(--radius);
+    width: 8px;
+    height: 8px;
     cursor: pointer;
 }
 .os-windows ::-webkit-scrollbar-thumb {
-    background-color: var(--color);
+    background-color: var(--grey-2);
     cursor: pointer;
+    border-radius: var(--radius);
 }

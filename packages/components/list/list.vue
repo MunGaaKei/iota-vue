@@ -1,31 +1,30 @@
 <template>
-  <ul class="i-list" :class="ulClass" :style="ulStyle">
-    <slot></slot>
-  </ul>
+    <ul class="i-list" :class="ulClass" :style="ulStyle">
+        <slot></slot>
+    </ul>
 </template>
 
 <script lang="ts" setup name="i-list">
 import { computed, withDefaults } from "vue";
 import "./list.scss";
 
-const props = withDefaults(
-  defineProps<{
+type IProps = {
     labelWidth?: string;
-    type?: "number" | "circle";
+    type?: "option" | "number" | "circle";
     prefix?: string;
-  }>(),
-  {}
-);
+};
+
+const props = withDefaults(defineProps<IProps>(), {});
 
 const ulStyle = computed(() => {
-  return {
-    "--label-width": props.labelWidth,
-  };
+    return {
+        "--label-width": props.labelWidth,
+    };
 });
 
 const ulClass = computed(() => {
-  return {
-    [`i-list-${props.type}`]: props.type,
-  };
+    return {
+        [`i-list-${props.type}`]: props.type,
+    };
 });
 </script>

@@ -1,3 +1,4 @@
-import vRipple from './ripple';
+import vClickoutside from "./clickoutside";
+import vRipple from "./ripple";
 
-export { vRipple };
+export { vClickoutside, vRipple };
