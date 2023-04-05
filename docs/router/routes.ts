@@ -1,6 +1,6 @@
 const pages = [
     {
-        name: "start",
+        name: "home",
         path: "/",
         layout: "empty",
     },

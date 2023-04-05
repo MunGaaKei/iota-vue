@@ -1,15 +1,13 @@
-import themeStore from "./theme";
+import settingsStore from "./settings";
 
 const useStore = () => {
     return {
-        theme: themeStore
-    }
-}
+        global: settingsStore,
+    };
+};
 
 export interface PiniaStore {
-    themeStore: ReturnType<typeof themeStore>
+    settingsStore: ReturnType<typeof settingsStore>;
 }
 
-export {
-    useStore
-}
+export { useStore };

@@ -31,9 +31,30 @@ $colors: (
         --#{$name}: #{$value};
 
         @if ($name == "black") {
-            --#{$name}-1: #{lighten($value, 12%)};
-            --#{$name}-2: #{lighten($value, 16%)};
+            --#{$name}-1: #{lighten($value, 10%)};
+            --#{$name}-2: #{lighten($value, 20%)};
+            --#{$name}-3: #{lighten($value, 30%)};
+            --#{$name}-4: #{lighten($value, 40%)};
+            --#{$name}-5: #{lighten($value, 50%)};
+            --#{$name}-6: #{lighten($value, 60%)};
+            --#{$name}-7: #{lighten($value, 70%)};
+            --#{$name}-8: #{lighten($value, 80%)};
+            --#{$name}-9: #{lighten($value, 90%)};
             --#{$name}-slight: #{lighten($value, 80%)};
+
+            @for $i from 1 to 10 {
+                .bg-#{$name}-#{$i} {
+                    @if ($i > 5) {
+                        color: var(--black);
+                    } @else {
+                        color: var(--white);
+                    }
+                    background: var(--#{$name}-#{$i});
+                }
+                .#{$name}-#{$i} {
+                    color: var(--#{$name}-#{$i});
+                }
+            }
         } @else if ($name == "red") {
             --#{$name}-1: #{darken($value, 4%)};
             --#{$name}-2: #{darken($value, 8%)};
@@ -157,9 +178,9 @@ $colors: (
 
     @each $name, $value in $colors {
         @if ($name == "black") {
-            --#{$name}-slight: #{lighten($value, 20%)};
+            --#{$name}-slight: rgba(0, 0, 0, 0.2);
         } @else if ($name == "red") {
-            --#{$name}-slight: #{darken($value, 36%)};
+            --#{$name}-slight: #{darken($value, 32%)};
         } @else if ($name == "blue") {
             --#{$name}-slight: #{darken($value, 36%)};
         } @else if ($name == "green") {
@@ -169,11 +190,11 @@ $colors: (
         } @else if ($name == "grey") {
             --#{$name}-slight: #{darken($value, 40%)};
         } @else if ($name == "pink") {
-            --#{$name}-slight: #{darken($value, 50%)};
+            --#{$name}-slight: #{darken($value, 56%)};
         } @else if ($name == "purple") {
             --#{$name}-slight: #{darken($value, 40%)};
         } @else {
-            --#{$name}-slight: #{darken($value, 50%)};
+            --#{$name}-slight: rgba(255, 255, 255, 0.2);
         }
         .bg-#{$name}-slight {
             --color: var(--white);

@@ -12,12 +12,16 @@ type IProps = {
     labelWidth?: string;
     type?: "option" | "number" | "circle";
     prefix?: string;
+    labelAlign?: "left" | "right";
 };
 
-const props = withDefaults(defineProps<IProps>(), {});
+const props = withDefaults(defineProps<IProps>(), {
+    labelAlign: "left",
+});
 
 const ulStyle = computed(() => {
     return {
+        "--label-align": props.labelAlign,
         "--label-width": props.labelWidth,
     };
 });

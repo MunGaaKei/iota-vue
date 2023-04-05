@@ -4,12 +4,16 @@
         使用方式：<code>.[type]-[n]</code>，如<code> .pd-12</code>
         表示内边距<code>padding: 12px</code>。
     </p>
-    <i-list class="my-20" label-width="40px">
+    <i-list class="my-20" label-width="2em">
         <i-list-item type="title">
             <code>[type]</code>
         </i-list-item>
-        <i-list-item v-for="type in types" :key="type.key" :label="type.key">
-            <code>{{ type.value }}</code>
+        <i-list-item
+            v-for="type in types"
+            :key="type.key"
+            :label="keycode(type.key)"
+        >
+            {{ type.value }}
         </i-list-item>
 
         <i-list-item type="title" class="mt-40">
@@ -25,62 +29,59 @@
         </i-list-item>
     </i-list>
 
-    <i-list type="number" prefix="*">
-        <i-list-item>设立考点附近开了</i-list-item>
-        <i-list-item>设立考点附近开了</i-list-item
-        ><i-list-item>设立考点附近开了</i-list-item
-        ><i-list-item>设立考点附近开了</i-list-item>
-    </i-list>
-
     <h3 class="mt-80">布局相关</h3>
-    <i-list class="my-20" label-width="180px">
-        <i-list-item :label="keyword('.flex')">display: flex;</i-list-item>
-        <i-list-item :label="keyword('.flex-column')"
+    <i-list class="my-20" label-width="150px" label-align="right">
+        <i-list-item :label="keycode('.flex')">display: flex;</i-list-item>
+        <i-list-item :label="keycode('.flex-column')"
             >flex-direction: column;</i-list-item
         >
-        <i-list-item :label="keyword('.sticky')">
+        <i-list-item :label="keycode('.sticky')">
             <p>position: sticky;</p>
             <p>top: 0;</p>
         </i-list-item>
-        <i-list-item :label="keyword('.text-center')"
+        <i-list-item :label="keycode('.sticky-bottom')">
+            <p>position: sticky;</p>
+            <p>bottom: 0;</p>
+        </i-list-item>
+        <i-list-item :label="keycode('.text-center')"
             >text-align: center;</i-list-item
         >
-        <i-list-item :label="keyword('.justify-center')"
+        <i-list-item :label="keycode('.justify-center')"
             >justify-content: center;</i-list-item
         >
-        <i-list-item :label="keyword('.justify-evenly')"
+        <i-list-item :label="keycode('.justify-evenly')"
             >justify-content: evenly;</i-list-item
         >
-        <i-list-item :label="keyword('.justify-between')"
+        <i-list-item :label="keycode('.justify-between')"
             >justify-content: between;</i-list-item
         >
-        <i-list-item :label="keyword('.align-center')"
+        <i-list-item :label="keycode('.align-center')"
             >align-items: center;</i-list-item
         >
-        <i-list-item :label="keyword('.w-100')">width: 100%;</i-list-item>
-        <i-list-item :label="keyword('.h-100')">height: 100%;</i-list-item>
+        <i-list-item :label="keycode('.w-100')">width: 100%;</i-list-item>
+        <i-list-item :label="keycode('.h-100')">height: 100%;</i-list-item>
     </i-list>
 
     <h3 class="mt-80">显示相关</h3>
-    <i-list class="my-20" label-width="180px">
-        <i-list-item :label="keyword('.rounded')">
-            border-radius: 200px;
+    <i-list class="my-20" label-width="150px" label-align="right">
+        <i-list-item :label="keycode('.rounded')">
+            border-radius: 50vw;
         </i-list-item>
-        <i-list-item :label="keyword('.rounded-slight')">
+        <i-list-item :label="keycode('.rounded-slight')">
             border-radius: var(--radius);
         </i-list-item>
-        <i-list-item :label="keyword('.disabled')">
+        <i-list-item :label="keycode('.disabled')">
             <p>opacity: .4;</p>
             <p>cursor: not-allowed;</p>
         </i-list-item>
-        <i-list-item :label="keyword('.hidden')">
+        <i-list-item :label="keycode('.hidden')">
             display: none !important;
         </i-list-item>
-        <i-list-item :label="keyword('.mobile')">
+        <i-list-item :label="keycode('.mobile')">
             在小屏幕显示，大屏幕隐藏，临界值为
             <code>--breakpoint: 980px</code>
         </i-list-item>
-        <i-list-item :label="keyword('.hidden-mobile')">
+        <i-list-item :label="keycode('.hidden-mobile')">
             在小屏幕隐藏，大屏幕显示
         </i-list-item>
     </i-list>
@@ -150,7 +151,7 @@ const types = [
 ];
 const ns = [4, 8, 12, 16, 20, 24, 32, 40, 60, 80, 120];
 
-const keyword = (text: string): VNode => {
+const keycode = (text: string): VNode => {
     return h("code", text);
 };
 </script>

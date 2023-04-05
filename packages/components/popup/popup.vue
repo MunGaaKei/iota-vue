@@ -27,6 +27,7 @@
 <script setup lang="ts" name="i-popup">
 import { vClickoutside } from "@p/directives";
 import { TypePosition, usePosition } from "@p/js/usePosition";
+import useResize from "@p/js/useResize";
 import { useState } from "@p/js/useState";
 import {
     StyleValue,
@@ -35,6 +36,7 @@ import {
     defineExpose,
     h,
     nextTick,
+    onBeforeUnmount,
     ref,
     useSlots,
     withDefaults,
@@ -49,6 +51,7 @@ type IProps = {
     gap?: number;
     touchable?: boolean;
     body?: boolean;
+    delay?: number;
 };
 type TypeTriggerEvents = Record<string, Function | Object>;
 
@@ -58,7 +61,6 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 
 const [mounted, setMounted] = useState<boolean>(false);
-const [toggling, setToggling] = useState<boolean>(false);
 const [show, setShow] = useState<boolean>(false);
 const offsets = ref<string>("");
 const $trigger = ref<HTMLElement>();
@@ -98,10 +100,25 @@ const popupStyle = computed((): StyleValue => {
     };
 });
 
-function toggle(show?: boolean) {
-    if (toggling.value) return;
+useResize(computePopupPos);
+onBeforeUnmount(() => {
+    useResize(computePopupPos, "unbind");
+});
 
-    setToggling(true);
+let toggling = false;
+let timer: ReturnType<typeof setTimeout> | null = null;
+
+function toggle(show?: boolean) {
+    if (timer && show === false) {
+        clearTimeout(timer);
+        toggling = false;
+        handleHide();
+        return;
+    }
+
+    if (toggling) return;
+
+    toggling = true;
 
     if (show !== undefined) {
         show ? handleShow() : handleHide();
@@ -116,17 +133,19 @@ function handleShow() {
         computePopupPos();
         setShow(true);
     });
-    setTimeout(() => {
-        setToggling(false);
-    }, 100);
+    timer = setTimeout(() => {
+        toggling = false;
+        timer && clearTimeout(timer);
+    }, 160);
 }
 
 function handleHide() {
     setShow(false);
-    setTimeout(() => {
+    timer = setTimeout(() => {
         setMounted(false);
-        setToggling(false);
-    }, 100);
+        toggling = false;
+        timer && clearTimeout(timer);
+    }, 160);
 }
 
 function handleClickoutside() {

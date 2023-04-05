@@ -2,8 +2,10 @@ import { useState } from "@p/js/useState";
 import { defineStore } from "pinia";
 import { watchEffect } from "vue";
 
-const themeStore = defineStore("theme", () => {
+const settingsStore = defineStore("settings", () => {
+    const { language } = navigator;
     const [theme, setTheme] = useState<string>("auto");
+    const [locale, setLocale] = useState<string>(language);
 
     watchEffect(() => {
         const $html = document.documentElement as HTMLHtmlElement;
@@ -18,9 +20,10 @@ const themeStore = defineStore("theme", () => {
     });
 
     return {
+        locale,
         theme,
         setTheme,
     };
 });
 
-export default themeStore;
+export default settingsStore;

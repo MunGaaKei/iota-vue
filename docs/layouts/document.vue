@@ -1,42 +1,35 @@
 <template>
-    <i-container
-        layout="menu"
-        sider-width="300px"
-        v-model="collapsed"
-        @sider-toggle="setCollapsed"
-        breakpoint="940px"
-    >
+    <i-container layout="menu" v-model="collapsed" breakpoint="940px">
         <template #sider>
-            <div class="px-4 py-12">
-                <h2 class="px-12 mb-20">IOTA V</h2>
+            <div class="px-4 py-12" style="min-width: 300px">
+                <h2 class="px-12 mb-20">
+                    <router-link to="/">IOTA V</router-link>
+                </h2>
 
                 <i-menu :items="menus" seletable></i-menu>
             </div>
         </template>
 
         <template #header>
-            <div class="py-8 px-12 flex align-center">
-                <i-button size="thin" flat @click="setCollapsed(!collapsed)">
+            <div class="py-8 px-12 flex flex-1 align-center">
+                <i-button square flat @click="setCollapsed(!collapsed)">
                     <i-icon :icon="MenuFilled"></i-icon>
                 </i-button>
 
-                <i-dropdown ref="$theme" body>
+                <i-dropdown v-model="theme" :options="themeOptions" body>
                     <template #trigger>
-                        <i-button class="ml-auto" size="thin" flat>
+                        <i-button class="ml-auto" square flat>
                             <i-icon :icon="themeIcon"></i-icon>
                         </i-button>
                     </template>
+                </i-dropdown>
 
-                    <i-list type="option" class="pd-4 bg-blur">
-                        <i-list-item
-                            v-for="(item, key) in themes"
-                            :key="key"
-                            :active="theme === key"
-                            @click="handleSelectTheme(key)"
-                        >
-                            <i-icon :icon="item"></i-icon>
-                        </i-list-item>
-                    </i-list>
+                <i-dropdown v-model="locale" :options="localeOptions" body>
+                    <template #trigger>
+                        <i-button class="ml-4" square flat>
+                            <i-icon :icon="TranslateRound"></i-icon>
+                        </i-button>
+                    </template>
                 </i-dropdown>
             </div>
         </template>
@@ -53,38 +46,23 @@
 
 <script lang="ts" setup>
 import menu from "@d/config/menu";
-import useTheme from "@d/store/theme";
-import {
-    iButton,
-    iContainer,
-    iDropdown,
-    iIcon,
-    iList,
-    iListItem,
-    iMenu,
-} from "@p/components";
+import useGlobalSettings from "@d/store/settings";
+import { iButton, iContainer, iDropdown, iIcon, iMenu } from "@p/components";
 import { useState } from "@p/js/useState";
 import {
     DarkModeTwotone,
     MenuFilled,
     TonalityRound,
+    TranslateRound,
     WbSunnyTwotone,
 } from "@vicons/material";
 import { storeToRefs } from "pinia";
-import { computed, ref, shallowRef } from "vue";
+import { computed, h, ref } from "vue";
 
-const themeStore = useTheme();
-const { theme } = storeToRefs(themeStore);
-const { setTheme } = themeStore;
 const [collapsed, setCollapsed] = useState<boolean>(false);
 const menus = ref(menu);
-const $theme = ref();
-const themes = shallowRef({
-    light: WbSunnyTwotone,
-    dark: DarkModeTwotone,
-    auto: TonalityRound,
-});
-
+const settingsStore = useGlobalSettings();
+const { theme, locale } = storeToRefs(settingsStore);
 const themeIcon = computed(() => {
     switch (theme.value) {
         case "light":
@@ -96,8 +74,29 @@ const themeIcon = computed(() => {
     }
 });
 
-const handleSelectTheme = (t: string) => {
-    $theme.value.toggle(false);
-    setTheme(t);
-};
+const themeOptions = [
+    {
+        label: h(iIcon, { icon: WbSunnyTwotone }),
+        value: "light",
+    },
+    {
+        label: h(iIcon, { icon: DarkModeTwotone }),
+        value: "dark",
+    },
+    {
+        label: h(iIcon, { icon: TonalityRound }),
+        value: "auto",
+    },
+];
+
+const localeOptions = [
+    {
+        label: "简体中文",
+        value: "zh-CN",
+    },
+    {
+        label: "English",
+        value: "en",
+    },
+];
 </script>

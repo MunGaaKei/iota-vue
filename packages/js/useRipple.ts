@@ -1,18 +1,13 @@
-import { DirectiveBinding } from "vue";
-import "./ripple.scss";
-
+let RIPPLE_ENABLE = false;
 const TIMEOUT = 500;
-let useRipple = false;
 
-const handleMounted = ($el: HTMLElement, binding: DirectiveBinding) => {
-    if (binding.value === false) return;
-
-    $el.setAttribute("ripple", "");
-
-    if (useRipple) return;
-    useRipple = true;
-
-    document.addEventListener("mousedown", listener);
+const useRipple = () => {
+    if (RIPPLE_ENABLE) {
+        document.addEventListener("mousedown", listener);
+        return;
+    } else {
+        RIPPLE_ENABLE = true;
+    }
 };
 
 function listener(e: MouseEvent) {
@@ -57,6 +52,4 @@ function createRipple() {
     return [$box, $ripple];
 }
 
-export default {
-    mounted: handleMounted,
-};
+export default useRipple;
