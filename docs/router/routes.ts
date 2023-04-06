@@ -6,6 +6,7 @@ const pages = [
     },
     "button",
     "checkbox",
+    "clickoutside",
     "colors",
     "container",
     "dialog",
