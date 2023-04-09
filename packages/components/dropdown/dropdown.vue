@@ -1,7 +1,7 @@
 <template>
     <i-popup v-bind="restProps" ref="$popup">
         <template #trigger>
-            <Trigger></Trigger>
+            <component :is="triggerComponent"></component>
         </template>
         <i-list v-if="options" class="bg-blur" type="option">
             <i-list-item
@@ -31,14 +31,11 @@ import {
     withDefaults,
 } from "vue";
 import { iList, iListItem, iPopup } from "..";
+import { InputOption } from "../types";
 import "./dropdown.scss";
 
 type TypePosition = "left" | "top" | "right" | "bottom";
 type TypeTrigger = "hover" | "click" | "focus";
-type TypeOption = {
-    label: string | VNode;
-    value: any;
-};
 type IProps = {
     modelValue?: any;
     trigger?: TypeTrigger;
@@ -46,7 +43,7 @@ type IProps = {
     touchable?: boolean;
     gap?: number;
     body?: boolean;
-    options?: TypeOption[];
+    options?: InputOption[];
 };
 
 const slots = useSlots();
@@ -59,11 +56,11 @@ const props = withDefaults(defineProps<IProps>(), {
 });
 const { modelValue: _mv, options: _opts, ...restProps } = props;
 const emits = defineEmits<{
-    (e: "update:modelValue", v: boolean): void;
-    (e: "select", v: TypeOption): void;
+    (e: "update:modelValue", v: string | number): void;
+    (e: "select", v: InputOption): void;
 }>();
 
-const Trigger = (): VNode | undefined => {
+const triggerComponent = (): VNode | undefined => {
     if (slots?.trigger) {
         const triggerSlots = slots.trigger();
         const element = triggerSlots.find((slot: VNode) => {
@@ -75,7 +72,7 @@ const Trigger = (): VNode | undefined => {
     return undefined;
 };
 
-const handleSelect = (option: TypeOption) => {
+const handleSelect = (option: InputOption) => {
     emits("select", option);
     emits("update:modelValue", option.value);
     $popup.value.toggle(false);

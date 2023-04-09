@@ -41,10 +41,7 @@
     padding: 0 0.5em;
 }
 .i-btn:hover {
-    --background: var(--background-hover);
-}
-.i-btn:active {
-    --background: var(--color-main);
+    background: var(--background-hover);
 }
 .i-btn-flat {
     --background-hover: var(--color-main-slight);

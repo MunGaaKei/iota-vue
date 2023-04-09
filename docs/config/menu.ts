@@ -57,6 +57,10 @@ export default [
                         title: "Radio",
                         to: "/docs/radio",
                     },
+                    {
+                        title: "Select",
+                        to: "/docs/select",
+                    },
                 ],
             },
             {

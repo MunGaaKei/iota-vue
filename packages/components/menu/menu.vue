@@ -13,7 +13,13 @@
             </template>
 
             <template v-else>
-                <Tag
+                <component
+                    :is="
+                        useLinkTag({
+                            tag: 'a',
+                            to: item.to,
+                        })
+                    "
                     class="i-menu-item-header px-12 py-8"
                     :class="headerClass(item)"
                     active-class="i-menu-item-active"
@@ -37,7 +43,7 @@
                     >
                         <KeyboardArrowDownRound></KeyboardArrowDownRound>
                     </span>
-                </Tag>
+                </component>
 
                 <div v-if="hasChildren(item)" class="i-menu-item-content">
                     <i-menu
@@ -55,11 +61,11 @@
 <script lang="ts" setup name="i-menu">
 import { iIcon } from "@p/components";
 import { vRipple } from "@p/directives";
+import useLinkTag from "@p/js/useLinkTag";
 import { KeyboardArrowDownRound } from "@vicons/material";
 import { computed, withDefaults } from "vue";
 import iMenu from "./index";
 import "./menu.scss";
-import Tag from "./tag-name.vue";
 import { TypeMenuItem } from "./types";
 
 const props = withDefaults(

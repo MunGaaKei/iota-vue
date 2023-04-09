@@ -8,13 +8,25 @@
     .flex-1 {
         flex: 1;
     }
-    .sticky {
+    .sticky-top {
         position: sticky;
         top: 0;
+        z-index: 10;
     }
     .sticky-bottom {
         position: sticky;
         bottom: 0;
+        z-index: 10;
+    }
+    .sticky-left {
+        position: sticky;
+        left: 0;
+        z-index: 10;
+    }
+    .sticky-right {
+        position: sticky;
+        right: 0;
+        z-index: 10;
     }
     .text-center {
         text-align: center;
@@ -40,7 +52,6 @@
     .h-100vh {
         height: 100vh;
     }
-
     .bg-blur {
         background: var(--background-opacity);
         backdrop-filter: var(--blur);
@@ -197,6 +208,17 @@
     @keyframes loading {
         50% {
             transform: scale(1);
+        }
+    }
+    @keyframes bounce {
+        20% {
+            transform: translate(12px, 0);
+        }
+        50% {
+            transform: translate(-8px, 0);
+        }
+        80% {
+            transform: translate(6px, 0);
         }
     }
 }

@@ -20,6 +20,7 @@ const pages = [
     "popup",
     "radio",
     "ripple",
+    "select",
     {
         name: "404",
         path: "/:pathMatch(.*)*",

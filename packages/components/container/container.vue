@@ -1,6 +1,6 @@
 <template>
     <div class="i-container" v-if="layout === 'default'">
-        <header v-if="slots.header" class="i-header bg-blur sticky">
+        <header v-if="slots.header" class="i-header bg-blur sticky-top">
             <slot name="header"></slot>
         </header>
 
@@ -26,7 +26,7 @@
             v-if="slots.footer"
             class="i-footer bg-blur"
             :class="{
-                sticky: stickyFooter,
+                'sticky-bottom': stickyFooter,
             }"
         >
             <slot name="footer"></slot>
@@ -47,7 +47,7 @@
             <slot name="sider"></slot>
         </div>
         <div class="i-content" :style="contentCSS">
-            <header v-if="slots.header" class="i-header bg-blur sticky">
+            <header v-if="slots.header" class="i-header bg-blur sticky-top">
                 <slot name="header"></slot>
             </header>
 
@@ -57,7 +57,7 @@
                 v-if="slots.footer"
                 class="i-footer bg-blur"
                 :class="{
-                    sticky: stickyFooter,
+                    'sticky-bottom': stickyFooter,
                 }"
             >
                 <slot name="footer"></slot>

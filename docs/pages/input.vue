@@ -1,6 +1,12 @@
 <template>
     <div style="width: 500px">
-        <i-input label="XIAOXI" message="message error">
+        <i-input
+            label="姓名"
+            message="message error"
+            v-model="text"
+            @input="handleInput"
+            allow-clear
+        >
             <template #prefix>
                 <i-icon
                     :icon="PersonalInjuryTwotone"
@@ -14,4 +20,11 @@
 <script setup lang="ts">
 import { iIcon, iInput } from "@p/components";
 import { PersonalInjuryTwotone } from "@vicons/material";
+import { ref } from "vue";
+
+const text = ref("");
+
+const handleInput = (e: Event) => {
+    console.log(e);
+};
 </script>

@@ -1,6 +1,6 @@
 <template>
-    <Tag
-        :tag="tag"
+    <component
+        :is="Tag"
         :type="buttonType"
         :to="to"
         :href="href"
@@ -13,38 +13,42 @@
         <span class="i-btn-content">
             <slot></slot>
         </span>
-    </Tag>
+    </component>
 </template>
 
 <script lang="ts" setup name="i-button">
 import { vRipple } from "@p/directives";
+import useLinkTag from "@p/js/useLinkTag";
 import { computed, ref, withDefaults } from "vue";
 import "./button.scss";
-import Tag from "./tag-name.vue";
 
-const props = withDefaults(
-    defineProps<{
-        tag?: "button" | "a";
-        to?: string;
-        href?: string;
-        outline?: boolean;
-        flat?: boolean;
-        loading?: boolean;
-        buttonType?: "submit" | "reset" | "button";
-        ripple?: boolean;
-        disabled?: boolean;
-        size?: "small" | "large" | "normal" | "extreme";
-        block?: boolean;
-        round?: boolean;
-        square?: boolean;
-    }>(),
-    {
-        tag: "a",
-        ripple: true,
-        size: "normal",
-    }
-);
-const $btn = ref();
+type IProps = {
+    tag?: "button" | "a";
+    to?: string;
+    href?: string;
+    outline?: boolean;
+    flat?: boolean;
+    loading?: boolean;
+    buttonType?: "submit" | "reset" | "button";
+    ripple?: boolean;
+    disabled?: boolean;
+    size?: "small" | "large" | "normal" | "extreme";
+    block?: boolean;
+    round?: boolean;
+    square?: boolean;
+};
+
+const props = withDefaults(defineProps<IProps>(), {
+    tag: "a",
+    ripple: true,
+    size: "normal",
+});
+const $btn = ref<HTMLElement>();
+const Tag = useLinkTag({
+    tag: props.tag,
+    to: props.to,
+    href: props.href,
+});
 
 const btnClass = computed(() => {
     return {

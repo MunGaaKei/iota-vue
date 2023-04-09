@@ -1,5 +1,5 @@
-import Button from './button.vue';
-import { componentInstall } from '@p/js/install';
+import { componentInstall } from "@p/js/install";
+import Button from "./button.vue";
 
 const iButton = componentInstall(Button);
 

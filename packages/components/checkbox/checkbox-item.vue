@@ -7,7 +7,8 @@
     >
         <input
             type="checkbox"
-            v-model="value"
+            :value="modelValue"
+            :checked="checked"
             class="i-checkbox-input"
             :class="[
                 `i-checkbox-${type}`,
@@ -17,7 +18,6 @@
             ]"
             :disabled="disabled"
             :name="name"
-            :value="optionValue"
             @change="handleChange"
         />
 
@@ -28,39 +28,27 @@
 </template>
 
 <script lang="ts" setup name="i-checkbox-item">
-import { useState } from "@p/js/useState";
-import { withDefaults, watch } from "vue";
+import { withDefaults } from "vue";
 
-const props = withDefaults(
+withDefaults(
     defineProps<{
         type?: "default" | "switch" | "button";
-        modelValue?: any;
+        modelValue?: boolean;
+        checked?: boolean;
         name?: string;
         round?: boolean;
         disabled?: boolean;
-        optionValue?: any;
     }>(),
     {
         type: "default",
     }
 );
 
-watch(
-    () => props.modelValue,
-    (newValue) => setValue(newValue)
-);
-
-const [value, setValue] = useState<any>(props.modelValue);
-
 const emits = defineEmits<{
-    (e: "update:modelValue", v: any): void;
-    (e: "change", v: any): void;
+    (e: "update:modelValue", v: boolean): void;
 }>();
 
-const handleChange = () => {
-    if (props.disabled) return;
-
-    emits("update:modelValue", value.value);
-    emits("change", value.value);
+const handleChange = (e: Event) => {
+    emits("update:modelValue", (e.target as HTMLInputElement).checked);
 };
 </script>

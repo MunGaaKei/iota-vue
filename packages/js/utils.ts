@@ -36,8 +36,8 @@ export function uuid(digit: number = 8): string {
 
 export function renderStringOrVNode(node: string | VNode, props: Object = {}) {
     if (typeof node === "string") {
-        return h("span", Object, node);
+        return h("span", props, node);
     } else {
-        return h(node, props);
+        return node ? h(node, props) : null;
     }
 }

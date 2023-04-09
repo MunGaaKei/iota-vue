@@ -28,8 +28,13 @@
             color: var(--color-main-1);
         }
         &.active {
+            background: var(--color-main-slight);
             color: var(--color-main);
         }
+    }
+    .i-list-content {
+        display: flex;
+        flex: 1;
     }
 }
 

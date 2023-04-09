@@ -4,10 +4,12 @@ export default `<template></template>
 import './{{lowername}}.scss'
 import { withDefaults } from "vue";
 
+export type IProps = {
+  type?: string
+}
+
 const props = withDefaults(
-  defineProps<{
-    type?: string
-  }>(),
+  defineProps<IProps>(),
   {}
 );
 

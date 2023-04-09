@@ -14,40 +14,42 @@
         </i-button>
 
         <template #config>
-            <div class="pd-20">
-                <i-grid cols="4 3:800 2:600" gap="12px" refer="container">
-                    <i-checkbox v-model="config.loading" type="switch">
-                        loading
-                    </i-checkbox>
-                    <i-checkbox v-model="config.disabled" type="switch">
-                        disabled
-                    </i-checkbox>
-                    <i-checkbox v-model="config.round" type="switch">
-                        round
-                    </i-checkbox>
-                    <i-checkbox v-model="config.block" type="switch">
-                        block
-                    </i-checkbox>
-                    <i-checkbox v-model="config.outline" type="switch">
-                        outline
-                    </i-checkbox>
-                    <i-checkbox v-model="config.flat" type="switch">
-                        flat
-                    </i-checkbox>
-                </i-grid>
-            </div>
+            <i-grid
+                cols="4 3:800 2:600"
+                gap="12px"
+                refer="container"
+                class="pd-12"
+            >
+                <i-checkbox v-model="config.loading" type="switch">
+                    loading
+                </i-checkbox>
+                <i-checkbox v-model="config.disabled" type="switch">
+                    disabled
+                </i-checkbox>
+                <i-checkbox v-model="config.round" type="switch">
+                    round
+                </i-checkbox>
+                <i-checkbox v-model="config.block" type="switch">
+                    block
+                </i-checkbox>
+                <i-checkbox v-model="config.outline" type="switch">
+                    outline
+                </i-checkbox>
+                <i-checkbox v-model="config.flat" type="switch">
+                    flat
+                </i-checkbox>
+            </i-grid>
         </template>
     </Demo>
 
     <h3 class="mt-80 mb-12">颜色</h3>
     <Demo :code="colorCode">
-        <i-button outline class="green">Green</i-button>
-        <i-button flat class="bg-yellow mx-12">
+        <i-button outline class="blue">Blue</i-button>
+        <i-button class="bg-yellow mx-12">
             <i-icon :icon="FlashOnRound" size="1.2em"></i-icon>
             Yellow
         </i-button>
-        <i-button class="bg-blue">Red</i-button>
-        <i-button flat class="purple-slight ml-12">Purple Slight</i-button>
+        <i-button class="pink" flat>Pink</i-button>
     </Demo>
 
     <h3 class="mt-80 mb-20">属性设置</h3>

@@ -25,22 +25,23 @@
         >
             <template v-if="options">
                 <checkbox-item
-                    v-for="(option, index) in options"
-                    :key="index"
-                    v-model="value"
+                    v-for="option in computedOptions"
+                    :key="option.value"
+                    :value="option.value"
+                    :checked="modelValue.includes(option.value)"
                     :disabled="option.disabled"
                     :name="name"
                     :type="type"
                     :round="round"
-                    :option-value="option.value"
-                    @change="handleChange"
+                    @change="handleOptionChange($event, option)"
                 >
                     {{ option.label }}
                 </checkbox-item>
             </template>
             <checkbox-item
                 v-else
-                v-model="value"
+                :value="modelValue"
+                :checked="modelValue"
                 :name="name"
                 :type="type"
                 :disabled="disabled"
@@ -54,12 +55,11 @@
 </template>
 
 <script lang="ts" setup name="i-checkbox">
-import { useState } from "@p/js/useState";
 import { renderStringOrVNode } from "@p/js/utils";
-import { computed, watch, withDefaults } from "vue";
+import { computed, withDefaults } from "vue";
+import { InputOption } from "../types";
 import CheckboxItem from "./checkbox-item.vue";
 import "./checkbox.scss";
-import { TypeOption } from "./types";
 
 const props = withDefaults(
     defineProps<{
@@ -73,7 +73,8 @@ const props = withDefaults(
         labelInline?: boolean;
         optionInline?: boolean;
         labelWidth?: string;
-        options?: TypeOption[];
+        labelAlign?: string;
+        options?: InputOption[];
     }>(),
     {
         type: "default",
@@ -83,26 +84,46 @@ const props = withDefaults(
     }
 );
 
-const [value, setValue] = useState<any>(props.modelValue);
-
-watch(
-    () => props.modelValue,
-    (newValue) => setValue(newValue)
-);
-
 const emits = defineEmits<{
     (e: "update:modelValue", v: any): void;
-    (e: "change", v: any): void;
 }>();
 
-const handleChange = (newValue: any) => {
-    emits("update:modelValue", newValue);
-    emits("change", newValue);
+const handleChange = (e: Event) => {
+    emits("update:modelValue", (e.target as HTMLInputElement).checked);
+};
+
+const computedOptions = computed(() => {
+    return props.options?.map((option: InputOption) => {
+        if (typeof option === "string" || typeof option === "number") {
+            return { label: option, value: option };
+        }
+        return option;
+    });
+});
+
+const handleOptionChange = (e: Event, option: any) => {
+    const checked = (e.target as HTMLInputElement).checked;
+    const { modelValue } = props;
+
+    if (modelValue && Array.isArray(modelValue)) {
+        const i = modelValue.findIndex((value) => value === option.value);
+
+        if (checked) {
+            modelValue.push(option.value);
+        } else {
+            i > -1 && modelValue.splice(i, 1);
+        }
+
+        emits("update:modelValue", modelValue);
+    } else {
+        emits("update:modelValue", checked ? [option.value] : []);
+    }
 };
 
 const checkboxStyle = computed(() => {
     return {
         "--label-width": props.labelWidth,
+        "--label-align": props.labelAlign,
     };
 });
 </script>

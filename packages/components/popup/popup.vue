@@ -1,5 +1,9 @@
 <template>
-    <Trigger ref="$trigger"></Trigger>
+    <component
+        :is="triggerComponent"
+        ref="$trigger"
+        v-bind="$attrs"
+    ></component>
 
     <Teleport v-if="body" to="body">
         <div
@@ -52,6 +56,7 @@ type IProps = {
     touchable?: boolean;
     body?: boolean;
     delay?: number;
+    disabled?: boolean;
 };
 type TypeTriggerEvents = Record<string, Function | Object>;
 
@@ -67,29 +72,42 @@ const $trigger = ref<HTMLElement>();
 const $popup = ref<HTMLElement>();
 const slots = useSlots();
 
-const Trigger = (): VNode | undefined => {
+const triggerComponent = (): VNode | null => {
     if (slots?.trigger) {
         const triggerSlots = slots.trigger();
         const events: TypeTriggerEvents = {};
 
-        if (props.trigger === "click") {
-            events["onClick"] = () => toggle();
-        } else {
-            const [eventShow, eventHide] = getNativeEventType(props.trigger);
-            events[eventShow] = withModifiers(() => toggle(true), ["self"]);
-            events[eventHide] = withModifiers(() => toggle(false), ["self"]);
+        if (!props.disabled) {
+            if (props.trigger === "click") {
+                events["onClick"] = () => toggle();
+            } else {
+                const [eventShow, eventHide] = getNativeEventType(
+                    props.trigger
+                );
+                events[eventShow] = withModifiers(() => toggle(true), ["self"]);
+                events[eventHide] = withModifiers(
+                    () => toggle(false),
+                    ["self"]
+                );
+            }
         }
 
         const element = triggerSlots.find((slot: VNode) => {
-            return slot.type !== "symbol" && typeof slot.children !== "string";
+            return (
+                Object.prototype.toString.call(slot.type) !== "[object Symbol]"
+            );
         }) as VNode;
 
-        return h(element, {
-            ...events,
-        });
-    } else {
-        return undefined;
+        if (element) {
+            return h(element, {
+                ...events,
+            });
+        } else {
+            console.error(`IOTA: slot[trigger] can\'t be textnode`);
+        }
     }
+
+    return null;
 };
 
 const popupStyle = computed((): StyleValue => {
