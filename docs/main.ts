@@ -1,10 +1,9 @@
-import "@p/css/main.scss";
-import useInit from "@p/js/useInit";
+import useIota from "@p/js/useIota";
 import { createPinia } from "pinia";
 import { createApp } from "vue";
 import App from "./App.vue";
 import Router from "./router";
 
-useInit();
+useIota();
 
 createApp(App).use(Router).use(createPinia()).mount("#app");

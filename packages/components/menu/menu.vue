@@ -26,7 +26,7 @@
                     :to="item.to"
                     :href="item.href"
                     v-ripple="ripple"
-                    @click="handleClick(item)"
+                    @click.native="handleClick($event, item)"
                 >
                     <span class="i-menu-item-icon" :style="IconStyle">
                         <i-icon :icon="item.icon"></i-icon>
@@ -68,26 +68,33 @@ import iMenu from "./index";
 import "./menu.scss";
 import { TypeMenuItem } from "./types";
 
-const props = withDefaults(
-    defineProps<{
-        items: TypeMenuItem[];
-        depth?: number;
-        selectable?: boolean;
-        round?: boolean;
-        ripple?: boolean;
-    }>(),
-    {
-        items: () => [],
-        depth: 0,
-        ripple: true,
-    }
-);
+interface IProps {
+    items: TypeMenuItem[];
+    depth?: number;
+    selectable?: boolean;
+    round?: boolean;
+    ripple?: boolean;
+}
+
+const props = withDefaults(defineProps<IProps>(), {
+    items: () => [],
+    depth: 0,
+    ripple: true,
+});
 
 const emits = defineEmits<{
     (e: "item-click", item: TypeMenuItem): void;
 }>();
 
-const handleClick = (item: TypeMenuItem): void => {
+const handleClick = (e: Event, item: TypeMenuItem) => {
+    if (item.disabled) {
+        console.log(1);
+
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+    }
+
     emits("item-click", item);
 
     if (hasChildren(item)) {
@@ -113,6 +120,7 @@ const hasChildren = (item: TypeMenuItem): boolean => {
 const headerClass = (item: TypeMenuItem) => {
     return {
         round: props.round,
+        disabled: item.disabled,
         "i-menu-item-selected": item.selected,
     };
 };

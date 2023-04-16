@@ -38,12 +38,16 @@
                 <i-checkbox v-model="config.flat" type="switch">
                     flat
                 </i-checkbox>
+                <i-checkbox v-model="config.plain" type="switch">
+                    plain
+                </i-checkbox>
             </i-grid>
         </template>
     </Demo>
 
     <h3 class="mt-80 mb-12">颜色</h3>
     <Demo :code="colorCode">
+        <i-button plain class="mr-12">Ghost</i-button>
         <i-button outline class="blue">Blue</i-button>
         <i-button class="bg-yellow mx-12">
             <i-icon :icon="FlashOnRound" size="1.2em"></i-icon>
@@ -70,6 +74,7 @@ const config = reactive<{
     block: boolean;
     outline: boolean;
     flat: boolean;
+    plain: boolean;
 }>({
     loading: false,
     disabled: false,
@@ -77,6 +82,7 @@ const config = reactive<{
     block: false,
     outline: false,
     flat: false,
+    plain: false,
 });
 
 const propsGuidence = [

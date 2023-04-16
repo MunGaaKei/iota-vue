@@ -53,27 +53,26 @@
 <script setup lang="ts" name="i-radio">
 import { renderStringOrVNode } from "@p/js/utils";
 import { computed, withDefaults } from "vue";
-import { InputOption } from "../types";
+import { InputOption } from "../common";
 import "./radio.scss";
 
-const props = withDefaults(
-    defineProps<{
-        label?: string;
-        type?: "default" | "button";
-        modelValue?: any;
-        options: any[];
-        name?: string;
-        disabled?: boolean;
-        inline?: boolean;
-        labelInline?: boolean;
-        optionInline?: boolean;
-        labelWidth?: string;
-        labelAlign?: string;
-    }>(),
-    {
-        type: "default",
-    }
-);
+interface IProps {
+    label?: string;
+    type?: "default" | "button";
+    modelValue?: any;
+    options: any[];
+    name?: string;
+    disabled?: boolean;
+    inline?: boolean;
+    labelInline?: boolean;
+    optionInline?: boolean;
+    labelWidth?: string;
+    labelAlign?: string;
+}
+
+const props = withDefaults(defineProps<IProps>(), {
+    type: "default",
+});
 
 const emits = defineEmits<{
     (e: "update:modelValue", v: any): void;

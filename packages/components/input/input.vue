@@ -47,7 +47,7 @@ import { VNode, defineEmits, defineExpose, ref, withDefaults } from "vue";
 import "./input.scss";
 
 export type TypeInputStatus = "error" | "warning" | "normal" | "success";
-export type IProps = {
+interface IProps {
     type?: string;
     label?: VNode | string;
     modelValue?: string;
@@ -57,7 +57,7 @@ export type IProps = {
     message?: string;
     disabled?: boolean;
     allowClear?: boolean;
-};
+}
 
 withDefaults(defineProps<IProps>(), {
     status: "normal",

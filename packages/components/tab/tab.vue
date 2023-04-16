@@ -66,27 +66,25 @@ type TypeTabItem = {
     content: string | VNode;
     props?: Object;
 };
+interface IProps {
+    active?: TypeActive;
+    vertical?: boolean;
+    animateBar?: boolean;
+    clickToggle?: boolean;
+    navbarClass?: string;
+    ripple?: boolean;
+}
 
 const navs = ref<HTMLElement>();
-const props = withDefaults(
-    defineProps<{
-        active?: TypeActive;
-        vertical?: boolean;
-        animateBar?: boolean;
-        clickToggle?: boolean;
-        navbarClass?: string;
-        ripple?: boolean;
-    }>(),
-    {
-        animateBar: true,
-        ripple: true,
-    }
-);
+const props = withDefaults(defineProps<IProps>(), {
+    animateBar: true,
+    ripple: true,
+});
 
 props.animateBar &&
     nextTick((): void => {
         const $active = (navs.value as HTMLElement).querySelector(
-            ".v-tab-active"
+            ".i-tab-active"
         );
         if ($active) {
             setBarPosition($active as HTMLElement);

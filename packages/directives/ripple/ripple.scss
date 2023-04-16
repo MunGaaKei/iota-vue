@@ -9,8 +9,8 @@
 .i-ripple {
     position: absolute;
     background: var(--color);
-    opacity: .1;
-    transform: translate(-50%, -50%) scale(.4);
+    opacity: 0.1;
+    transform: translate(-50%, -50%) scale(0.4);
     transform-origin: 50%;
     border-radius: 50%;
 }

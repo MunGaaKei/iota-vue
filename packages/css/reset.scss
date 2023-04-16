@@ -102,7 +102,11 @@ label {
     cursor: pointer;
 }
 .os-windows ::-webkit-scrollbar-thumb {
-    background-color: var(--grey-2);
+    background-color: var(--color-2);
     cursor: pointer;
     border-radius: var(--radius);
+}
+
+.os-windows ::-webkit-scrollbar-corner {
+    background: none;
 }

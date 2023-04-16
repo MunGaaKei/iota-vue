@@ -9,10 +9,12 @@ import iInput from "./input";
 import iList, { iListItem } from "./list";
 import iMenu from "./menu";
 import iMessage, { useMessage } from "./message";
+import iPage from "./page";
 import iPopup from "./popup";
 import iRadio from "./radio";
 import iSelect from "./select";
 import iTab, { iTabItem } from "./tab";
+import iTable from "./table";
 
 export {
     iButton,
@@ -27,10 +29,12 @@ export {
     iListItem,
     iMenu,
     iMessage,
+    iPage,
     iPopup,
     iRadio,
     iSelect,
     iTab,
     iTabItem,
+    iTable,
     useMessage,
 };

@@ -49,7 +49,8 @@ import {
 import "./popup.scss";
 
 type TypeTrigger = "hover" | "click" | "focus";
-type IProps = {
+type TypeTriggerEvents = Record<string, Function | Object>;
+interface IProps {
     trigger?: TypeTrigger;
     position?: TypePosition;
     gap?: number;
@@ -57,8 +58,7 @@ type IProps = {
     body?: boolean;
     delay?: number;
     disabled?: boolean;
-};
-type TypeTriggerEvents = Record<string, Function | Object>;
+}
 
 const props = withDefaults(defineProps<IProps>(), {
     trigger: "hover",

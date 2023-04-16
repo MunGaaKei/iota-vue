@@ -17,10 +17,13 @@ const pages = [
     "input",
     "list",
     "message",
+    "page",
     "popup",
     "radio",
     "ripple",
     "select",
+    "tab",
+    "table",
     {
         name: "404",
         path: "/:pathMatch(.*)*",

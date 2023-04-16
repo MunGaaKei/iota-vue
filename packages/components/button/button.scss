@@ -58,6 +58,11 @@
         border-color: var(--color);
     }
 }
+.i-btn.i-btn-plain {
+    --background: transparent;
+    --color: var(--color);
+    --background-hover: var(--color-slight);
+}
 .i-btn.i-btn-outline:hover,
 .i-btn.i-btn-flat:hover {
     --background: var(--background-hover);

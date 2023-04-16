@@ -12,6 +12,7 @@ $colors: (
 
 :root {
     --background: #fff;
+    --background-1: #f1f1f1;
     --background-2: #efeef1;
     --background-opacity: rgba(255, 255, 255, 0.81);
     --background-opacity-1: rgba(233, 233, 233, 0.6);
@@ -154,13 +155,15 @@ $colors: (
 
 @mixin themeDark() {
     --background: #212121;
-    --background-2: #1a1a1a;
+    --background-1: #1a1a1a;
+    --background-2: #303030;
     --background-opacity: rgba(33, 33, 33, 0.8);
     --background-opacity-1: rgba(88, 88, 88, 0.4);
     --blur: blur(24px);
 
     --color-main-slight: #243836;
     --color: #fff;
+    --color-1: #efefef;
     --color-slight: rgba(255, 255, 255, 0.1);
 
     background: var(--background);
@@ -170,7 +173,7 @@ $colors: (
         @if ($name == "black") {
             --#{$name}-slight: rgba(0, 0, 0, 0.2);
         } @else if ($name == "red") {
-            --#{$name}-slight: #6e333f;
+            --#{$name}-slight: #4c3338;
         } @else if ($name == "blue") {
             --#{$name}-slight: #{darken($value, 36%)};
         } @else if ($name == "green") {

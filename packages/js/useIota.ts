@@ -1,3 +1,5 @@
+import "../css/main.scss";
+
 export default function () {
     document?.addEventListener("DOMContentLoaded", () => {
         // 是否为 WINDOWS 系统

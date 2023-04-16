@@ -1,0 +1,45 @@
+.i-pages {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.i-page {
+    --background: var(--background-1);
+    --background-hover: var(--background-2);
+    --color: var(--color-main-reverse);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.8em;
+    height: 2.5em;
+    border-radius: var(--radius);
+    border: 2px solid transparent;
+    transition: var(--transition);
+    user-select: none;
+    cursor: pointer;
+    white-space: nowrap;
+    outline: none;
+    background: var(--background);
+    color: var(--color);
+    .i-ripple-container {
+        inset: -2px;
+    }
+    &:hover {
+        background: var(--background-hover);
+    }
+    &.active {
+        --background-hover: var(--color-main);
+        --background: var(--color-main);
+    }
+}
+
+.i-page-prev,
+.i-page-next {
+    padding: 0 0.4em;
+    > svg {
+        width: 1.5em;
+        height: 1.5em;
+    }
+}

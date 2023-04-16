@@ -8,12 +8,12 @@
 import { computed, withDefaults } from "vue";
 import "./list.scss";
 
-type IProps = {
+interface IProps {
     labelWidth?: string;
     type?: "option" | "number" | "circle";
     prefix?: string;
     labelAlign?: "left" | "right";
-};
+}
 
 const props = withDefaults(defineProps<IProps>(), {
     labelAlign: "left",

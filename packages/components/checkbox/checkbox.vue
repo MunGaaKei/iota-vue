@@ -57,32 +57,31 @@
 <script lang="ts" setup name="i-checkbox">
 import { renderStringOrVNode } from "@p/js/utils";
 import { computed, withDefaults } from "vue";
-import { InputOption } from "../types";
+import { InputOption } from "../common";
 import CheckboxItem from "./checkbox-item.vue";
 import "./checkbox.scss";
 
-const props = withDefaults(
-    defineProps<{
-        label?: string;
-        type?: "default" | "switch" | "button";
-        modelValue?: any;
-        name?: string;
-        round?: boolean;
-        disabled?: boolean;
-        inline?: boolean;
-        labelInline?: boolean;
-        optionInline?: boolean;
-        labelWidth?: string;
-        labelAlign?: string;
-        options?: InputOption[];
-    }>(),
-    {
-        type: "default",
-        labelInline: true,
-        optionInline: true,
-        inline: true,
-    }
-);
+interface IProps {
+    label?: string;
+    type?: "default" | "switch" | "button";
+    modelValue?: any;
+    name?: string;
+    round?: boolean;
+    disabled?: boolean;
+    inline?: boolean;
+    labelInline?: boolean;
+    optionInline?: boolean;
+    labelWidth?: string;
+    labelAlign?: string;
+    options?: InputOption[];
+}
+
+const props = withDefaults(defineProps<IProps>(), {
+    type: "default",
+    labelInline: true,
+    optionInline: true,
+    inline: true,
+});
 
 const emits = defineEmits<{
     (e: "update:modelValue", v: any): void;

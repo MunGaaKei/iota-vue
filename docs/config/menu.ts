@@ -76,8 +76,20 @@ export default [
                 to: "/docs/message",
             },
             {
+                title: "Page",
+                to: "/docs/page",
+            },
+            {
                 title: "Popup",
                 to: "/docs/popup",
+            },
+            {
+                title: "Tab",
+                to: "/docs/tab",
+            },
+            {
+                title: "Table",
+                to: "/docs/table",
             },
         ],
     },

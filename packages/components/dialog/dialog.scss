@@ -15,7 +15,12 @@
 
 .i-dialog {
     position: relative;
+    display: flex;
+    flex-direction: column;
     margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+    overflow-x: hidden;
     box-shadow: var(--shadow);
     border-radius: var(--radius);
     opacity: 0;
@@ -29,4 +34,29 @@
 .active > .i-dialog {
     opacity: 1;
     transform: none;
+    pointer-events: unset;
+}
+
+.i-dialog-header,
+.i-dialog-footer {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+}
+
+.i-dialog-content {
+    max-height: 100%;
+    overflow-x: hidden;
+}
+
+.i-dialog-close {
+    display: flex;
+    padding: 2px;
+    border-radius: var(--radius);
+    opacity: 0.6;
+    align-self: flex-start;
+    &:hover {
+        opacity: 1;
+        background: var(--background);
+    }
 }

@@ -43,37 +43,33 @@
                             disabled,
                         }"
                     >
-                        <template v-if="chip && multiple && modelValue.length">
+                        <template v-if="multiple">
                             <span
                                 v-for="(option, index) in activeOptions.slice(
                                     0,
                                     maxDisplayCount
                                 )"
                                 :key="index"
-                                class="i-select-value i-select-value-chip"
-                                @click.stop="handleSelectOption(option)"
+                                class="i-select-value"
+                                :class="{
+                                    'i-select-value-chip': chip,
+                                }"
+                                @click.stop="chip && handleSelectOption(option)"
                             >
                                 {{ option.label }}
                             </span>
+
                             <span
-                                v-if="rest > 0"
-                                class="i-select-value-chip i-select-value-rest"
+                                v-if="chip && rest > 0"
+                                class="chip i-select-value-rest"
                             >
                                 +{{ rest }}
                             </span>
                         </template>
                         <span v-else class="i-select-value">
-                            {{
-                                multiple
-                                    ? activeOptions
-                                          .map(
-                                              (option: InputOption) =>
-                                                  option.label
-                                          )
-                                          .join(", ")
-                                    : activeOption?.label
-                            }}
+                            {{ activeOption?.label }}
                         </span>
+
                         <span
                             v-if="modelValue === '' || !modelValue.length"
                             class="i-select-holder"
@@ -127,11 +123,11 @@ import { renderStringOrVNode } from "@p/js/utils";
 import { ClearRound, UnfoldMoreRound } from "@vicons/material";
 import { VNode, computed, ref, withDefaults } from "vue";
 import { iList, iListItem, iPopup } from "..";
-import { InputOption, InputOptionValue } from "../types";
+import { InputOption, InputOptionValue } from "../common";
 import "./select.scss";
 
-export type TypeInputStatus = "error" | "warning" | "normal" | "success";
-export type IProps = {
+type TypeInputStatus = "error" | "warning" | "normal" | "success";
+interface IProps {
     label?: VNode | string;
     modelValue?: any;
     labelInline?: boolean;
@@ -146,7 +142,7 @@ export type IProps = {
     wrap?: boolean;
     maxDisplay?: number;
     body?: boolean;
-};
+}
 
 const props = withDefaults(defineProps<IProps>(), {
     status: "normal",

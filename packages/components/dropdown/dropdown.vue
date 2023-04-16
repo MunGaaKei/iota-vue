@@ -31,12 +31,12 @@ import {
     withDefaults,
 } from "vue";
 import { iList, iListItem, iPopup } from "..";
-import { InputOption } from "../types";
+import { InputOption } from "../common";
 import "./dropdown.scss";
 
 type TypePosition = "left" | "top" | "right" | "bottom";
 type TypeTrigger = "hover" | "click" | "focus";
-type IProps = {
+interface IProps {
     modelValue?: any;
     trigger?: TypeTrigger;
     position?: TypePosition;
@@ -44,7 +44,7 @@ type IProps = {
     gap?: number;
     body?: boolean;
     options?: InputOption[];
-};
+}
 
 const slots = useSlots();
 const $popup = ref();

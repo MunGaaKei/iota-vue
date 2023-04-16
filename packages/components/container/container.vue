@@ -72,22 +72,21 @@ import { useState } from "@p/js/useState";
 import { computed, ref, useSlots, withDefaults } from "vue";
 import "./container.scss";
 
-const props = withDefaults(
-    defineProps<{
-        layout?: "default" | "menu";
-        modelValue?: boolean;
-        breakpoint?: string;
-        stickyFooter?: boolean;
-        contentStyle?: Object;
-        siderStyle?: Object;
-    }>(),
-    {
-        layout: "default",
-        hideSider: false,
-        breakpoint: "980px",
-        stickyFooter: false,
-    }
-);
+interface IProps {
+    layout?: "default" | "menu";
+    modelValue?: boolean;
+    breakpoint?: string;
+    stickyFooter?: boolean;
+    contentStyle?: Object;
+    siderStyle?: Object;
+}
+
+const props = withDefaults(defineProps<IProps>(), {
+    layout: "default",
+    hideSider: false,
+    breakpoint: "980px",
+    stickyFooter: false,
+});
 
 const slots = useSlots();
 const $sider = ref();

@@ -1,29 +1,28 @@
 <template>
-  <component :is="icon" class="i-icon" :style="iconStyle"></component>
+    <component :is="icon" class="i-icon" :style="iconStyle"></component>
 </template>
 
 <script lang="ts" setup name="i-icon">
-import { withDefaults, computed, VNode } from "vue";
 import type { Component } from "vue";
+import { VNode, computed, withDefaults } from "vue";
 import "./icon.scss";
 
-const props = withDefaults(
-  defineProps<{
+interface IProps {
     icon: VNode | Component;
     size?: string;
     align?: string;
-  }>(),
-  {
+}
+
+const props = withDefaults(defineProps<IProps>(), {
     size: "1.5em",
     align: "middle",
-  }
-);
+});
 
 const iconStyle = computed(() => {
-  return {
-    width: `${props.size}`,
-    height: `${props.size}`,
-    verticalAlign: `${props.align}`,
-  };
+    return {
+        width: `${props.size}`,
+        height: `${props.size}`,
+        verticalAlign: `${props.align}`,
+    };
 });
 </script>

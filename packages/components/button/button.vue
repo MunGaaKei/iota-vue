@@ -22,7 +22,7 @@ import useLinkTag from "@p/js/useLinkTag";
 import { computed, ref, withDefaults } from "vue";
 import "./button.scss";
 
-type IProps = {
+interface IProps {
     tag?: "button" | "a";
     to?: string;
     href?: string;
@@ -36,7 +36,8 @@ type IProps = {
     block?: boolean;
     round?: boolean;
     square?: boolean;
-};
+    plain?: boolean;
+}
 
 const props = withDefaults(defineProps<IProps>(), {
     tag: "a",
@@ -57,6 +58,7 @@ const btnClass = computed(() => {
         "i-btn-loading": props.loading,
         "i-btn-outline": props.outline,
         "i-btn-square": props.square,
+        "i-btn-plain": props.plain,
         rounded: props.round,
         [`i-btn-${props.size}`]: props.size !== "normal",
         disabled: props.disabled,
