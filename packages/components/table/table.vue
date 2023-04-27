@@ -69,7 +69,7 @@
             </tr>
         </table>
 
-        <div class="i-loading-container">
+        <div v-if="loading" class="i-loading-container">
             <span class="i-loading-icon"></span>
         </div>
 

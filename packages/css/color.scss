@@ -63,7 +63,7 @@ $colors: (
         } @else if ($name == "blue") {
             --#{$name}-1: #{darken($value, 8%)};
             --#{$name}-2: #{lighten($value, 8%)};
-            --#{$name}-slight: #{lighten($value, 40%)};
+            --#{$name}-slight: #{lighten($value, 36%)};
         } @else if ($name == "green") {
             --#{$name}-1: #{darken($value, 4%)};
             --#{$name}-2: #{lighten($value, 8%)};

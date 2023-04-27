@@ -1,27 +1,11 @@
 @font-face {
-    font-family: "varela";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url("./varela.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "long-cang";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url("./Long-Cang.woff2") format("woff2");
-}
-
-@font-face {
-    font-family: "noto";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url("./noto.otf") format("otf");
+	font-family: "varela";
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("./varela.woff2") format("woff2");
 }
 
 html body {
-    font-family: "varela";
+	font-family: "varela";
 }
