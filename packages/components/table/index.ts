@@ -1,7 +1,4 @@
-import Table from './table.vue';
-import { componentInstall } from '@p/js/install';
+import iTable from "./table.vue";
 
-const iTable = componentInstall(Table);
-
+export type { Table } from "./types";
 export default iTable;
-

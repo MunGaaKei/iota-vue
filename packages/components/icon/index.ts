@@ -1,6 +1,4 @@
-import Icon from './icon.vue';
-import { componentInstall } from '@p/js/install';
+import iIcon from "./icon.vue";
 
-const iIcon = componentInstall(Icon);
-
+export type { Icon } from "./types";
 export default iIcon;

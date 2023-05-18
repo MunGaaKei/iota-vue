@@ -1,28 +1,28 @@
-import { render, h, ref, reactive } from 'vue';
-import { useState } from '@p/js/useState';
-import Container from './container.vue';
-import './message.scss';
-import type { TypeMessage, TypeMessageConfig } from './types';
-import { uuid } from '@p/js/utils';
+import { useState } from "@p/js/useState";
+import { uuid } from "@p/js/utils";
+import { h, reactive, ref, render } from "vue";
+import Container from "./container.vue";
+import "./message.scss";
+import type { Message, MessageConfig } from "./types";
 
 const heights: number[] = [];
-const queue = ref<TypeMessage[]>([]);
-const defaultConfig: TypeMessageConfig = {
+const queue = ref<Message[]>([]);
+const defaultConfig: MessageConfig = {
 	duration: 3000,
 	fromStart: true,
-	align: 'center',
-	offset: '12px',
-	max: 0
+	align: "center",
+	offset: "12px",
+	max: 0,
 };
 const [align, setAlign] = useState<string>(defaultConfig.align);
 const [offset, setOffset] = useState<string>(defaultConfig.offset);
 const alignMap = {
-	left: 'flex-start',
-	center: 'center',
-	right: 'flex-end'
+	left: "flex-start",
+	center: "center",
+	right: "flex-end",
 };
 
-function useMessage(config?: TypeMessageConfig) {
+function useMessage(config?: MessageConfig) {
 	if (config) {
 		Object.assign(defaultConfig, config);
 	}
@@ -34,19 +34,19 @@ function useMessage(config?: TypeMessageConfig) {
 	return [post, close];
 }
 
-function post(item: string | TypeMessage) {
+function post(item: string | Message) {
 	item = mixinMessage(item);
 
 	const { fromStart, duration } = item;
 	const { max } = defaultConfig;
-	const method = fromStart ? 'unshift' : 'push';
+	const method = fromStart ? "unshift" : "push";
 
 	queue.value[method](item);
 
 	max && subtractQueue(max, fromStart);
 
 	setTimeout(() => {
-		const message = item as TypeMessage;
+		const message = item as Message;
 		const $el = document.getElementById(
 			`i-message-${message.id}`
 		) as HTMLElement;
@@ -59,13 +59,13 @@ function post(item: string | TypeMessage) {
 
 	if (duration) {
 		item.timer = setTimeout(() => {
-			close.call(item as TypeMessage);
+			close.call(item as Message);
 		}, duration);
 	}
 }
 
-function close(this: TypeMessage) {
-	const j = queue.value.findIndex((node: TypeMessage) => node.id === this.id);
+function close(this: Message) {
+	const j = queue.value.findIndex((node: Message) => node.id === this.id);
 
 	this.active = false;
 	this.timer && clearTimeout(this.timer);
@@ -77,8 +77,8 @@ function close(this: TypeMessage) {
 	}, 240);
 }
 
-function mixinMessage(item: string | TypeMessage): TypeMessage {
-	if (typeof item === 'string') {
+function mixinMessage(item: string | Message): Message {
+	if (typeof item === "string") {
 		item = { content: item };
 	}
 
@@ -86,14 +86,14 @@ function mixinMessage(item: string | TypeMessage): TypeMessage {
 		Object.assign({}, defaultConfig, item, {
 			active: false,
 			id: uuid(4),
-			close
+			close,
 		})
 	);
 }
 
 function subtractQueue(max: number, fromStart?: boolean) {
 	const l = heights.length;
-	const method = fromStart ? 'pop' : 'shift';
+	const method = fromStart ? "pop" : "shift";
 
 	if (max <= l) {
 		let i = 0;
@@ -108,11 +108,11 @@ function subtractQueue(max: number, fromStart?: boolean) {
 function reflow(): void {
 	let top = 0;
 	const { bottom, gap = 8 } = defaultConfig;
-	queue.value.map((node: TypeMessage, i: number) => {
+	queue.value.map((node: Message, i: number) => {
 		if (i > 0) {
 			top += heights[i - 1];
 		}
-		node.offsetTop = `${bottom ? 'bottom' : 'top'}: ${top + i * gap}px`;
+		node.offsetTop = `${bottom ? "bottom" : "top"}: ${top + i * gap}px`;
 	});
 }
 
@@ -120,7 +120,7 @@ render(
 	h(Container, {
 		items: queue.value,
 		align,
-		offset
+		offset,
 	}),
 	document.body
 );

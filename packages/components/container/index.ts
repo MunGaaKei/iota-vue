@@ -1,6 +1,4 @@
-import Container from './container.vue';
-import { componentInstall } from '@p/js/install';
+import iContainer from "./container.vue";
 
-const vContainer = componentInstall(Container);
-
-export default vContainer;
+export type { Container } from "./types";
+export default iContainer;

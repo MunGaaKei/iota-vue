@@ -1,7 +1,9 @@
 <template>
-    <a class="i-tab-nav">
-        <slot></slot>
-    </a>
+	<slot></slot>
 </template>
 
-<script setup lang="ts" name="i-tab-item"></script>
+<script setup lang="ts">
+defineOptions({
+	name: "i-tab-item",
+});
+</script>

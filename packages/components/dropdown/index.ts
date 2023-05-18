@@ -1,7 +1,4 @@
-import Dropdown from './dropdown.vue';
-import { componentInstall } from '@p/js/install';
+import iDropdown from "./dropdown.vue";
 
-const iDropdown = componentInstall(Dropdown);
-
+export type { Dropdown } from "./types";
 export default iDropdown;
-

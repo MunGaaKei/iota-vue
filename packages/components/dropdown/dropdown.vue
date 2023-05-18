@@ -1,86 +1,76 @@
 <template>
-    <i-popup v-bind="restProps" ref="$popup">
-        <template #trigger>
-            <component :is="triggerComponent"></component>
-        </template>
-        <i-list v-if="options" class="bg-blur" type="option">
-            <i-list-item
-                v-for="option in options"
-                :key="option.value"
-                :active="modelValue === option.value"
-                @click="handleSelect(option)"
-            >
-                <template v-if="typeof option.label === 'string'">
-                    {{ option.label }}
-                </template>
-                <component v-else :is="option.label"></component>
-            </i-list-item>
-        </i-list>
-        <slot v-else></slot>
-    </i-popup>
+	<i-popup
+		v-bind="props"
+		ref="$popup"
+		@show="emits('show')"
+		@hide="emits('hide')"
+	>
+		<template #trigger>
+			<component :is="triggerComponent"></component>
+		</template>
+		<i-list v-if="options" class="bg-blur" type="option">
+			<i-list-item
+				v-for="option in options"
+				:key="option.value"
+				:active="modelValue === option.value"
+				@click="handleSelect(option)"
+			>
+				<StringOrVNode :content="option.label"></StringOrVNode>
+			</i-list-item>
+		</i-list>
+		<slot v-else></slot>
+	</i-popup>
 </template>
 
-<script setup lang="ts" name="i-dropdown">
-import {
-    VNode,
-    defineEmits,
-    defineExpose,
-    h,
-    ref,
-    useSlots,
-    withDefaults,
-} from "vue";
+<script setup lang="ts">
+import { VNode, h, ref, useSlots, withDefaults } from "vue";
 import { iList, iListItem, iPopup } from "..";
-import { InputOption } from "../common";
+import { Option } from "../@types";
+import StringOrVNode from "../common/StringOrVNode.vue";
 import "./dropdown.scss";
+import type { Dropdown } from "./types";
 
-type TypePosition = "left" | "top" | "right" | "bottom";
-type TypeTrigger = "hover" | "click" | "focus";
-interface IProps {
-    modelValue?: any;
-    trigger?: TypeTrigger;
-    position?: TypePosition;
-    touchable?: boolean;
-    gap?: number;
-    body?: boolean;
-    options?: InputOption[];
-}
+defineOptions({
+	name: "i-dropdown",
+});
 
 const slots = useSlots();
 const $popup = ref();
 
-const props = withDefaults(defineProps<IProps>(), {
-    trigger: "click",
-    position: "bottom",
-    touchable: true,
+const props = withDefaults(defineProps<Dropdown>(), {
+	trigger: "click",
+	position: "bottom",
+	touchable: true,
 });
-const { modelValue: _mv, options: _opts, ...restProps } = props;
+
 const emits = defineEmits<{
-    (e: "update:modelValue", v: string | number): void;
-    (e: "select", v: InputOption): void;
+	(e: "update:modelValue", v: string | number): void;
+	(e: "select", v: Option): void;
+	(e: "show"): void;
+	(e: "hide"): void;
 }>();
 
 const triggerComponent = (): VNode | undefined => {
-    if (slots?.trigger) {
-        const triggerSlots = slots.trigger();
-        const element = triggerSlots.find((slot: VNode) => {
-            return slot.type !== "symbol" && typeof slot.children !== "string";
-        }) as VNode;
-        return h(element);
-    }
+	if (slots?.trigger) {
+		const triggerSlots = slots.trigger();
+		const element = triggerSlots.find((slot: VNode) => {
+			return slot.type !== "symbol" && typeof slot.children !== "string";
+		}) as VNode;
+		return h(element);
+	}
 
-    return undefined;
+	return undefined;
 };
 
-const handleSelect = (option: InputOption) => {
-    emits("select", option);
-    emits("update:modelValue", option.value);
-    $popup.value.toggle(false);
+const handleSelect = (option: Option) => {
+	emits("select", option);
+	emits("update:modelValue", option.value);
+	$popup.value.toggle(false);
 };
 
 defineExpose({
-    toggle: (show?: boolean) => {
-        $popup.value.toggle(show);
-    },
+	toggle: (show?: boolean) => {
+		$popup.value.toggle(show);
+	},
 });
 </script>

@@ -1,6 +1,4 @@
-import Menu from './menu.vue';
-import { componentInstall } from '@p/js/install';
+import iMenu from "./menu.vue";
 
-const iMenu = componentInstall(Menu);
-
+export type { Menu, MenuItem } from "./types";
 export default iMenu;

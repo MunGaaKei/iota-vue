@@ -4,17 +4,16 @@
 	</ul>
 </template>
 
-<script lang="ts" setup name="i-list">
+<script lang="ts" setup>
 import { computed, withDefaults } from "vue";
 import "./list.scss";
+import type { List } from "./types";
 
-interface IProps {
-	labelWidth?: string;
-	type?: "option" | "number" | "circle";
-	labelAlign?: "left" | "right";
-}
+defineOptions({
+	name: "i-list",
+});
 
-const props = withDefaults(defineProps<IProps>(), {
+const props = withDefaults(defineProps<List>(), {
 	labelAlign: "left",
 });
 

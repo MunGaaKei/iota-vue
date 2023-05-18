@@ -1,6 +1,4 @@
-import Popup from './popup.vue';
-import { componentInstall } from '@p/js/install';
+import iPopup from "./popup.vue";
 
-const iPopup = componentInstall(Popup);
-
+export type { Popup } from "./types";
 export default iPopup;

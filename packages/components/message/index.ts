@@ -1,10 +1,6 @@
-import Message from './message.vue';
-import useMessage from './useMessage';
-import { componentInstall } from '@p/js/install';
+import iMessage from "./message.vue";
+import useMessage from "./useMessage";
 
-const iMessage = componentInstall(Message);
-
-export {
-    useMessage
-}
+export type { Message, MessageConfig } from "./types";
+export { useMessage };
 export default iMessage;

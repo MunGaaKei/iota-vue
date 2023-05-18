@@ -1,8 +1,7 @@
-import { componentInstall } from "@p/js/install";
-import Checkbox from "./checkbox.vue";
-import type { TypeOption } from "./types";
+import iCheckboxItem from "./checkbox-item.vue";
+import iCheckbox from "./checkbox.vue";
+import type { Checkbox, CheckboxItem } from "./types";
 
-const iCheckbox = componentInstall(Checkbox);
-
-export { TypeOption };
+export { iCheckboxItem };
+export type { Checkbox, CheckboxItem };
 export default iCheckbox;

@@ -1,20 +1,20 @@
-import { VNode } from 'vue';
+import type { TypeStringOrVNode } from "../@types";
 
-export type TypeMessageConfig = {
+export interface MessageConfig {
 	duration?: number;
 	closable?: boolean;
 	classname?: string;
 	fromStart?: boolean;
 	bottom?: boolean;
-	align?: 'center' | 'left' | 'right';
+	align?: "center" | "left" | "right";
 	gap?: number;
 	max?: number;
 	offset?: string;
-};
+}
 
-export type TypeMessage = {
+export interface Message {
 	id?: string;
-	content: string | VNode;
+	content: TypeStringOrVNode;
 	active?: boolean;
 	offsetTop?: string;
 	close?: Function;
@@ -24,4 +24,4 @@ export type TypeMessage = {
 	classname?: string;
 	closable?: boolean;
 	timer?: ReturnType<typeof setTimeout>;
-};
+}

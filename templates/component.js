@@ -1,15 +1,16 @@
 export default `<template></template>
 
-<script setup lang="ts" name="i-{{lowername}}">
+<script setup lang="ts">
 import './{{lowername}}.scss'
+import type { {{name}} } from './types';
 import { withDefaults } from "vue";
 
-export type IProps = {
-  type?: string
-}
+defineOptions({
+  name: 'i-{{lowername}}'
+});
 
 const props = withDefaults(
-  defineProps<IProps>(),
+  defineProps<{{name}}>(),
   {}
 );
 

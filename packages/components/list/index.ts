@@ -1,9 +1,7 @@
-import List from './list.vue';
-import ListItem from './list-item.vue'
-import { componentInstall } from '@p/js/install';
+import iListItem from "./list-item.vue";
+import iList from "./list.vue";
 
-const iList = componentInstall(List);
-const iListItem = componentInstall(ListItem);
+export type { List, ListItem } from "./types";
 
 export { iListItem };
 export default iList;

@@ -3,47 +3,37 @@
 		<div class="demo-widget flex justify-center">
 			<slot></slot>
 		</div>
-		<i-tab
-			class="demo"
-			click-toggle
-		>
-			<i-tab-item v-if="slots.config">
+		<i-tab class="demo" click-toggle>
+			<i-tab-item v-if="slots.config" key="config">
 				<template #title>
 					<i-icon :icon="AutoAwesomeMosaicTwotone"></i-icon>
 				</template>
 				<slot name="config"></slot>
 			</i-tab-item>
-			<i-tab-item>
+			<i-tab-item key="code">
 				<template #title>
 					<i-icon :icon="CodeRound"></i-icon>
 				</template>
-				<Codes
-					type="html"
-					:code="code"
-				></Codes>
+				<Codes type="html" :code="code"></Codes>
 			</i-tab-item>
-			<i-tab-item
-				class="ml-auto"
-				@click="handleCopy"
-				prevent-click
-			>
-				<template #title>
+			<template #suffix>
+				<i-button @click="handleCopy" plain square class="color-4">
 					<i-icon :icon="CopyAllTwotone"></i-icon>
-				</template>
-			</i-tab-item>
+				</i-button>
+			</template>
 		</i-tab>
 	</div>
 </template>
 
 <script setup lang="ts">
-import Codes from './Codes.vue';
-import { iTab, iTabItem, iIcon } from '@p/components';
-import { withDefaults, useSlots } from 'vue';
+import { iButton, iIcon, iTab, iTabItem } from "@p/components";
 import {
 	AutoAwesomeMosaicTwotone,
 	CodeRound,
-	CopyAllTwotone
-} from '@vicons/material';
+	CopyAllTwotone,
+} from "@vicons/material";
+import { useSlots, withDefaults } from "vue";
+import Codes from "./Codes.vue";
 
 const slots = useSlots();
 
@@ -52,7 +42,7 @@ const props = withDefaults(
 		code?: string;
 	}>(),
 	{
-		code: ''
+		code: "",
 	}
 );
 

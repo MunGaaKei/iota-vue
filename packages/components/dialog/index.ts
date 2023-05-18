@@ -1,7 +1,4 @@
-import Dialog from './dialog.vue';
-import { componentInstall } from '@p/js/install';
+import iDialog from "./dialog.vue";
 
-const iDialog = componentInstall(Dialog);
-
+export type { Dialog } from "./types";
 export default iDialog;
-

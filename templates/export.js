@@ -1,8 +1,5 @@
-export default `import {{name}} from './{{lowername}}.vue';
-import { componentInstall } from '@p/js/install';
+export default `import i{{name}} from './{{lowername}}.vue';
 
-const i{{name}} = componentInstall({{name}});
-
+export type { {{name}} } from './types';
 export default i{{name}};
-
 `;

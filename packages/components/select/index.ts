@@ -1,7 +1,4 @@
-import Select from './select.vue';
-import { componentInstall } from '@p/js/install';
+import iSelect from "./select.vue";
 
-const iSelect = componentInstall(Select);
-
+export type { Select } from "./types";
 export default iSelect;
-

@@ -1,26 +1,24 @@
 <template>
-    <i-button @click="toggleDialog(!dialog)">打开/关闭</i-button>
+	<i-button @click="toggleDialog(!dialog)">打开/关闭</i-button>
 
-    {{ dialog }}
+	<i-dialog v-model="dialog">
+		<template #title>🤓</template>
+		<div
+			style="
+				background-image: linear-gradient(
+					-225deg,
+					#77ffd2 0%,
+					#6297db 48%,
+					#1eecff 100%
+				);
+				width: 600px;
+				max-width: 100%;
+				height: 200px;
+			"
+		></div>
+	</i-dialog>
 
-    <i-dialog v-model="dialog">
-        <template #title>🤓</template>
-        <div
-            style="
-                background-image: linear-gradient(
-                    -225deg,
-                    #77ffd2 0%,
-                    #6297db 48%,
-                    #1eecff 100%
-                );
-                width: 600px;
-                max-width: 100%;
-                height: 1400px;
-            "
-        ></div>
-    </i-dialog>
-
-    <div style="height: 2000px"></div>
+	<div style="height: 2000px"></div>
 </template>
 
 <script setup lang="ts">

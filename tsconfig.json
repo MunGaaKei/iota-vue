@@ -1,23 +1,30 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "strict": true,
-    "jsx": "preserve",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true,
-    "noEmit": true,
-    "baseUrl": ".",
-    "paths": {
-      "@d/*": ["docs/*"],
-      "@p/*": ["packages/*"]
-    }
-  },
-  "include": ["docs/**/*.ts", "docs/**/*.d.ts", "docs/**/*.tsx", "docs/**/*.vue", "packages/**/*.ts", "packages/**/*.vue"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+	"compilerOptions": {
+		"target": "ESNext",
+		"useDefineForClassFields": true,
+		"module": "ESNext",
+		"moduleResolution": "Node",
+		"strict": true,
+		"jsx": "preserve",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"esModuleInterop": true,
+		"lib": ["ESNext", "DOM"],
+		"skipLibCheck": true,
+		"noEmit": true,
+		"baseUrl": ".",
+		"paths": {
+			"@d/*": ["docs/*"],
+			"@p/*": ["packages/*"]
+		}
+	},
+	"include": [
+		"docs/**/*.ts",
+		"docs/**/*.d.ts",
+		"docs/**/*.tsx",
+		"docs/**/*.vue",
+		"packages/**/*.ts",
+		"packages/**/*.vue"
+	],
+	"references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -1,7 +1,4 @@
-import Page from './page.vue';
-import { componentInstall } from '@p/js/install';
+import iPage from "./page.vue";
 
-const iPage = componentInstall(Page);
-
+export type { Page } from "./types";
 export default iPage;
-

@@ -1,62 +1,63 @@
 .i-backdrop {
-    display: none;
-    padding: 12px;
-    z-index: 100;
-    pointer-events: none;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
-    transition: var(--transition);
-    opacity: 0;
-    &.active {
-        opacity: 1;
-        pointer-events: unset;
-    }
+	display: none;
+	padding: 12px;
+	z-index: 100;
+	pointer-events: none;
+	background: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(8px);
+	transition: var(--transition);
+	opacity: 0;
+	&.active {
+		opacity: 1;
+		pointer-events: unset;
+	}
 }
 
 .i-dialog {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    margin: auto;
-    max-width: 100%;
-    max-height: 100%;
-    overflow-x: hidden;
-    box-shadow: var(--shadow);
-    border-radius: var(--radius);
-    opacity: 0;
-    transform: translate(0, 12px);
-    transition: var(--transition);
-    background: var(--background-opacity);
-    &.bounced {
-        animation: bounce 0.4s ease-in-out 0s;
-    }
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	max-width: 100%;
+	max-height: 100%;
+	overflow-x: hidden;
+	box-shadow: var(--shadow);
+	border-radius: var(--radius);
+	opacity: 0;
+	transform: translate(0, 12px);
+	transition: var(--transition);
+	background: var(--background-opacity);
+	&.bounced {
+		animation: bounce 0.4s ease-in-out 0s;
+	}
 }
 .active > .i-dialog {
-    opacity: 1;
-    transform: none;
-    pointer-events: unset;
+	opacity: 1;
+	transform: none;
+	pointer-events: unset;
 }
 
 .i-dialog-header,
 .i-dialog-footer {
-    display: flex;
-    align-items: center;
-    padding: 12px;
+	display: flex;
+	align-items: center;
+	padding: 12px;
 }
 
 .i-dialog-content {
-    max-height: 100%;
-    overflow-x: hidden;
+	max-height: 100%;
+	overflow-x: hidden;
 }
 
 .i-dialog-close {
-    display: flex;
-    padding: 2px;
-    border-radius: var(--radius);
-    opacity: 0.6;
-    align-self: flex-start;
-    &:hover {
-        opacity: 1;
-        background: var(--background);
-    }
+	display: flex;
+	padding: 2px;
+	border-radius: var(--radius);
+	opacity: 0.6;
+	align-self: flex-start;
+	&:hover {
+		opacity: 1;
+		background: var(--background-opacity);
+		backdrop-filter: var(--blur);
+	}
 }

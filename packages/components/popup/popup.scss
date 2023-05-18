@@ -1,12 +1,14 @@
 .i-popup {
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 50;
-    transition: opacity 0.16s;
-    pointer-events: none;
-    border-radius: var(--radius);
-    overflow-x: hidden;
-    opacity: 0;
-    box-shadow: var(--shadow);
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 50;
+	transition: opacity 0.16s;
+	pointer-events: none;
+	border-radius: var(--radius);
+	overflow-x: hidden;
+	opacity: 0;
+	background: var(--background-opacity);
+	backdrop-filter: var(--blur);
+	box-shadow: var(--shadow);
 }

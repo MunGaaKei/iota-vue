@@ -1,27 +1,30 @@
 <template>
 	<h3 class="mb-12">使用</h3>
 
-	<i-table
-		:data="data"
-		:columns="columns"
-		max-height="500px"
-		width="1500px"
-		@item:dblclick="handleClick"
-	>
-		<template #footer>
-			<i-page
-				v-model="page"
-				:total="Math.ceil(data.length / 15)"
-			></i-page>
-		</template>
-	</i-table>
+	<Demo>
+		<i-table
+			:data="displayData"
+			:columns="columns"
+			max-height="500px"
+			width="1500px"
+			@item:dblclick="handleClick"
+			class="mb-12"
+		>
+			<template #footer>
+				<i-page
+					v-model="page"
+					:total="Math.ceil(data.length / PAGESIZE)"
+				></i-page>
+			</template>
+		</i-table>
+	</Demo>
 </template>
 
 <script setup lang="ts">
+import Demo from "@d/components/Demo.vue";
 import { iButton, iPage, iTable } from "@p/components";
-import { useState } from "@p/js/useState";
 import { mock } from "mockjs";
-import { h, ref } from "vue";
+import { computed, h, ref } from "vue";
 
 interface User {
 	id: number;
@@ -34,6 +37,7 @@ interface User {
 	address: number;
 	active: boolean;
 }
+const PAGESIZE = 10;
 
 const columns = [
 	{
@@ -113,7 +117,7 @@ const columns = [
 
 const data = ref<User[]>(
 	mock({
-		"data|40-60": [
+		"data|81": [
 			{
 				"id|+1": 1,
 				name: "@cname",
@@ -129,7 +133,11 @@ const data = ref<User[]>(
 	}).data
 );
 
-const [page, setPage] = useState<number>(1);
+const page = ref<number>(1);
+
+const displayData = computed(() => {
+	return data.value.slice((page.value - 1) * PAGESIZE, page.value * PAGESIZE);
+});
 
 const handleClick = (e: Event, item: any) => {
 	console.log(e, item);

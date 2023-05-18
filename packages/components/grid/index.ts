@@ -1,6 +1,4 @@
-import Grid from './grid.vue';
-import { componentInstall } from '@p/js/install';
+import iGrid from "./grid.vue";
 
-const iGrid = componentInstall(Grid);
-
+export type { Grid } from "./types";
 export default iGrid;

@@ -1,6 +1,4 @@
-import Input from './input.vue';
-import { componentInstall } from '@p/js/install';
+import iInput from "./input.vue";
 
-const vInput = componentInstall(Input);
-
-export default vInput;
+export type { Input } from "./types";
+export default iInput;

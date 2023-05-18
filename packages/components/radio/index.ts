@@ -1,7 +1,4 @@
-import Radio from './radio.vue';
-import { componentInstall } from '@p/js/install';
+import iRadio from "./radio.vue";
 
-const iRadio = componentInstall(Radio);
-
+export type { Radio } from "./types";
 export default iRadio;
-

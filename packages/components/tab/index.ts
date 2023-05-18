@@ -1,9 +1,6 @@
-import Tab from './tab.vue';
-import TabItem from './tab-item.vue'
-import { componentInstall } from '@p/js/install';
+import iTabItem from "./tab-item.vue";
+import iTab from "./tab.vue";
 
-const iTabItem = componentInstall(TabItem);
-const iTab = componentInstall(Tab);
-
+export type { Tab, TabItem } from "./types";
 export { iTabItem };
 export default iTab;

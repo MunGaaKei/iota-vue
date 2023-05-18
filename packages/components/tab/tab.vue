@@ -1,180 +1,287 @@
 <template>
-    <div
-        class="i-tab"
-        :class="{
-            flex: vertical,
-        }"
-    >
-        <div
-            ref="navs"
-            class="i-tab-navs"
-            :class="[
-                navbarClass,
-                {
-                    'flex-column': vertical,
-                },
-            ]"
-        >
-            <i-tab-item
-                v-for="item in tabs"
-                :key="item.key"
-                :class="{
-                    'i-tab-active': active === item.key,
-                }"
-                v-bind="{ ...item.props }"
-                @click="handleClick($event, item)"
-                v-ripple="ripple"
-            >
-                <component :is="renderStringOrVNode(item.title)"></component>
-            </i-tab-item>
+	<div
+		class="i-tab"
+		:class="{
+			flex: vertical,
+		}"
+	>
+		<div
+			class="i-tab-navs-container"
+			:class="[
+				navbarClass,
+				{
+					'flex-column': vertical,
+				},
+			]"
+			@mousewheel="(e: WheelEvent) => e.preventDefault()"
+		>
+			<slot v-if="slots.prefix" name="prefix"></slot>
 
-            <span
-                v-if="animateBar"
-                class="i-tab-navs-bar"
-                :style="barStyle"
-            ></span>
-        </div>
+			<i-dropdown v-if="hiddenTabs.length" ref="$dropdown">
+				<template #trigger>
+					<i-button plain square class="shrink-0 color-3">
+						<i-icon :icon="PaddingOutlined"></i-icon>
+					</i-button>
+				</template>
+				<i-list class="bg-blur" type="option">
+					<i-list-item
+						v-for="item in hiddenTabs"
+						:key="item.key"
+						:active="active === item.key"
+						@click="handleClick(item, true)"
+					>
+						<StringOrVNode :content="item.title"></StringOrVNode>
+					</i-list-item>
+				</i-list>
+			</i-dropdown>
 
-        <div class="i-tab-contents">
-            <div
-                v-for="item in tabs"
-                :key="item.key"
-                class="i-tab-content"
-                :class="{
-                    'i-tab-active': active === item.key,
-                }"
-            >
-                <component :is="renderStringOrVNode(item.content)"></component>
-            </div>
-        </div>
-    </div>
+			<div
+				ref="$navsContainer"
+				class="i-tab-navs"
+				:class="{
+					'i-tab-closable': closable,
+				}"
+				@mousewheel="handleMouseWheel"
+			>
+				<a
+					v-for="item in tabs"
+					ref="$navs"
+					:key="item.key"
+					:data-index="item.key"
+					class="i-tab-nav"
+					:class="{
+						'i-tab-active': active === item.key,
+					}"
+					v-bind="{ ...item.props }"
+					@click="handleClick(item)"
+					v-ripple="ripple"
+				>
+					<StringOrVNode :content="item.title"></StringOrVNode>
+					<span
+						v-if="closable"
+						class="i-tab-nav-close"
+						@click.prevent="handleClose($event, item)"
+					>
+						<i-icon :icon="CloseRound" size="1.2em"></i-icon>
+					</span>
+				</a>
+
+				<span
+					v-if="!closable && animateBar"
+					class="i-tab-navs-bar"
+					:style="barStyle"
+				></span>
+			</div>
+
+			<slot v-if="slots.suffix" name="suffix"></slot>
+		</div>
+
+		<div class="i-tab-contents">
+			<div
+				v-for="item in tabs"
+				:key="item.key"
+				class="i-tab-content"
+				:class="{
+					'i-tab-active': active === item.key,
+				}"
+			>
+				<StringOrVNode :content="item.content"></StringOrVNode>
+			</div>
+		</div>
+	</div>
 </template>
 
-<script setup lang="ts" name="i-tab">
+<script setup lang="ts">
+import { iButton, iDropdown, iIcon, iList, iListItem } from "@p/components";
 import { vRipple } from "@p/directives";
+import useIntersectionObserver from "@p/js/useIntersectionObserver";
+import { warn } from "@p/js/useLog";
 import { useState } from "@p/js/useState";
-import { renderStringOrVNode } from "@p/js/utils";
-import type { VNode } from "vue";
-import { computed, nextTick, ref, useSlots, withDefaults } from "vue";
-import { iTabItem } from ".";
+import { CloseRound, PaddingOutlined } from "@vicons/material";
+import {
+	computed,
+	nextTick,
+	onUnmounted,
+	ref,
+	useSlots,
+	watchEffect,
+	withDefaults,
+} from "vue";
+import StringOrVNode from "../common/StringOrVNode.vue";
 import "./tab.scss";
+import type { Tab, TabItem, TabKey } from "./types";
 
-type TypeActive = string | number | symbol;
-type TypeTabItem = {
-    key: TypeActive;
-    title: string | VNode;
-    content: string | VNode;
-    props?: Object;
-};
-interface IProps {
-    active?: TypeActive;
-    vertical?: boolean;
-    animateBar?: boolean;
-    clickToggle?: boolean;
-    navbarClass?: string;
-    ripple?: boolean;
-}
-
-const navs = ref<HTMLElement>();
-const props = withDefaults(defineProps<IProps>(), {
-    animateBar: true,
-    ripple: true,
+defineOptions({
+	name: "i-tab",
 });
 
-props.animateBar &&
-    nextTick((): void => {
-        const $active = (navs.value as HTMLElement).querySelector(
-            ".i-tab-active"
-        );
-        if ($active) {
-            setBarPosition($active as HTMLElement);
-        }
-    });
+const $navsContainer = ref<HTMLElement>();
+const $navs = ref<HTMLElement[]>([]);
+const $dropdown = ref();
+const props = withDefaults(defineProps<Tab>(), {
+	animateBar: true,
+	ripple: true,
+});
 
 const emits = defineEmits<{
-    (e: "tab-open", key: TypeActive, item: TypeTabItem): void;
+	(e: "tab-open", key: TabKey, item: TabItem): void;
+	(e: "tab-close", key: TabKey, item: TabItem): void;
 }>();
 
-const [active, setActive] = useState<TypeActive>(props.active);
+const [active, setActive] = useState<TabKey>(props.active);
 const [bar, setBar] = useState<{
-    left: number;
-    top: number;
-    width: number;
-    height: number;
+	left: number;
+	top: number;
+	width: number;
+	height: number;
 }>({
-    left: 0,
-    top: 0,
-    width: 0,
-    height: 0,
+	left: 0,
+	top: 0,
+	width: 0,
+	height: 0,
+});
+const slots = useSlots();
+const tabs = ref<TabItem[]>([]);
+const hiddenTabs = ref<TabItem[]>([]);
+let prevDisconnect: () => void;
+
+watchEffect(() => {
+	prevDisconnect?.();
+	const { observe, disconnect } = useIntersectionObserver({
+		root: $navsContainer.value,
+	});
+
+	prevDisconnect = disconnect;
+
+	const watchNode = ($node: HTMLElement) => {
+		observe($node, (isIntersecting: boolean) => {
+			const key = $node.dataset.index;
+			const tab = tabs.value.find((t) => t.key === key);
+
+			if (tab) {
+				tab.visible = isIntersecting;
+				hiddenTabs.value = tabs.value.filter((tab) => !tab.visible);
+			}
+		});
+	};
+
+	const slotsDefault = slots.default?.();
+	tabs.value = travelSlots(slotsDefault);
+
+	nextTick(() => $navs.value.map(watchNode));
 });
 
-const slots = useSlots().default?.();
-
-const tabs = computed(() => {
-    return slots
-        ?.map((slot, index): TypeTabItem => {
-            slot.props = slot.props || {};
-            const { title, key } = slot.props as { title: string; key: string };
-            const { children, props }: any = slot;
-
-            return {
-                key: key || index,
-                title: title || children.title || "",
-                content: children.default,
-                props,
-            };
-        })
-        .filter((tab: TypeTabItem) => {
-            return tab.title;
-        });
+nextTick(() => {
+	if (!props.closable && props.animateBar) {
+		const $active = ($navsContainer.value as HTMLElement).querySelector(
+			".i-tab-active"
+		);
+		$active && setBarPosition($active as HTMLElement);
+	}
 });
 
 const barStyle = computed(() => {
-    const { left, width, top, height } = bar.value;
+	const { left, width, top, height } = bar.value;
 
-    return props.vertical
-        ? {
-              transform: `translate3d(0, ${top + 0.25 * height}px, 0)`,
-              height: active.value !== "" ? `${height / 2}px` : 0,
-          }
-        : {
-              transform: `translate3d(${left + 0.25 * width}px, 0, 0)`,
-              width: active.value !== "" ? `${width / 2}px` : 0,
-          };
+	return props.vertical
+		? {
+				transform: `translate3d(0, ${top + 0.25 * height}px, 0)`,
+				height: active.value !== "" ? `${height / 2}px` : 0,
+		  }
+		: {
+				transform: `translate3d(${left + 0.25 * width}px, 0, 0)`,
+				width: active.value !== "" ? `${width / 2}px` : 0,
+		  };
 });
 
-const handleClick = (e: Event, item: TypeTabItem) => {
-    const isActivated = props.clickToggle && active.value === item.key;
-    const p = item.props;
-    let tar = e.target as HTMLElement;
+const handleClick = (item: TabItem, isHidden?: boolean) => {
+	const isActivated = props.clickToggle && active.value === item.key;
+	const tar = $navsContainer.value?.querySelector(
+		`.i-tab-nav[data-index="${String(item.key)}"]`
+	) as HTMLElement;
 
-    if (p?.hasOwnProperty("prevent-click")) return;
-
-    setBarPosition(tar);
-    setActive(isActivated ? "" : item.key);
-    emits("tab-open", item.key, item);
+	isHidden && $dropdown.value?.toggle(false);
+	tar && setBarPosition(tar, isHidden);
+	setActive(isActivated ? "" : item.key);
+	emits("tab-open", item.key, item);
 };
 
-function setBarPosition(tar: HTMLElement) {
-    if (props.animateBar) {
-        while (!tar.matches(".i-tab-nav")) {
-            tar = tar.parentNode as HTMLElement;
-        }
+const handleClose = (e: Event, item: TabItem) => {
+	e.stopPropagation();
+	emits("tab-close", item.key, item);
+};
 
-        setBar({
-            top: tar.offsetTop,
-            height: tar.offsetHeight,
-            left: tar.offsetLeft,
-            width: tar.offsetWidth,
-        });
-    }
+const handleMouseWheel = (e: WheelEvent) => {
+	if (props.vertical) return;
+
+	$navsContainer.value?.scrollBy({
+		left: e.deltaY + e.deltaX,
+	});
+};
+
+function setBarPosition(tar: HTMLElement, isHidden?: boolean) {
+	const { closable, animateBar, vertical } = props;
+
+	if ($navsContainer.value && isHidden) {
+		$navsContainer.value.scrollTo({
+			[vertical ? "top" : "left"]: vertical
+				? tar.offsetTop
+				: tar.offsetLeft,
+			behavior: "smooth",
+		});
+	}
+
+	if (!closable && animateBar) {
+		setBar({
+			top: tar.offsetTop,
+			height: tar.offsetHeight,
+			left: tar.offsetLeft,
+			width: tar.offsetWidth,
+		});
+	}
 }
 
+function travelSlots(slots?: any[], cursor: number = 0) {
+	const results: TabItem[] = [];
+
+	slots?.map((slot) => {
+		slot.props = slot.props || {};
+		const { children, props } = slot;
+		const { title, key, ...restProps } = props;
+
+		if (children.default) {
+			if (!key) {
+				warn({
+					text: 'Warning: Each <i-tab-item> should have a unique "key" prop.',
+				});
+			}
+
+			results.push({
+				key: String(key || cursor),
+				title: title || children.title?.()[0] || "",
+				content: children.default?.()[0] || "",
+				props: restProps,
+			});
+			cursor += 1;
+		} else if (Array.isArray(children)) {
+			const childrenSlots = travelSlots(children, cursor);
+			cursor += childrenSlots.length;
+			results.push(...childrenSlots);
+		}
+	});
+
+	return results;
+}
+
+onUnmounted(() => {
+	prevDisconnect?.();
+});
+
 defineExpose<{
-    active: TypeActive;
-    setActive: Function;
+	active: TabKey;
+	setActive: Function;
 }>({
-    active: active.value,
-    setActive,
+	active: active.value,
+	setActive,
 });
 </script>

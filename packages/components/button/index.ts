@@ -1,6 +1,4 @@
-import { componentInstall } from "@p/js/install";
-import Button from "./button.vue";
+import iButton from "./button.vue";
 
-const iButton = componentInstall(Button);
-
+export type { Button } from "./types";
 export default iButton;

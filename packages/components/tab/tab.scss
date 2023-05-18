@@ -1,52 +1,99 @@
+.i-tab-navs-container {
+	display: flex;
+	background: var(--color-9);
+	border-radius: var(--radius);
+	scroll-behavior: smooth;
+}
 .i-tab-navs {
-    position: relative;
-    display: flex;
-    overflow: auto;
-    user-select: none;
-    scroll-behavior: unset;
+	flex: 1;
+	position: relative;
+	display: flex;
+	flex-direction: inherit;
+	overflow: auto;
+	user-select: none;
+	scroll-behavior: unset;
+	scrollbar-width: none;
+}
+.i-tab-navs::-webkit-scrollbar {
+	display: none;
 }
 .i-tab-nav {
-    --color: var(--color-2);
-    position: relative;
-    padding: 0 .8em;
-    line-height: 2.5;
-    user-select: none;
-    flex-shrink: 0;
-    border-radius: var(--radius);
-    color: var(--color);
-    &:hover {
-        background: var(--color-slight);
-        --color: var(--color-main);
-    }
-    &:active,
-    &.i-tab-active {
-        --color: var(--color-main);
-    }
+	--color: var(--color-5);
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 0.8em;
+	height: 2.5em;
+	user-select: none;
+	flex-shrink: 0;
+	color: var(--color);
+	&:hover {
+		background: var(--color-slight);
+		--color: var(--color-4);
+	}
+	&.i-tab-active {
+		--color: var(--color-main);
+	}
+	&:hover,
+	&.i-tab-active {
+		> .i-tab-nav-close {
+			margin-left: 0.25em;
+			width: 1.6em;
+			opacity: 1;
+		}
+	}
+}
+.i-tab-closable {
+	.i-tab-nav {
+		padding-right: 0;
+		border-radius: var(--radius) var(--radius) 0 0;
+		&.i-tab-active {
+			box-shadow: 2px 0 8px #0000000d;
+			background-color: var(--background);
+		}
+	}
+}
+.i-tab-nav-close {
+	--color: red;
+	align-self: stretch;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0;
+	margin-left: 0.8em;
+	width: 0;
+	border-radius: 0 var(--radius) 0 0;
+	transition: var(--transition);
+	&:hover {
+		background: var(--error-1);
+		color: var(--white);
+	}
 }
 .i-tab-navs-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 3px;
-    background: var(--color-main);
-    pointer-events: none;
-    transition: var(--transition);
-    border-radius: var(--radius);
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 3px;
+	background: var(--color-main);
+	pointer-events: none;
+	transition: var(--transition);
+	border-radius: var(--radius);
 }
-.flex-column > .i-tab-navs-bar {
-    width: 3px;
-    left: unset;
-    bottom: unset;
-    right: 0;
-    top: 0;
+.flex-column .i-tab-navs-bar {
+	width: 3px;
+	left: unset;
+	bottom: unset;
+	right: 0;
+	top: 0;
 }
 .i-tab-contents {
-    position: relative;
-    flex: 1;
+	position: relative;
+	flex: 1;
 }
 .i-tab-content {
-    display: none;
-    &.i-tab-active {
-        display: block;
-    }
+	display: none;
+	&.i-tab-active {
+		display: block;
+	}
 }

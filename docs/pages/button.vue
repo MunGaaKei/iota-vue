@@ -53,7 +53,10 @@
 			<i-icon :icon="FlashOnRound" size="1.2em"></i-icon>
 			Yellow
 		</i-button>
-		<i-button class="pink" flat>Pink</i-button>
+		<i-button square class="bg-red">
+			<i-icon :icon="WarningRound" size="1.2em"></i-icon>
+		</i-button>
+		<i-button class="pink ml-12" flat>Pink</i-button>
 	</Demo>
 
 	<h3 class="mt-80 mb-20">属性设置</h3>
@@ -64,7 +67,7 @@
 import Demo from "@d/components/Demo.vue";
 import Props from "@d/components/Props.vue";
 import { iButton, iCheckbox, iGrid, iIcon } from "@p/components";
-import { FlashOnRound } from "@vicons/material";
+import { FlashOnRound, WarningRound } from "@vicons/material";
 import { computed, reactive } from "@vue/reactivity";
 
 const config = reactive<{
@@ -135,10 +138,16 @@ const propsGuidence = [
 		desc: "按钮100%宽度",
 	},
 	{
+		name: "square",
+		type: "boolean",
+		defaultValue: "false",
+		desc: "按钮呈正方形，通常用于只显示图标，可搭配 round 使用",
+	},
+	{
 		name: "round",
 		type: "boolean",
 		defaultValue: "false",
-		desc: "按钮圆角",
+		desc: "按钮圆角值更大",
 	},
 	{
 		name: "ripple",
@@ -170,12 +179,16 @@ const configCode = computed(() => {
 
 const colorCode = computed(() => {
 	return `
-<i-button flat class="black">Black</i-button>
-<i-button outline class="red mx-12">
-    <i-icon :icon="AlarmRound" size="1.2em"></i-icon>
-    Red
+<i-button plain>Ghost</i-button>
+<i-button outline class="blue">Blue</i-button>
+<i-button class="bg-yellow">
+	<i-icon :icon="FlashOnRound" size="1.2em"></i-icon>
+	Yellow
 </i-button>
-<i-button class="bg-blue">Blue</i-button>
+<i-button square class="bg-red">
+	<i-icon :icon="WarningRound" size="1.2em"></i-icon>
+</i-button>
+<i-button class="pink" flat>Pink</i-button>
 
 `;
 });
