@@ -1,5 +1,7 @@
 <template>
-	<template v-if="typeof content === 'string'">{{ content }}</template>
+	<template v-if="['string', 'number'].includes(typeof content)">
+		{{ content }}
+	</template>
 	<component v-else :is="content"></component>
 </template>
 

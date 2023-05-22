@@ -4,7 +4,28 @@ export type TypeStringOrVNode = "string" | Component | Object | undefined;
 
 export type InputOptionValue = string | number;
 
+export type InputStatus = "error" | "warning" | "normal" | "success";
+
 export type Position = "left" | "top" | "right" | "bottom";
+
+export type InputRule = {
+	status?: InputStatus;
+	invalid: (value: string) => false | string;
+	delay?: number;
+};
+
+export interface BaseInput {
+	label?: TypeStringOrVNode;
+	name?: string;
+	modelValue?: any;
+	labelInline?: boolean;
+	border?: boolean;
+	status?: InputStatus;
+	message?: string;
+	disabled?: boolean;
+	allowClear?: boolean;
+	placeholder?: string;
+}
 
 export interface Option {
 	label: TypeStringOrVNode;

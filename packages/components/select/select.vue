@@ -5,18 +5,19 @@
 		trigger="click"
 		position="bottom"
 		:gap="0"
-		:body="body"
+		body
 		:disabled="disabled"
+		adjust-width
 		@show="emits('show')"
 		@hide="emits('hide')"
 	>
 		<template #trigger>
 			<label
-				ref="$label"
 				class="i-select-label"
 				:class="{
 					'i-input-inline': labelInline,
 				}"
+				v-bind="$attrs"
 			>
 				<span v-if="label" class="i-input-label-text">
 					<StringOrVNode :content="label"></StringOrVNode>
@@ -25,12 +26,14 @@
 				<input
 					type="hidden"
 					ref="$input"
+					:name="name"
 					:value="modelValue"
 					:disabled="disabled"
 				/>
 
 				<div
-					class="i-input-item"
+					ref="$target"
+					class="i-input-item i-popup-target"
 					:class="{
 						[`i-input-${status}`]: status !== 'normal',
 					}"
@@ -141,7 +144,7 @@ const props = withDefaults(defineProps<Select>(), {
 });
 
 const $input = ref<HTMLInputElement>();
-const $label = ref<HTMLLabelElement>();
+const $target = ref<HTMLLabelElement>();
 const $popup = ref();
 const rest = ref<number>(0);
 
@@ -221,7 +224,7 @@ const handleSelectOption = (option: Option) => {
 
 const optionsStyle = computed(() => {
 	return {
-		width: `${$label.value?.offsetWidth}px`,
+		width: `${$target.value?.offsetWidth}px`,
 	};
 });
 

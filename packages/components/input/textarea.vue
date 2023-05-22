@@ -16,10 +16,11 @@
 			}"
 		>
 			<slot name="prefix"></slot>
-			<input
-				ref="$input"
+			<textarea
 				:type="type"
-				class="i-input"
+				:name="name"
+				ref="$textarea"
+				class="i-textarea"
 				:value="modelValue"
 				:disabled="disabled"
 				v-bind="$attrs"
@@ -37,20 +38,6 @@
 				}"
 				@click="emits('update:modelValue', '')"
 			></ClearRound>
-
-			<div class="flex flex-column my-auto mx-4">
-				<AddRound
-					v-if="type === 'number'"
-					class="i-input-plus"
-					@click.prevent="computeValue(true)"
-				></AddRound>
-				<MinusRound
-					v-if="type === 'number'"
-					class="i-input-minus"
-					@click.prevent="computeValue(false)"
-				></MinusRound>
-			</div>
-
 			<span class="i-input-message">{{
 				validateState.message || message
 			}}</span>
@@ -60,15 +47,15 @@
 </template>
 
 <script lang="ts" setup>
-import { AddRound, ClearRound, MinusRound } from "@vicons/material";
+import { ClearRound } from "@vicons/material";
 import { computed, reactive, ref, withDefaults } from "vue";
 import { InputStatus } from "../@types";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./input.scss";
-import type { Input } from "./types";
+import type { Textarea } from "./types";
 
 defineOptions({
-	name: "i-input",
+	name: "i-textarea",
 });
 
 type Trigger = "change" | "input" | "focus" | "blur";
@@ -77,32 +64,26 @@ type ValidState = {
 	message?: string;
 };
 
-const props = withDefaults(defineProps<Input>(), {
+const props = withDefaults(defineProps<Textarea>(), {
 	status: "normal",
 	type: "text",
 	trigger: "change",
-	step: 1,
 });
 
-const $input = ref<HTMLInputElement>();
+const $textarea = ref<HTMLInputElement>();
 const validateState = reactive<ValidState>(initValidState());
 
 const emits = defineEmits<{
-	(e: "update:modelValue", v: string | number): void;
+	(e: "update:modelValue", v: string): void;
 	(e: "invalid"): void;
 }>();
 
 let validateTimer: ReturnType<typeof setTimeout> | undefined;
 
 const handleTrigger = (e: Event, evt: Trigger) => {
-	const { type } = props;
-	let value: number | string = (e.target as HTMLInputElement).value;
+	const value = (e.target as HTMLInputElement).value;
 
 	handleValidate(value, evt);
-
-	if (type === "number") {
-		value = valueInRange(+value);
-	}
 
 	if (evt === "input") {
 		Object.assign(validateState, initValidState());
@@ -110,46 +91,18 @@ const handleTrigger = (e: Event, evt: Trigger) => {
 	}
 };
 
-const computeValue = (isPlus: boolean) => {
-	const { modelValue, step, max, min } = props;
-	let value = modelValue;
-
-	if (isPlus) {
-		value = valueInRange(value + step);
-	} else {
-		value = valueInRange(value - step);
-	}
-
-	emits("update:modelValue", value);
-};
-
-const valueInRange = (value: number) => {
-	const { min, max } = props;
-
-	if (max !== undefined) value = Math.min(max, value);
-	if (min !== undefined) value = Math.max(min, value);
-
-	return value;
-};
-
 const handleValidate = (value: string, evt: Trigger) => {
-	const { rule, trigger, message } = props;
+	if (!props.rule || props.trigger !== evt) return;
 
-	if (!rule || trigger !== evt) return;
-
-	const { invalid, status = "error", delay } = rule;
+	const { invalid, status = "error", delay = 100 } = props.rule;
 
 	if (delay) {
 		validateTimer && clearTimeout(validateTimer);
 		validateTimer = setTimeout(() => {
 			const isInvalid = invalid(value);
 
-			Object.assign(
-				validateState,
-				isInvalid
-					? { status, message: isInvalid }
-					: { status: "normal", message }
-			);
+			validateState.status = isInvalid ? status : "normal";
+			validateState.message = isInvalid ? isInvalid : props.message;
 			isInvalid && emits("invalid");
 
 			validateTimer && clearTimeout(validateTimer);
@@ -160,12 +113,8 @@ const handleValidate = (value: string, evt: Trigger) => {
 
 	const isInvalid = invalid(value);
 
-	Object.assign(
-		validateState,
-		isInvalid
-			? { status, message: isInvalid }
-			: { status: "normal", message }
-	);
+	validateState.status = isInvalid ? status : "normal";
+	validateState.message = isInvalid ? isInvalid : props.message;
 	isInvalid && emits("invalid");
 };
 
@@ -181,6 +130,6 @@ function initValidState(): ValidState {
 }
 
 defineExpose({
-	$input: $input.value,
+	$textarea: $textarea.value,
 });
 </script>

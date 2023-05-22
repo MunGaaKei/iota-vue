@@ -6,7 +6,7 @@ import iDropdown, { Dropdown } from "./dropdown";
 import iForm, { Form } from "./form";
 import iGrid, { Grid } from "./grid";
 import iIcon, { Icon } from "./icon";
-import iInput, { Input } from "./input";
+import iInput, { Input, Textarea, iTextarea } from "./input";
 import iList, { List, ListItem, iListItem } from "./list";
 import iMenu, { Menu, MenuItem } from "./menu";
 import iMessage, { Message, MessageConfig, useMessage } from "./message";
@@ -39,6 +39,7 @@ export {
 	iTab,
 	iTabItem,
 	iTable,
+	iTextarea,
 	useMessage,
 };
 
@@ -66,4 +67,5 @@ export type {
 	Tab,
 	TabItem,
 	Table,
+	Textarea,
 };

@@ -70,6 +70,18 @@ const emits = defineEmits<{
 	(e: "hide"): void;
 }>();
 
+nextTick(() => {
+	if (!$trigger.value) return;
+
+	const $target = $trigger.value.querySelector(
+		".i-popup-target"
+	) as HTMLElement;
+
+	if (!$target) return;
+
+	$trigger.value = $target;
+});
+
 const triggerComponent = (): VNode | null => {
 	if (slots?.trigger) {
 		const triggerSlots = slots.trigger();
@@ -175,10 +187,15 @@ function handleClickoutside() {
 }
 
 function computePopupPos(): void {
-	if (!$trigger.value || !$popup.value) return;
+	let $t = $trigger.value;
+	let $p = $popup.value;
 
-	const rectTrigger: DOMRect = $trigger.value.getBoundingClientRect();
-	const rectPopup: DOMRect = $popup.value.getBoundingClientRect();
+	if (!$t || !$p) return;
+
+	$t = ($t.querySelector(".i-popup-target") as HTMLElement) ?? $t;
+
+	const rectTrigger: DOMRect = $t.getBoundingClientRect();
+	const rectPopup: DOMRect = $p.getBoundingClientRect();
 
 	const position =
 		props.position ??
@@ -186,7 +203,7 @@ function computePopupPos(): void {
 			? "top"
 			: "bottom");
 
-	const [posLeft, posTop] = usePosition($trigger.value, $popup.value, {
+	const [posLeft, posTop] = usePosition($t, $p, {
 		position,
 		refBody: props.body,
 		gap: props.gap,

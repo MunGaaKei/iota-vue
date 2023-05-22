@@ -7,6 +7,10 @@
 	&.i-input-inline {
 		flex-wrap: nowrap;
 	}
+	&:hover .i-input-item {
+		background: var(--background-opacity);
+		box-shadow: 0 0 0 3px var(--background-opacity-1);
+	}
 }
 
 .i-input-label-text {
@@ -15,6 +19,7 @@
 	padding: var(--padding);
 	border-radius: inherit;
 	text-align: var(--label-align);
+	flex-shrink: 0;
 }
 
 .i-input-item {
@@ -84,8 +89,8 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 
-	&:focus,
-	&:hover {
+	&:hover,
+	&:focus {
 		background: var(--background-opacity);
 	}
 
@@ -145,7 +150,6 @@
 	flex-direction: column;
 	max-height: 40vh;
 	gap: 2px;
-	padding: 2px;
 }
 .i-select-option {
 	.i-list-content {

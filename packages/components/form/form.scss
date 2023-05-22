@@ -1,0 +1,16 @@
+.i-form {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--gap);
+	> .flex {
+		gap: inherit;
+		width: 100%;
+	}
+}
+
+.i-form-label-inline {
+	.i-input-label,
+	.i-select-label {
+		flex-wrap: nowrap;
+	}
+}

@@ -1,17 +1,17 @@
-import type { TypeStringOrVNode } from "../@types";
+import type { BaseInput, InputRule } from "../@types";
 
-export type InputStatus = "error" | "warning" | "normal" | "success";
-
-export interface Input {
+export interface Input extends BaseInput {
 	type?: string;
-	label?: TypeStringOrVNode;
-	modelValue?: string;
-	labelInline?: boolean;
-	border?: boolean;
-	status?: InputStatus;
-	message?: string;
-	disabled?: boolean;
-	allowClear?: boolean;
 	trigger?: string | string[];
-	validate?: (value?: string) => boolean;
+	rule?: InputRule;
+	max?: number;
+	min?: number;
+	step?: number;
+}
+
+export interface Textarea extends BaseInput {
+	type?: string;
+	trigger?: string | string[];
+	rule?: InputRule;
+	resize?: boolean;
 }

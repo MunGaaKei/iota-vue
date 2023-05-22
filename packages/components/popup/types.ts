@@ -10,4 +10,5 @@ export interface Popup {
 	body?: boolean;
 	delay?: number;
 	disabled?: boolean;
+	adjustWidth?: boolean;
 }

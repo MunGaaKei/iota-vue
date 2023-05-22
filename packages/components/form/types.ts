@@ -1,4 +1,7 @@
 export interface Form {
-	name?: string;
 	modelValue?: any;
+	gap?: string;
+	labelInline?: boolean;
+	labelWidth?: string;
+	labelAlign?: string;
 }
