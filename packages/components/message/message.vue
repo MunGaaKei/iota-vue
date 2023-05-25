@@ -1,7 +1,7 @@
 <template>
 	<div
 		:id="`i-message-${item.id}`"
-		class="i-message px-12 py-4"
+		class="i-message px-12 py-8"
 		:class="[
 			{
 				active: item.active,

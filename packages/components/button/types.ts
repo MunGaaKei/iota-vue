@@ -5,7 +5,7 @@ export interface Button {
 	outline?: boolean;
 	flat?: boolean;
 	loading?: boolean;
-	buttonType?: "submit" | "reset" | "button";
+	type?: "submit" | "reset" | "button";
 	ripple?: boolean;
 	disabled?: boolean;
 	size?: "small" | "large" | "normal" | "extreme";

@@ -1,7 +1,7 @@
 <template>
 	<component
 		:is="Tag"
-		:type="buttonType"
+		:type="type"
 		:to="to"
 		:href="href"
 		class="i-btn"
@@ -30,9 +30,8 @@ const props = withDefaults(defineProps<Button>(), {
 });
 const $btn = ref<HTMLElement>();
 const Tag = useLinkTag({
-	tag: props.tag,
 	to: props.to,
-	href: props.href,
+	type: props.type,
 });
 
 const btnClass = computed(() => {

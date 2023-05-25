@@ -47,9 +47,10 @@
 </template>
 
 <script lang="ts" setup>
+import useValidation from "@p/js/useValidation";
 import { ClearRound } from "@vicons/material";
-import { computed, reactive, ref, withDefaults } from "vue";
-import { InputStatus } from "../@types";
+import { computed, inject, reactive, ref, withDefaults } from "vue";
+import { FormValidator, InputStatus } from "../@types";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./input.scss";
 import type { Textarea } from "./types";
@@ -72,50 +73,35 @@ const props = withDefaults(defineProps<Textarea>(), {
 
 const $textarea = ref<HTMLInputElement>();
 const validateState = reactive<ValidState>(initValidState());
+const formValidators = inject<FormValidator>("form-validators", {});
+
+const validate = useValidation({
+	rule: props.rule,
+	message: props.message,
+	state: validateState,
+});
+
+if (props.name && formValidators && validate) {
+	formValidators[props.name] = validate;
+}
 
 const emits = defineEmits<{
 	(e: "update:modelValue", v: string): void;
 	(e: "invalid"): void;
 }>();
 
-let validateTimer: ReturnType<typeof setTimeout> | undefined;
-
 const handleTrigger = (e: Event, evt: Trigger) => {
 	const value = (e.target as HTMLInputElement).value;
 
-	handleValidate(value, evt);
+	if (props.trigger === evt) {
+		const isValid = validate?.(value);
+		isValid === false && emits("invalid");
+	}
 
 	if (evt === "input") {
 		Object.assign(validateState, initValidState());
 		emits("update:modelValue", value);
 	}
-};
-
-const handleValidate = (value: string, evt: Trigger) => {
-	if (!props.rule || props.trigger !== evt) return;
-
-	const { invalid, status = "error", delay = 100 } = props.rule;
-
-	if (delay) {
-		validateTimer && clearTimeout(validateTimer);
-		validateTimer = setTimeout(() => {
-			const isInvalid = invalid(value);
-
-			validateState.status = isInvalid ? status : "normal";
-			validateState.message = isInvalid ? isInvalid : props.message;
-			isInvalid && emits("invalid");
-
-			validateTimer && clearTimeout(validateTimer);
-		}, delay);
-
-		return;
-	}
-
-	const isInvalid = invalid(value);
-
-	validateState.status = isInvalid ? status : "normal";
-	validateState.message = isInvalid ? isInvalid : props.message;
-	isInvalid && emits("invalid");
 };
 
 const status = computed(() => {

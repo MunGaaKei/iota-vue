@@ -12,5 +12,9 @@ export type IProps = {
 	content: TypeStringOrVNode;
 };
 
+defineOptions({
+	name: "StringOrVNode",
+});
+
 withDefaults(defineProps<IProps>(), {});
 </script>

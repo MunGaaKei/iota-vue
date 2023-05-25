@@ -1,8 +1,7 @@
 .i-select-label {
-	position: relative;
 	display: flex;
 	flex-wrap: wrap;
-	align-items: baseline;
+	align-items: flex-start;
 	width: 100%;
 	&.i-input-inline {
 		flex-wrap: nowrap;
@@ -10,42 +9,6 @@
 	&:hover .i-input-item {
 		background: var(--background-opacity);
 		box-shadow: 0 0 0 3px var(--background-opacity-1);
-	}
-}
-
-.i-input-label-text {
-	margin-right: 0.5em;
-	width: var(--label-width);
-	padding: var(--padding);
-	border-radius: inherit;
-	text-align: var(--label-align);
-	flex-shrink: 0;
-}
-
-.i-input-item {
-	width: 100%;
-	display: flex;
-	align-items: baseline;
-	background: var(--background-opacity-1);
-	transition: var(--transition);
-	border-radius: var(--radius);
-	.i-btn {
-		align-self: stretch;
-	}
-	&:hover {
-		box-shadow: 0 0 0 3px var(--background-opacity-1);
-		.i-select-caret {
-			color: var(--color-main);
-		}
-	}
-	&.i-input-success {
-		box-shadow: 0 0 0 3px var(--green-slight);
-	}
-	&.i-input-warning {
-		box-shadow: 0 0 0 3px var(--yellow-slight);
-	}
-	&.i-input-error {
-		box-shadow: 0 0 0 3px var(--red-slight);
 	}
 }
 
@@ -75,7 +38,7 @@
 }
 
 .i-select {
-	padding: 0.4em 0.8em;
+	padding: 0.5em 0.8em;
 	display: flex;
 	gap: 0.4em;
 	flex: 1;
@@ -113,36 +76,6 @@
 }
 .i-select-chips {
 	padding: 0.4em;
-}
-
-.i-input-message {
-	position: absolute;
-	z-index: 1;
-	padding: 0 1em;
-	font-size: 0.6em;
-	bottom: 0;
-	left: 1em;
-	transform: translate(0, 50%);
-	background: var(--background-opacity);
-	backdrop-filter: blur(4px);
-	border-radius: 0.5em;
-	pointer-events: none;
-	box-shadow: 4px 8px 8px var(--background-opacity);
-}
-.i-input-success {
-	.i-input-message {
-		color: var(--green-2);
-	}
-}
-.i-input-warning {
-	.i-input-message {
-		color: var(--yellow-2);
-	}
-}
-.i-input-error {
-	.i-input-message {
-		color: var(--red-2);
-	}
 }
 
 .i-select-options {

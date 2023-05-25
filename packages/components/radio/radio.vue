@@ -10,7 +10,7 @@
 			v-if="label"
 			class="i-radio-label"
 			:class="{
-				'i-radio-label-block': !inline,
+				'i-radio-label-block': !labelInline,
 			}"
 		>
 			<StringOrVNode :content="label"></StringOrVNode>
@@ -21,6 +21,7 @@
 			:class="{
 				'i-radio-options': options,
 				'flex-column': !optionInline,
+				[`i-input-${status}`]: status !== 'normal',
 			}"
 		>
 			<label
@@ -46,17 +47,21 @@
 					{{ option.label }}
 				</span>
 			</label>
+
+			<span class="i-input-message">
+				{{ validateState.message || message }}
+			</span>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { computed, withDefaults } from "vue";
-import type { Option } from "../@types";
-import type { Radio } from "./types";
-
+import useValidation from "@p/js/useValidation";
+import { computed, inject, reactive, withDefaults } from "vue";
+import type { FormValidator, Option, ValidState } from "../@types";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./radio.scss";
+import type { Radio } from "./types";
 
 defineOptions({
 	name: "i-radio",
@@ -65,9 +70,25 @@ defineOptions({
 const props = withDefaults(defineProps<Radio>(), {
 	type: "default",
 });
+const formValidators = inject<FormValidator>("form-validators", {});
+const validateState = reactive<ValidState>({
+	status: "normal",
+	message: "",
+});
+
+const validate = useValidation({
+	rule: props.rule,
+	message: props.message,
+	state: validateState,
+});
+
+if (props.name && formValidators && validate) {
+	formValidators[props.name] = validate;
+}
 
 const emits = defineEmits<{
 	(e: "update:modelValue", v: any): void;
+	(e: "invalid"): void;
 }>();
 
 const computedOptions = computed(() => {
@@ -80,8 +101,17 @@ const computedOptions = computed(() => {
 });
 
 const handleChange = (e: Event, option: Option) => {
+	if (props.rule) {
+		const isValid = validate?.(option.value);
+		isValid === false && emits("invalid");
+	}
+
 	emits("update:modelValue", option.value);
 };
+
+const status = computed(() => {
+	return props.rule ? validateState.status : props.status;
+});
 
 const radioStyle = computed(() => {
 	return {

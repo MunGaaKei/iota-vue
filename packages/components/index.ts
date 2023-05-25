@@ -14,6 +14,7 @@ import iPage, { Page } from "./page";
 import iPopup, { Popup } from "./popup";
 import iRadio, { Radio } from "./radio";
 import iSelect, { Select } from "./select";
+import iSwiper, { Swiper } from "./swiper";
 import iTab, { Tab, TabItem, iTabItem } from "./tab";
 import iTable, { Table } from "./table";
 
@@ -36,6 +37,7 @@ export {
 	iPopup,
 	iRadio,
 	iSelect,
+	iSwiper,
 	iTab,
 	iTabItem,
 	iTable,
@@ -64,6 +66,7 @@ export type {
 	Popup,
 	Radio,
 	Select,
+	Swiper,
 	Tab,
 	TabItem,
 	Table,

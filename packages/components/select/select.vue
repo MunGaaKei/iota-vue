@@ -5,9 +5,7 @@
 		trigger="click"
 		position="bottom"
 		:gap="0"
-		body
 		:disabled="disabled"
-		adjust-width
 		@show="emits('show')"
 		@hide="emits('hide')"
 	>
@@ -76,7 +74,10 @@
 						</span>
 
 						<span
-							v-if="modelValue === '' || !modelValue.length"
+							v-if="
+								!activeOption ||
+								(multiple && !modelValue.length)
+							"
 							class="i-select-holder"
 						>
 							{{ placeholder }}
@@ -94,7 +95,9 @@
 
 					<UnfoldMoreRound class="i-select-caret" />
 
-					<span class="i-input-message">{{ message }}</span>
+					<span class="i-input-message">
+						{{ validateState.message || message }}
+					</span>
 					<slot name="suffix"></slot>
 				</div>
 			</label>
@@ -115,21 +118,18 @@
 				}"
 				@click="handleSelectOption(option)"
 			>
-				<StringOrVNode
-					:content="option.label"
-					:title="option.label"
-					class="i-select-value"
-				></StringOrVNode>
+				<StringOrVNode :content="option.label"></StringOrVNode>
 			</i-list-item>
 		</i-list>
 	</i-popup>
 </template>
 
 <script setup lang="ts">
+import useValidation from "@p/js/useValidation";
 import { ClearRound, UnfoldMoreRound } from "@vicons/material";
-import { computed, ref, withDefaults } from "vue";
+import { computed, inject, reactive, ref, withDefaults } from "vue";
 import { iList, iListItem, iPopup } from "..";
-import { InputOptionValue, Option } from "../@types";
+import { FormValidator, InputOptionValue, Option, ValidState } from "../@types";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./select.scss";
 import type { Select } from "./types";
@@ -140,13 +140,27 @@ defineOptions({
 
 const props = withDefaults(defineProps<Select>(), {
 	status: "normal",
-	allowClear: true,
 });
 
 const $input = ref<HTMLInputElement>();
 const $target = ref<HTMLLabelElement>();
 const $popup = ref();
 const rest = ref<number>(0);
+const formValidators = inject<FormValidator>("form-validators", {});
+const validateState = reactive<ValidState>({
+	status: "normal",
+	message: "",
+});
+
+const validate = useValidation({
+	rule: props.rule,
+	message: props.message,
+	state: validateState,
+});
+
+if (props.name && formValidators && validate) {
+	formValidators[props.name] = validate;
+}
 
 const computedOptions = computed((): Option[] => {
 	return props.options?.map((option: any) => {
@@ -191,9 +205,14 @@ const maxDisplayCount = computed(() => {
 	return l;
 });
 
+const status = computed(() => {
+	return props.rule ? validateState.status : props.status;
+});
+
 const emits = defineEmits<{
 	(e: "update:modelValue", v: any): void;
 	(e: "select", v: Option): void;
+	(e: "invalid"): boolean;
 	(e: "show"): void;
 	(e: "hide"): void;
 }>();
@@ -215,8 +234,18 @@ const handleSelectOption = (option: Option) => {
 			modelValue.push(option.value);
 		}
 
+		if (props.rule) {
+			const isValid = validate?.(modelValue);
+			isValid === false && emits("invalid");
+		}
+
 		emits("update:modelValue", modelValue);
 	} else {
+		if (props.rule) {
+			const isValid = validate?.(option.value);
+			isValid === false && emits("invalid");
+		}
+
 		emits("update:modelValue", option.value);
 		$popup.value.toggle(false);
 	}

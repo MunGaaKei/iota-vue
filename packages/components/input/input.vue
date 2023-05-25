@@ -25,7 +25,6 @@
 				v-bind="$attrs"
 				@input="handleTrigger($event, 'input')"
 				@change="handleTrigger($event, 'change')"
-				@focus="handleTrigger($event, 'focus')"
 				@blur="handleTrigger($event, 'blur')"
 			/>
 
@@ -38,31 +37,31 @@
 				@click="emits('update:modelValue', '')"
 			></ClearRound>
 
-			<div class="flex flex-column my-auto mx-4">
+			<div v-if="type === 'number'" class="flex flex-column my-auto mx-4">
 				<AddRound
-					v-if="type === 'number'"
 					class="i-input-plus"
 					@click.prevent="computeValue(true)"
 				></AddRound>
 				<MinusRound
-					v-if="type === 'number'"
 					class="i-input-minus"
 					@click.prevent="computeValue(false)"
 				></MinusRound>
 			</div>
 
-			<span class="i-input-message">{{
-				validateState.message || message
-			}}</span>
+			<span class="i-input-message">
+				{{ validateState.message || message }}
+			</span>
+
 			<slot name="suffix"></slot>
 		</div>
 	</label>
 </template>
 
 <script lang="ts" setup>
+import useValidation from "@p/js/useValidation";
 import { AddRound, ClearRound, MinusRound } from "@vicons/material";
-import { computed, reactive, ref, withDefaults } from "vue";
-import { InputStatus } from "../@types";
+import { computed, inject, reactive, ref, withDefaults } from "vue";
+import { FormValidator, ValidState } from "../@types";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./input.scss";
 import type { Input } from "./types";
@@ -71,11 +70,7 @@ defineOptions({
 	name: "i-input",
 });
 
-type Trigger = "change" | "input" | "focus" | "blur";
-type ValidState = {
-	status: InputStatus;
-	message?: string;
-};
+type Trigger = "change" | "input" | "blur";
 
 const props = withDefaults(defineProps<Input>(), {
 	status: "normal",
@@ -86,19 +81,31 @@ const props = withDefaults(defineProps<Input>(), {
 
 const $input = ref<HTMLInputElement>();
 const validateState = reactive<ValidState>(initValidState());
+const formValidators = inject<FormValidator>("form-validators", {});
 
 const emits = defineEmits<{
 	(e: "update:modelValue", v: string | number): void;
 	(e: "invalid"): void;
 }>();
 
-let validateTimer: ReturnType<typeof setTimeout> | undefined;
+const validate = useValidation({
+	rule: props.rule,
+	message: props.message,
+	state: validateState,
+});
+
+if (props.name && formValidators && validate) {
+	formValidators[props.name] = validate;
+}
 
 const handleTrigger = (e: Event, evt: Trigger) => {
-	const { type } = props;
+	const { type, trigger } = props;
 	let value: number | string = (e.target as HTMLInputElement).value;
 
-	handleValidate(value, evt);
+	if (trigger === evt) {
+		const isValid = validate?.(value);
+		isValid === false && emits("invalid");
+	}
 
 	if (type === "number") {
 		value = valueInRange(+value);
@@ -111,7 +118,7 @@ const handleTrigger = (e: Event, evt: Trigger) => {
 };
 
 const computeValue = (isPlus: boolean) => {
-	const { modelValue, step, max, min } = props;
+	const { modelValue, step } = props;
 	let value = modelValue;
 
 	if (isPlus) {
@@ -130,43 +137,6 @@ const valueInRange = (value: number) => {
 	if (min !== undefined) value = Math.max(min, value);
 
 	return value;
-};
-
-const handleValidate = (value: string, evt: Trigger) => {
-	const { rule, trigger, message } = props;
-
-	if (!rule || trigger !== evt) return;
-
-	const { invalid, status = "error", delay } = rule;
-
-	if (delay) {
-		validateTimer && clearTimeout(validateTimer);
-		validateTimer = setTimeout(() => {
-			const isInvalid = invalid(value);
-
-			Object.assign(
-				validateState,
-				isInvalid
-					? { status, message: isInvalid }
-					: { status: "normal", message }
-			);
-			isInvalid && emits("invalid");
-
-			validateTimer && clearTimeout(validateTimer);
-		}, delay);
-
-		return;
-	}
-
-	const isInvalid = invalid(value);
-
-	Object.assign(
-		validateState,
-		isInvalid
-			? { status, message: isInvalid }
-			: { status: "normal", message }
-	);
-	isInvalid && emits("invalid");
 };
 
 const status = computed(() => {

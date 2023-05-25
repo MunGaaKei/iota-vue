@@ -16,7 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, withDefaults } from "vue";
+import { provide, ref, withDefaults } from "vue";
+import { FormValidator } from "../@types";
 import "./form.scss";
 import type { Form } from "./types";
 
@@ -28,21 +29,30 @@ const props = withDefaults(defineProps<Form>(), {
 	gap: "1em",
 });
 const $form = ref<HTMLFormElement>();
+const validators: FormValidator = {};
+
 const emits = defineEmits<{
 	(e: "update:modelValue", v: any): void;
 }>();
 
-const validate = () => {
-	return true;
-};
+provide("form-validators", validators);
 
-const reset = () => {
-	$form.value?.reset();
+const validate = () => {
+	const fields = Object.keys(validators);
+	let isValid = true;
+
+	for (let field of fields) {
+		const validator = validators[field];
+		const fieldValid = validator(props.modelValue[field]);
+
+		if (!fieldValid) isValid = false;
+	}
+
+	return isValid;
 };
 
 defineExpose({
 	$form,
 	validate,
-	reset,
 });
 </script>

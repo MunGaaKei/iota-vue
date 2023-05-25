@@ -4,4 +4,5 @@ export interface Form {
 	labelInline?: boolean;
 	labelWidth?: string;
 	labelAlign?: string;
+	initialValue?: any;
 }

@@ -1,4 +1,9 @@
-import { ApiRound, ColorLensTwotone, DashboardTwotone } from "@vicons/material";
+import {
+	ApiRound,
+	ColorLensTwotone,
+	DashboardTwotone,
+	TipsAndUpdatesTwotone,
+} from "@vicons/material";
 import { h } from "vue";
 
 export default [
@@ -106,5 +111,9 @@ export default [
 				to: "/docs/ripple",
 			},
 		],
+	},
+	{
+		title: "Updates",
+		icon: () => h(TipsAndUpdatesTwotone),
 	},
 ];

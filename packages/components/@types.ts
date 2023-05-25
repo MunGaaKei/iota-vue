@@ -8,10 +8,17 @@ export type InputStatus = "error" | "warning" | "normal" | "success";
 
 export type Position = "left" | "top" | "right" | "bottom";
 
+export type FormValidator = Record<string, (value: string | number) => boolean>;
+
 export type InputRule = {
 	status?: InputStatus;
-	invalid: (value: string) => false | string;
+	invalid: (value: any) => false | string;
 	delay?: number;
+};
+
+export type ValidState = {
+	status: InputStatus;
+	message?: string;
 };
 
 export interface BaseInput {
@@ -25,6 +32,7 @@ export interface BaseInput {
 	disabled?: boolean;
 	allowClear?: boolean;
 	placeholder?: string;
+	rule?: InputRule;
 }
 
 export interface Option {
@@ -51,4 +59,7 @@ export interface InputOption {
 	labelWidth?: string;
 	labelAlign?: string;
 	options?: Option[];
+	rule?: InputRule;
+	message?: string;
+	status?: InputStatus;
 }

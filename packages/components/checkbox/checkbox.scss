@@ -4,7 +4,8 @@
 }
 
 .i-checkbox-label {
-	margin-right: 1em;
+	margin-right: 0.5em;
+	padding: var(--padding);
 	width: var(--label-width);
 	text-align: var(--label-align);
 }
@@ -19,14 +20,27 @@
 	display: inline-flex;
 	align-items: center;
 	border-radius: var(--radius);
+	&:hover {
+		.i-checkbox-input {
+			box-shadow: 0 0 0 3px var(--background-opacity-1);
+			background: var(--background-opacity);
+		}
+	}
+}
+.i-input-success .i-checkbox-input {
+	box-shadow: 0 0 0 3px var(--green-slight);
+}
+.i-input-warning .i-checkbox-input {
+	box-shadow: 0 0 0 3px var(--yellow-slight);
+}
+.i-input-error .i-checkbox-input {
+	box-shadow: 0 0 0 3px var(--red-slight);
 }
 
 .i-checkbox-options {
+	position: relative;
 	display: flex;
-	.i-checkbox-item {
-		margin-right: 1em;
-		margin-bottom: 0.5em;
-	}
+	gap: 1em;
 }
 
 .i-checkbox-text {

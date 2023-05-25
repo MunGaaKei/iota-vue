@@ -12,6 +12,5 @@ export interface Input extends BaseInput {
 export interface Textarea extends BaseInput {
 	type?: string;
 	trigger?: string | string[];
-	rule?: InputRule;
 	resize?: boolean;
 }
