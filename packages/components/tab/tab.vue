@@ -15,7 +15,7 @@
 			]"
 			@mousewheel="(e: WheelEvent) => e.preventDefault()"
 		>
-			<slot v-if="slots.prefix" name="prefix"></slot>
+			<slot v-if="slots?.prefix" name="prefix"></slot>
 
 			<i-dropdown v-if="hiddenTabs.length" ref="$dropdown">
 				<template #trigger>
@@ -73,7 +73,7 @@
 				></span>
 			</div>
 
-			<slot v-if="slots.suffix" name="suffix"></slot>
+			<slot v-if="slots?.suffix" name="suffix"></slot>
 		</div>
 
 		<div class="i-tab-contents">
@@ -103,7 +103,6 @@ import {
 	nextTick,
 	onUnmounted,
 	ref,
-	useSlots,
 	watchEffect,
 	withDefaults,
 } from "vue";
@@ -140,7 +139,11 @@ const [bar, setBar] = useState<{
 	width: 0,
 	height: 0,
 });
-const slots = useSlots();
+const slots = defineSlots<{
+	default: () => any;
+	prefix?: () => any;
+	suffix?: () => any;
+}>();
 const tabs = ref<TabItem[]>([]);
 const hiddenTabs = ref<TabItem[]>([]);
 let prevDisconnect: () => void;
@@ -165,8 +168,7 @@ watchEffect(() => {
 		});
 	};
 
-	const slotsDefault = slots.default?.();
-	tabs.value = travelSlots(slotsDefault);
+	tabs.value = travelSlots(slots.default());
 
 	nextTick(() => $navs.value.map(watchNode));
 });
@@ -241,10 +243,10 @@ function setBarPosition(tar: HTMLElement, isHidden?: boolean) {
 	}
 }
 
-function travelSlots(slots?: any[], cursor: number = 0) {
+function travelSlots(slots: any[], cursor: number = 0) {
 	const results: TabItem[] = [];
 
-	slots?.map((slot) => {
+	slots.map((slot) => {
 		slot.props = slot.props || {};
 		const { children, props } = slot;
 		const { title, key, ...restProps } = props;

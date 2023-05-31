@@ -11,7 +11,7 @@
 		</i-tab-item>
 
 		<template #suffix>
-			<i-button class="ml-4 my-auto blue" plain>更多</i-button>
+			<i-button class="ml-4" plain>更多</i-button>
 		</template>
 	</i-tab>
 

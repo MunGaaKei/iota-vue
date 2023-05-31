@@ -1,10 +1,5 @@
 <template>
-	<Demo :code="``">
-		<i-button>button</i-button>
-	</Demo>
+	<h3 class="mb-12">使用</h3>
 </template>
 
-<script setup lang="ts">
-import Demo from "@d/components/Demo.vue";
-import { iButton } from "@p/components";
-</script>
+<script setup lang="ts"></script>

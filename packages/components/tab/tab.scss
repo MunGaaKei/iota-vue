@@ -28,6 +28,7 @@
 	user-select: none;
 	flex-shrink: 0;
 	color: var(--color);
+	border-radius: var(--radius);
 	&:hover {
 		background: var(--color-slight);
 		--color: var(--color-4);

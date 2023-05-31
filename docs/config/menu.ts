@@ -89,6 +89,10 @@ export default [
 				to: "/docs/popup",
 			},
 			{
+				title: "Swiper",
+				to: "/docs/swiper",
+			},
+			{
 				title: "Tab",
 				to: "/docs/tab",
 			},

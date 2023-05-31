@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { VNode, h, ref, useSlots, withDefaults } from "vue";
+import { VNode, h, ref, withDefaults } from "vue";
 import { iList, iListItem, iPopup } from "..";
 import { Option } from "../@types";
 import StringOrVNode from "../common/StringOrVNode.vue";
@@ -34,7 +34,10 @@ defineOptions({
 	name: "i-dropdown",
 });
 
-const slots = useSlots();
+const slots = defineSlots<{
+	default: () => any;
+	trigger: () => any;
+}>();
 const $popup = ref();
 
 const props = withDefaults(defineProps<Dropdown>(), {
@@ -51,7 +54,7 @@ const emits = defineEmits<{
 }>();
 
 const triggerComponent = (): VNode | undefined => {
-	if (slots?.trigger) {
+	if (slots.trigger) {
 		const triggerSlots = slots.trigger();
 		const element = triggerSlots.find((slot: VNode) => {
 			return slot.type !== "symbol" && typeof slot.children !== "string";

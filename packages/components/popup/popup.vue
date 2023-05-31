@@ -42,7 +42,6 @@ import {
 	nextTick,
 	onBeforeUnmount,
 	ref,
-	useSlots,
 	withDefaults,
 	withModifiers,
 } from "vue";
@@ -63,7 +62,10 @@ const [show, setShow] = useState<boolean>(false);
 const offsets = ref<string>("");
 const $trigger = ref<HTMLElement>();
 const $popup = ref<HTMLElement>();
-const slots = useSlots();
+const slots = defineSlots<{
+	default: () => any;
+	trigger: () => any;
+}>();
 
 const emits = defineEmits<{
 	(e: "show"): void;
@@ -83,7 +85,7 @@ nextTick(() => {
 });
 
 const triggerComponent = (): VNode | null => {
-	if (slots?.trigger) {
+	if (slots.trigger) {
 		const triggerSlots = slots.trigger();
 		const events: Record<string, Function | Object> = {};
 

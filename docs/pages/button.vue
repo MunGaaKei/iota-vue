@@ -9,6 +9,7 @@
 			:round="config.round"
 			:outline="config.outline"
 			:flat="config.flat"
+			:plain="config.plain"
 		>
 			BUTTON
 		</i-button>
@@ -156,9 +157,9 @@ const propsGuidence = [
 		desc: "按钮点击波纹效果",
 	},
 	{
-		name: "button-type",
+		name: "type",
 		type: "'submit' | 'reset' | 'button'",
-		defaultValue: "'button'",
+		defaultValue: "",
 		desc: "当按钮为<button>标签时，它的原生[type]属性",
 	},
 ];
@@ -170,8 +171,9 @@ const configCode = computed(() => {
     :block="${config.block}"
     :outline="${config.outline}"
     :flat="${config.flat}"
+    :plain="${config.plain}"
     :round="${config.round}">
-    按钮
+    BUTTON
 </i-button>
 
 `;
