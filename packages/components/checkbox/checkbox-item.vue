@@ -21,7 +21,7 @@
 			@change="handleChange"
 		/>
 
-		<span class="i-checkbox-text">
+		<span class="i-checkbox-text" :class="{ rounded: round }">
 			<slot></slot>
 		</span>
 	</label>

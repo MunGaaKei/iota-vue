@@ -1,8 +1,9 @@
 import { TypeStringOrVNode } from "../@types";
 
 export interface Page {
+	modelValue?: number;
+	page?: number;
 	total: number;
-	modelValue: number;
 	prev?: TypeStringOrVNode;
 	next?: TypeStringOrVNode;
 	sibling?: number;

@@ -24,9 +24,11 @@
 				:value="modelValue"
 				:disabled="disabled"
 				v-bind="$attrs"
+				:style="{
+					resize: resize ? '' : 'none',
+				}"
 				@input="handleTrigger($event, 'input')"
 				@change="handleTrigger($event, 'change')"
-				@focus="handleTrigger($event, 'focus')"
 				@blur="handleTrigger($event, 'blur')"
 			/>
 
@@ -59,7 +61,7 @@ defineOptions({
 	name: "i-textarea",
 });
 
-type Trigger = "change" | "input" | "focus" | "blur";
+type Trigger = "change" | "input" | "blur";
 type ValidState = {
 	status: InputStatus;
 	message?: string;

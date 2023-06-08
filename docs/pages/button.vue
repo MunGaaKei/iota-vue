@@ -1,7 +1,7 @@
 <template>
 	<h3 class="mb-12">使用</h3>
 
-	<Demo :code="configCode">
+	<Demo :html="configCode">
 		<i-button
 			:loading="config.loading"
 			:disabled="config.disabled"
@@ -47,7 +47,10 @@
 	</Demo>
 
 	<h3 class="mt-80 mb-12">颜色</h3>
-	<Demo :code="colorCode">
+	<p>
+		<router-link to="/docs/colors" class="blue">颜色选项参考</router-link>
+	</p>
+	<Demo :html="colorCode">
 		<i-button plain class="mr-12">Ghost</i-button>
 		<i-button outline class="blue">Blue</i-button>
 		<i-button class="bg-yellow mx-12">
@@ -67,7 +70,7 @@
 <script setup lang="ts" name="page-button">
 import Demo from "@d/components/Demo.vue";
 import Props from "@d/components/Props.vue";
-import { iButton, iCheckbox, iGrid, iIcon } from "@p/components";
+import { iButton, iCheckbox, iGrid, iIcon } from "@p/index";
 import { FlashOnRound, WarningRound } from "@vicons/material";
 import { computed, reactive } from "@vue/reactivity";
 

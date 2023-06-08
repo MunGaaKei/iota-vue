@@ -1,8 +1,7 @@
 export interface Table {
-	type?: string;
+	data?: any[];
 	columns?: any[];
 	header?: boolean;
-	data: any[];
 	loading?: boolean;
 	width?: string;
 	maxHeight?: string;

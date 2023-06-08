@@ -13,6 +13,7 @@
 			class="i-input-item"
 			:class="{
 				[`i-input-${status}`]: status !== 'normal',
+				rounded: round,
 			}"
 		>
 			<slot name="prefix"></slot>

@@ -13,26 +13,25 @@ export type FormValidator = Record<string, (value: string | number) => boolean>;
 export type InputRule = {
 	status?: InputStatus;
 	invalid: (value: any) => false | string;
-	delay?: number;
 };
 
 export type ValidState = {
-	status: InputStatus;
+	status?: InputStatus;
 	message?: string;
 };
 
-export interface BaseInput {
+export interface BaseInput extends ValidState {
+	type?: string;
 	label?: TypeStringOrVNode;
 	name?: string;
 	modelValue?: any;
 	labelInline?: boolean;
-	border?: boolean;
-	status?: InputStatus;
-	message?: string;
 	disabled?: boolean;
 	allowClear?: boolean;
 	placeholder?: string;
 	rule?: InputRule;
+	round?: boolean;
+	trigger?: string;
 }
 
 export interface Option {
@@ -47,19 +46,15 @@ export interface InputPropType {
 	spellcheck?: boolean;
 }
 
-export interface InputOption {
+export interface InputOption extends ValidState {
 	label?: string;
 	modelValue?: any;
 	name?: string;
-	round?: boolean;
 	disabled?: boolean;
-	inline?: boolean;
 	labelInline?: boolean;
 	optionInline?: boolean;
 	labelWidth?: string;
 	labelAlign?: string;
 	options?: Option[];
 	rule?: InputRule;
-	message?: string;
-	status?: InputStatus;
 }

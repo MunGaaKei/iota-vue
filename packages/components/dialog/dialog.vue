@@ -13,37 +13,49 @@
 				:class="{
 					bounced,
 				}"
-				:style="dialogStyle"
+				v-bind="$attrs"
 			>
-				<div v-if="header" class="i-dialog-header">
-					<slot name="title"></slot>
-					<a class="i-dialog-close ml-auto" @click="handleHide">
-						<CloseRound style="height: 1.5em; width: 1.5em" />
-					</a>
-				</div>
-
-				<div class="i-dialog-content">
+				<template v-if="customized">
 					<slot></slot>
-				</div>
+				</template>
 
-				<div v-if="footer" class="i-dialog-footer">
-					<slot name="footer"></slot>
-					<i-button plain class="ml-auto mr-12" @click="handleCancel">
-						{{ cancel }}
-					</i-button>
-					<i-button @click="handleOk">{{ confirm }}</i-button>
-				</div>
+				<template v-else>
+					<div v-if="header" class="i-dialog-header">
+						<slot name="title"></slot>
+						<a
+							v-if="closeButton"
+							class="i-dialog-close ml-auto"
+							@click="handleHide"
+						>
+							<CloseRound style="height: 1.5em; width: 1.5em" />
+						</a>
+					</div>
+
+					<div class="i-dialog-content">
+						<slot></slot>
+					</div>
+
+					<div v-if="footer" class="i-dialog-footer">
+						<slot name="footer"></slot>
+						<i-button
+							plain
+							class="ml-auto mr-12"
+							@click="handleCancel"
+						>
+							{{ cancel }}
+						</i-button>
+						<i-button @click="handleOk">{{ confirm }}</i-button>
+					</div>
+				</template>
 			</div>
 		</div>
 	</Teleport>
 </template>
 
 <script setup lang="ts">
-import { iButton } from "@p/components";
-import { useState } from "@p/js/useState";
+import { iButton } from "@p/index";
 import { CloseRound } from "@vicons/material";
-import { computed } from "@vue/reactivity";
-import { watchEffect, withDefaults } from "vue";
+import { ref, watchEffect, withDefaults } from "vue";
 import "./dialog.scss";
 import type { Dialog } from "./types";
 
@@ -56,12 +68,12 @@ const props = withDefaults(defineProps<Dialog>(), {
 	backdropClosable: true,
 	header: true,
 	footer: true,
-	closeBtn: true,
+	closeButton: true,
 	confirm: "确定",
 	cancel: "取消",
 });
-const [active, setActive] = useState<boolean>(props.modelValue);
-const [bounced, setBounced] = useState<boolean>(false);
+const active = ref<boolean>(props.modelValue);
+const bounced = ref<boolean>(false);
 let togglable = true;
 
 const emits = defineEmits<{
@@ -73,13 +85,6 @@ const emits = defineEmits<{
 
 watchEffect(() => {
 	props.modelValue ? handleShow() : handleHide();
-});
-
-const dialogStyle = computed(() => {
-	return {
-		width: props.width,
-		height: props.height,
-	};
 });
 
 function handleBackDropClick() {
@@ -103,7 +108,7 @@ function handleHide() {
 	}
 
 	togglable = false;
-	setActive(false);
+	active.value = false;
 	emits("toggle", false);
 
 	const timer = setTimeout(() => {
@@ -120,16 +125,16 @@ function handleShow() {
 	emits("toggle", true);
 	const timer = setTimeout(() => {
 		togglable = true;
-		setActive(true);
+		active.value = true;
 		emits("update:modelValue", true);
 		timer && clearTimeout(timer);
 	}, 0);
 }
 
 function notAllowToClose() {
-	setBounced(true);
+	bounced.value = true;
 	setTimeout(() => {
-		setBounced(false);
+		bounced.value = false;
 	}, 400);
 }
 </script>

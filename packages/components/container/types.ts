@@ -1,8 +1,11 @@
+export type ContainerLayout = "default" | "menu";
+
 export interface Container {
-	layout?: "default" | "menu";
+	layout?: ContainerLayout;
 	modelValue?: boolean;
-	breakpoint?: string;
-	stickyFooter?: boolean;
-	contentStyle?: Object;
-	siderStyle?: Object;
+	breakpoint?: string | boolean;
+	contentClass?: string | Object;
+	siderClass?: string | Object;
+	footerClass?: string | Object;
+	headerClass?: string | Object;
 }

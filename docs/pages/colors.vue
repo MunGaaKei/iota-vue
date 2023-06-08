@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts" setup>
-import { iGrid, iList, iListItem } from "@p/components";
+import { iGrid, iList, iListItem } from "@p/index";
 
 const colors: Record<string, string> = {
 	white: "#fff",

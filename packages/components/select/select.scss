@@ -20,13 +20,13 @@
 	transform: scale(0);
 	opacity: 0.6;
 	&.active {
-		margin: auto 0.25em;
-		width: 1em;
-		height: 1em;
+		margin: auto 0.25em auto 0;
+		width: 1.2em;
+		height: 1.2em;
 		transform: none;
 	}
 	&:hover {
-		background: var(--background-opacity);
+		background: var(--background-opacity-1);
 	}
 }
 .i-select-caret {

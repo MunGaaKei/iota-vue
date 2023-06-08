@@ -13,9 +13,7 @@ defineOptions({
 	name: "i-list",
 });
 
-const props = withDefaults(defineProps<List>(), {
-	labelAlign: "left",
-});
+const props = withDefaults(defineProps<List>(), {});
 
 const ulStyle = computed(() => {
 	return {

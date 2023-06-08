@@ -2,13 +2,13 @@
 	<div v-if="items.length" class="i-menu">
 		<div
 			v-for="(item, i) in items"
-			:key="i"
+			:key="item.key || i"
 			class="i-menu-item"
 			:class="{
 				'i-menu-expand': item.expanded,
 			}"
 		>
-			<template v-if="item.type === 'subtitle'">
+			<template v-if="item.type === 'title'">
 				<h4 class="i-menu-subtitle my-4 px-12" v-html="item.title"></h4>
 			</template>
 
@@ -16,7 +16,6 @@
 				<component
 					:is="
 						useLinkTag({
-							tag: 'a',
 							to: item.to,
 						})
 					"
@@ -26,7 +25,7 @@
 					:to="item.to"
 					:href="item.href"
 					v-ripple="ripple"
-					@click.native="handleClick($event, item)"
+					@click="handleClick(item, $event)"
 				>
 					<span class="i-menu-item-icon" :style="IconStyle">
 						<i-icon :icon="item.icon"></i-icon>
@@ -50,7 +49,11 @@
 						:items="item.children"
 						:depth="depth + 1"
 						:round="round"
-						:seletable="selectable"
+						:selectable="selectable"
+						:selected="selected"
+						:ripple="ripple"
+						@item-click="handlePassClick"
+						@toggle="handlePassToggle"
 					></i-menu>
 				</div>
 			</template>
@@ -59,11 +62,11 @@
 </template>
 
 <script lang="ts" setup>
-import { iIcon } from "@p/components";
 import { vRipple } from "@p/directives";
+import { iIcon } from "@p/index";
 import useLinkTag from "@p/js/useLinkTag";
 import { KeyboardArrowDownRound } from "@vicons/material";
-import { computed, withDefaults } from "vue";
+import { computed, ref, watchEffect, withDefaults } from "vue";
 import iMenu from "./index";
 import "./menu.scss";
 import type { Menu, MenuItem } from "./types";
@@ -78,24 +81,39 @@ const props = withDefaults(defineProps<Menu>(), {
 	ripple: true,
 });
 
+const selected = ref<MenuItem | undefined>(props.selected);
+
+watchEffect(() => {
+	selected.value = props.selected;
+});
+
 const emits = defineEmits<{
-	(e: "item-click", item: MenuItem): void;
+	(e: "item-click", item: MenuItem, evt: Event): void;
+	(e: "toggle", expanded: boolean, item: MenuItem): void;
 }>();
 
-const handleClick = (e: Event, item: MenuItem) => {
+const handleClick = (item: MenuItem, e: Event) => {
 	if (item.disabled) {
-		console.log(1);
-
 		e.preventDefault();
 		e.stopPropagation();
 		return false;
 	}
 
-	emits("item-click", item);
+	handlePassClick(item, e);
 
-	if (hasChildren(item)) {
-		item.expanded = !item.expanded;
+	hasChildren(item) && expand(e, item);
+};
+
+const handlePassClick = (item: MenuItem, e: Event) => {
+	if (props.selectable) {
+		selected.value = item;
 	}
+
+	emits("item-click", item, e);
+};
+
+const handlePassToggle = (expanded: boolean, item: MenuItem) => {
+	emits("toggle", expanded, item);
 };
 
 const expand = (e: Event, item: MenuItem): void => {
@@ -106,6 +124,7 @@ const expand = (e: Event, item: MenuItem): void => {
 
 	if (hasChildren(item)) {
 		item.expanded = !item.expanded;
+		emits("toggle", item.expanded, item);
 	}
 };
 
@@ -117,7 +136,7 @@ const headerClass = (item: MenuItem) => {
 	return {
 		round: props.round,
 		disabled: item.disabled,
-		"i-menu-item-selected": item.selected,
+		"i-menu-item-active": item === selected.value,
 	};
 };
 

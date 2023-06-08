@@ -36,6 +36,8 @@ const props = withDefaults(
 );
 
 const handleClick = () => {
+	if (!props.item.closable) return;
+
 	props.item.close?.();
 	props.item.onClose?.();
 };

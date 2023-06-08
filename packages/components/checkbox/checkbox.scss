@@ -1,6 +1,7 @@
 .i-checkbox {
 	display: inline-flex;
 	flex-wrap: wrap;
+	flex-shrink: 0;
 }
 
 .i-checkbox-label {
@@ -84,8 +85,8 @@
 	transition: var(--transition);
 }
 .i-checkbox-default:after {
-	left: 34%;
-	top: 18%;
+	left: 38%;
+	top: 16%;
 	height: 50%;
 	width: 20%;
 	border-bottom: 2px solid var(--color-main-reverse);
@@ -130,7 +131,6 @@
 		line-height: 2;
 		white-space: nowrap;
 		background: var(--color-main-slight);
-		border-radius: inherit;
 	}
 	&:checked + .i-checkbox-text {
 		background: var(--color-main);

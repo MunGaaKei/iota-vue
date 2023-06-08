@@ -2,7 +2,6 @@ import type { TypeStringOrVNode } from "../@types";
 
 export interface MessageConfig {
 	duration?: number;
-	closable?: boolean;
 	classname?: string;
 	fromStart?: boolean;
 	bottom?: boolean;
@@ -10,6 +9,7 @@ export interface MessageConfig {
 	gap?: number;
 	max?: number;
 	offset?: string;
+	closable?: boolean;
 }
 
 export interface Message {
@@ -17,11 +17,12 @@ export interface Message {
 	content: TypeStringOrVNode;
 	active?: boolean;
 	offsetTop?: string;
-	close?: Function;
-	onClose?: Function;
+	close?: () => void;
+	onClose?: () => void;
 	duration?: number;
 	fromStart?: boolean;
 	classname?: string;
 	closable?: boolean;
 	timer?: ReturnType<typeof setTimeout>;
+	max?: number;
 }

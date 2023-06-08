@@ -6,7 +6,10 @@
 			active,
 		}"
 	>
-		<labelItem v-if="label"></labelItem>
+		<div v-if="label" class="i-list-label">
+			<StringOrVNode :content="label"></StringOrVNode>
+		</div>
+
 		<div class="i-list-content">
 			<slot></slot>
 		</div>
@@ -17,8 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import type { VNode } from "vue";
-import { h, withDefaults } from "vue";
+import { withDefaults } from "vue";
+import StringOrVNode from "../common/StringOrVNode.vue";
 import type { ListItem } from "./types";
 
 defineOptions({
@@ -28,12 +31,4 @@ defineOptions({
 const props = withDefaults(defineProps<ListItem>(), {
 	type: "item",
 });
-
-const labelItem = (): VNode => {
-	const p = {
-		class: "i-list-label",
-	};
-
-	return h("div", p, props.label as VNode);
-};
 </script>

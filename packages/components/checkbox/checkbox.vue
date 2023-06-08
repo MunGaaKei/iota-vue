@@ -10,7 +10,11 @@
 			v-if="label"
 			class="i-checkbox-label"
 			:class="{
-				'i-checkbox-label-block': !inline,
+				'i-checkbox-label-block': !labelInline,
+			}"
+			:style="{
+				'--label-width': labelWidth,
+				'--label-align': labelAlign,
 			}"
 		>
 			<StringOrVNode :content="label"></StringOrVNode>
@@ -29,8 +33,10 @@
 					v-for="option in computedOptions"
 					:key="option.value"
 					:value="option.value"
-					:checked="modelValue.includes(option.value)"
-					:disabled="option.disabled"
+					:checked="
+						modelValue?.includes(option.value) || option.checked
+					"
+					:disabled="disabled || option.disabled"
 					:name="name"
 					:type="type"
 					:round="round"
@@ -72,7 +78,6 @@ const props = withDefaults(defineProps<Checkbox>(), {
 	type: "default",
 	labelInline: true,
 	optionInline: true,
-	inline: true,
 });
 const formValidators = inject<FormValidator>("form-validators", {});
 const validateState = reactive<ValidState>({

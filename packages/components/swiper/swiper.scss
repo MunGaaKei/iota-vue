@@ -1,4 +1,5 @@
 .i-swiper {
+	max-width: 100%;
 	&:hover {
 		.i-swiper-dir {
 			opacity: 0.4;
@@ -99,6 +100,7 @@
 	flex-shrink: 0;
 	background: var(--color);
 	opacity: 0.4;
+	font-size: 0;
 	&.i-swiper-active {
 		opacity: 1;
 	}

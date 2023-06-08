@@ -1,4 +1,4 @@
-import { InputRule, ValidState } from "@p/components/@types";
+import { InputRule, ValidState } from "@p/index/@types";
 
 interface Config {
 	rule?: InputRule;

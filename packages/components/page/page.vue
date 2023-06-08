@@ -3,15 +3,22 @@
 		<a
 			class="i-page i-page-prev"
 			:class="{
-				disabled: modelValue === 1,
+				disabled: current === 1,
 			}"
-			@click="handlePageClick(modelValue - 1)"
+			@click="handlePageClick(current - 1)"
 			v-ripple="ripple"
 		>
 			<StringOrVNode :content="prev"></StringOrVNode>
 		</a>
 
-		<a v-if="start > 1" class="i-page" @click="handlePageClick(1)">1</a>
+		<a
+			v-if="start > 1"
+			class="i-page"
+			@click="handlePageClick(1)"
+			v-ripple="ripple"
+		>
+			1
+		</a>
 
 		<MoreHorizRound v-if="start > 2" class="i-page i-page-more">
 		</MoreHorizRound>
@@ -20,9 +27,10 @@
 			<a
 				class="i-page"
 				:class="{
-					active: p + start - 1 === modelValue,
+					active: p + start - 1 === current,
 				}"
 				@click="handlePageClick(p + start - 1)"
+				v-ripple="ripple"
 			>
 				{{ p + start - 1 }}
 			</a>
@@ -31,16 +39,21 @@
 		<MoreHorizRound v-if="end < total - 1" class="i-page i-page-more">
 		</MoreHorizRound>
 
-		<a v-if="end < total" class="i-page" @click="handlePageClick(total)">
+		<a
+			v-if="end < total"
+			class="i-page"
+			@click="handlePageClick(total)"
+			v-ripple="ripple"
+		>
 			{{ total }}
 		</a>
 
 		<a
 			class="i-page i-page-next"
 			:class="{
-				disabled: modelValue === total,
+				disabled: current === total,
 			}"
-			@click="handlePageClick(modelValue + 1)"
+			@click="handlePageClick(current + 1)"
 			v-ripple="ripple"
 		>
 			<StringOrVNode :content="next"></StringOrVNode>
@@ -72,14 +85,18 @@ const props = withDefaults(defineProps<Page>(), {
 	next: KeyboardArrowRightRound,
 });
 
+const current = computed(() => {
+	return props.modelValue || props.page || 1;
+});
+
 const start = computed(() => {
-	const { modelValue, sibling } = props;
-	return Math.max(1, modelValue - sibling);
+	const { sibling } = props;
+	return Math.max(1, current.value - sibling);
 });
 
 const end = computed(() => {
-	const { modelValue, total, sibling } = props;
-	return Math.min(total, modelValue + sibling);
+	const { total, sibling } = props;
+	return Math.min(total, current.value + sibling);
 });
 
 const siblings = computed(() => {

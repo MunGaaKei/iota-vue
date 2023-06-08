@@ -29,7 +29,7 @@
 				:key="option.value"
 				class="i-radio-item"
 				:class="{
-					disabled,
+					disabled: disabled || option.disabled,
 				}"
 			>
 				<input
@@ -38,12 +38,12 @@
 					:checked="modelValue === option.value"
 					class="i-radio-input"
 					:class="[`i-radio-${type}`]"
-					:disabled="disabled"
+					:disabled="disabled || option.disabled"
 					:name="name"
 					@change="handleChange($event, option)"
 				/>
 
-				<span class="i-radio-text">
+				<span class="i-radio-text" :class="{ rounded: round }">
 					{{ option.label }}
 				</span>
 			</label>

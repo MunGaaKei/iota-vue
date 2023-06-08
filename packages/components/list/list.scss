@@ -7,12 +7,14 @@
 
 .i-list-item {
 	display: flex;
-	align-items: baseline;
 	flex-shrink: 0;
 	margin: 0.4em 0;
 	border-radius: var(--radius);
 	&:before {
 		margin: 0 0.5em 0 0;
+	}
+	&.active {
+		color: var(--color-main);
 	}
 }
 
@@ -29,7 +31,6 @@
 		}
 		&.active {
 			background: var(--color-main-slight);
-			color: var(--color-main);
 		}
 	}
 	.i-list-content {
@@ -52,14 +53,29 @@
 	.i-list-item {
 		counter-increment: count;
 		&:before {
+			content: counters(count, ".", decimal);
+		}
+	}
+}
+.i-list-leading-zero {
+	counter-reset: count;
+	.i-list-item {
+		counter-increment: count;
+		&:before {
 			content: counters(count, ".", decimal-leading-zero);
 		}
 	}
 }
 
 .i-list-label {
-	margin-right: 1em;
+	margin-right: 0.5em;
 	width: var(--label-width);
-	flex-shrink: 0;
 	text-align: var(--label-align);
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	> svg {
+		width: 1.2em;
+		height: 1.2em;
+	}
 }

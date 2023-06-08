@@ -34,6 +34,7 @@
 					class="i-input-item i-popup-target"
 					:class="{
 						[`i-input-${status}`]: status !== 'normal',
+						rounded: round,
 					}"
 				>
 					<slot name="prefix"></slot>
@@ -57,13 +58,15 @@
 								:class="{
 									'i-select-value-chip': chip,
 								}"
-								@click.stop="chip && handleSelectOption(option)"
+								@click="
+									chip && handleSelectOption($event, option)
+								"
 							>
 								{{ option.label }}
 							</span>
 
 							<span
-								v-if="chip && rest > 0"
+								v-if="rest > 0"
 								class="chip i-select-value-rest"
 							>
 								+{{ rest }}
@@ -73,14 +76,10 @@
 							{{ activeOption?.label }}
 						</span>
 
-						<span
-							v-if="
-								!activeOption ||
-								(multiple && !modelValue.length)
-							"
-							class="i-select-holder"
-						>
-							{{ placeholder }}
+						<span class="i-select-holder">
+							<template v-if="multiple && !modelValue.length">
+								{{ placeholder }}
+							</template>
 						</span>
 					</div>
 
@@ -116,7 +115,7 @@
 					active: isOptionActive(option.value),
 					disabled: option.disabled,
 				}"
-				@click="handleSelectOption(option)"
+				@click="handleSelectOption($event, option)"
 			>
 				<StringOrVNode :content="option.label"></StringOrVNode>
 			</i-list-item>
@@ -125,10 +124,10 @@
 </template>
 
 <script setup lang="ts">
+import { iList, iListItem, iPopup } from "@p/index";
 import useValidation from "@p/js/useValidation";
 import { ClearRound, UnfoldMoreRound } from "@vicons/material";
 import { computed, inject, reactive, ref, withDefaults } from "vue";
-import { iList, iListItem, iPopup } from "..";
 import { FormValidator, InputOptionValue, Option, ValidState } from "../@types";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./select.scss";
@@ -217,8 +216,9 @@ const emits = defineEmits<{
 	(e: "hide"): void;
 }>();
 
-const handleSelectOption = (option: Option) => {
+const handleSelectOption = (e: Event, option: Option) => {
 	if (option.disabled) return;
+	if (props.chip) e.stopPropagation();
 
 	emits("select", option);
 

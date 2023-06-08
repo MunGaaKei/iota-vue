@@ -46,8 +46,8 @@
 						:style="{
 							textAlign: td.align,
 						}"
-						@click="emits('item:click', $event, tr, td.key)"
-						@dblclick="emits('item:dblclick', $event, tr, td.key)"
+						@click="emits('item-click', $event, tr, td.key)"
+						@dblclick="emits('item-dblclick', $event, tr, td.key)"
 					>
 						<StringOrVNode
 							v-if="td.render"
@@ -62,8 +62,8 @@
 						v-for="(td, k) in tr"
 						:key="k"
 						v-html="td"
-						@click="emits('item:click', $event, tr, k)"
-						@dblclick="emits('item:dblclick', $event, tr, td.key)"
+						@click="emits('item-click', $event, tr, k)"
+						@dblclick="emits('item-dblclick', $event, tr, td.key)"
 					></td>
 				</template>
 			</tr>
@@ -91,11 +91,12 @@ defineOptions({
 
 const props = withDefaults(defineProps<Table>(), {
 	header: true,
+	data: () => [],
 });
 
 const emits = defineEmits<{
-	(event: "item:click", e: Event, item: any, key: string | number): void;
-	(event: "item:dblclick", e: Event, item: any, key: string | number): void;
+	(event: "item-click", e: Event, item: any, key: string | number): void;
+	(event: "item-dblclick", e: Event, item: any, key: string | number): void;
 }>();
 
 const computedColumns = computed(() => {

@@ -8,7 +8,5 @@ export interface Popup {
 	gap?: number;
 	touchable?: boolean;
 	body?: boolean;
-	delay?: number;
 	disabled?: boolean;
-	adjustWidth?: boolean;
 }

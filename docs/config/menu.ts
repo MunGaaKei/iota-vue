@@ -1,15 +1,17 @@
 import {
-	ApiRound,
 	ColorLensTwotone,
-	DashboardTwotone,
+	MoveToInboxTwotone,
+	SpaceDashboardOutlined,
 	TipsAndUpdatesTwotone,
+	TurnSharpRightRound,
 } from "@vicons/material";
 import { h } from "vue";
 
 export default [
 	{
-		title: "USAGE",
-		type: "subtitle",
+		title: "Install",
+		icon: () => h(MoveToInboxTwotone),
+		to: "/docs/install",
 	},
 	{
 		title: "Style & Colors",
@@ -27,7 +29,7 @@ export default [
 	},
 	{
 		title: "Components",
-		icon: () => h(DashboardTwotone),
+		icon: () => h(SpaceDashboardOutlined),
 		expanded: true,
 		children: [
 			{
@@ -66,6 +68,10 @@ export default [
 						title: "Select",
 						to: "/docs/select",
 					},
+					{
+						title: "Textarea",
+						to: "/docs/textarea",
+					},
 				],
 			},
 			{
@@ -75,6 +81,10 @@ export default [
 			{
 				title: "List",
 				to: "/docs/list",
+			},
+			{
+				title: "Menu",
+				to: "/docs/menu",
 			},
 			{
 				title: "Message",
@@ -104,7 +114,7 @@ export default [
 	},
 	{
 		title: "Directives",
-		icon: () => h(ApiRound),
+		icon: () => h(TurnSharpRightRound),
 		children: [
 			{
 				title: "Clickoutside",
@@ -119,5 +129,6 @@ export default [
 	{
 		title: "Updates",
 		icon: () => h(TipsAndUpdatesTwotone),
+		to: "/docs/updates",
 	},
 ];

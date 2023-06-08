@@ -21,8 +21,8 @@
 	color: var(--color-2);
 	&.active {
 		margin: auto 4px;
-		width: 1.5em;
-		height: 1.5em;
+		width: 1.2em;
+		height: 1.2em;
 		transform: none;
 	}
 	&:hover {
@@ -81,5 +81,4 @@
 	display: block;
 	transition: var(--transition), width 0s, height 0s;
 	max-width: 100%;
-	resize: none;
 }

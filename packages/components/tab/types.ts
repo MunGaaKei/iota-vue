@@ -1,9 +1,7 @@
 import { TypeStringOrVNode } from "../@types";
 
-export type TabKey = string;
-
 export interface TabItem {
-	key: TabKey;
+	key: string;
 	props?: Object;
 	title: TypeStringOrVNode;
 	content: TypeStringOrVNode;
@@ -11,7 +9,7 @@ export interface TabItem {
 }
 
 export interface Tab {
-	active?: TabKey;
+	active?: string;
 	vertical?: boolean;
 	animateBar?: boolean;
 	clickToggle?: boolean;

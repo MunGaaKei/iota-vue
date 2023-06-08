@@ -15,7 +15,9 @@ const pages = [
 	"helper",
 	"icon",
 	"input",
+	"install",
 	"list",
+	"menu",
 	"message",
 	"page",
 	"popup",
@@ -25,6 +27,8 @@ const pages = [
 	"swiper",
 	"tab",
 	"table",
+	"textarea",
+	"updates",
 	{
 		name: "404",
 		path: "/:pathMatch(.*)*",

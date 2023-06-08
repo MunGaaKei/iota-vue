@@ -1,15 +1,15 @@
-import type { VNode } from "vue";
+import { TypeStringOrVNode } from "../@types";
 
-type TypeLabel = string | VNode | Object;
+export type ListType = "option" | "number" | "circle" | "leading-zero";
 
 export interface List {
+	type?: ListType;
 	labelWidth?: string;
-	type?: "option" | "number" | "circle";
 	labelAlign?: "left" | "right";
 }
 
 export interface ListItem {
-	label?: TypeLabel;
+	label?: TypeStringOrVNode;
 	type?: "title" | "item";
 	active?: boolean;
 }

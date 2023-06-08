@@ -92,8 +92,8 @@
 </template>
 
 <script setup lang="ts">
-import { iButton, iDropdown, iIcon, iList, iListItem } from "@p/components";
 import { vRipple } from "@p/directives";
+import { iButton, iDropdown, iIcon, iList, iListItem } from "@p/index";
 import useIntersectionObserver from "@p/js/useIntersectionObserver";
 import { warn } from "@p/js/useLog";
 import { useState } from "@p/js/useState";
@@ -108,7 +108,7 @@ import {
 } from "vue";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./tab.scss";
-import type { Tab, TabItem, TabKey } from "./types";
+import type { Tab, TabItem } from "./types";
 
 defineOptions({
 	name: "i-tab",
@@ -123,11 +123,12 @@ const props = withDefaults(defineProps<Tab>(), {
 });
 
 const emits = defineEmits<{
-	(e: "tab-open", key: TabKey, item: TabItem): void;
-	(e: "tab-close", key: TabKey, item: TabItem): void;
+	(e: "tab-open", key: string, item: TabItem): void;
+	(e: "tab-close", key: string, item: TabItem): void;
+	(e: "tab-remove", key: string, item: TabItem): void;
 }>();
 
-const [active, setActive] = useState<TabKey>(props.active);
+const [active, setActive] = useState<string>(props.active);
 const [bar, setBar] = useState<{
 	left: number;
 	top: number;
@@ -202,15 +203,21 @@ const handleClick = (item: TabItem, isHidden?: boolean) => {
 		`.i-tab-nav[data-index="${String(item.key)}"]`
 	) as HTMLElement;
 
+	if (isActivated) {
+		emits("tab-close", item.key, item);
+		setActive("");
+	} else {
+		setActive(item.key);
+		emits("tab-open", item.key, item);
+	}
+
 	isHidden && $dropdown.value?.toggle(false);
 	tar && setBarPosition(tar, isHidden);
-	setActive(isActivated ? "" : item.key);
-	emits("tab-open", item.key, item);
 };
 
 const handleClose = (e: Event, item: TabItem) => {
 	e.stopPropagation();
-	emits("tab-close", item.key, item);
+	emits("tab-remove", item.key, item);
 };
 
 const handleMouseWheel = (e: WheelEvent) => {
@@ -259,7 +266,7 @@ function travelSlots(slots: any[], cursor: number = 0) {
 			}
 
 			results.push({
-				key: String(key || cursor),
+				key: key || cursor,
 				title: title || children.title?.()[0] || "",
 				content: children.default?.()[0] || "",
 				props: restProps,
@@ -280,7 +287,7 @@ onUnmounted(() => {
 });
 
 defineExpose<{
-	active: TabKey;
+	active: string;
 	setActive: Function;
 }>({
 	active: active.value,

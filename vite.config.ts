@@ -12,7 +12,7 @@ export default defineConfig({
 		vue(),
 
 		prismjsPlugin({
-			languages: ["js", "html", "css", "json"],
+			languages: ["js", "html", "css", "json", "bash"],
 		}),
 	],
 	resolve: {

@@ -1,5 +1,3 @@
-import { VNode, h } from "vue";
-
 export function isMobile(): boolean {
 	return "ontouchend" in document;
 }

@@ -1,6 +1,7 @@
 .i-radio {
 	display: inline-flex;
 	flex-wrap: wrap;
+	flex-shrink: 0;
 }
 
 .i-radio-label {
@@ -89,7 +90,6 @@
 		line-height: 2;
 		white-space: nowrap;
 		background: var(--color-main-slight);
-		border-radius: inherit;
 	}
 	&:checked + .i-radio-text {
 		background: var(--color-main);

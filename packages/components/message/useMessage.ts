@@ -1,5 +1,4 @@
 import { useState } from "@p/js/useState";
-import { uuid } from "@p/js/utils";
 import { h, reactive, ref, render } from "vue";
 import Container from "./container.vue";
 import "./message.scss";
@@ -13,6 +12,7 @@ const defaultConfig: MessageConfig = {
 	align: "center",
 	offset: "12px",
 	max: 0,
+	closable: true,
 };
 const [align, setAlign] = useState<string>(defaultConfig.align);
 const [offset, setOffset] = useState<string>(defaultConfig.offset);
@@ -23,27 +23,31 @@ const alignMap = {
 };
 
 function useMessage(config?: MessageConfig) {
+	const configs = Object.assign({}, defaultConfig);
 	if (config) {
-		Object.assign(defaultConfig, config);
+		Object.assign(configs, config);
 	}
 
-	const { align, offset } = defaultConfig;
+	const { align, offset } = configs;
 	align && setAlign(alignMap[align]);
 	offset && setOffset(offset);
 
-	return [post, close];
+	return post.bind(configs);
 }
 
-function post(item: string | Message) {
+function post(this: MessageConfig, item: string | Message) {
 	item = mixinMessage(item);
 
-	const { fromStart, duration } = item;
-	const { max } = defaultConfig;
+	const { fromStart, duration, max: itemMax } = item;
+	const { max } = this;
 	const method = fromStart ? "unshift" : "push";
 
 	queue.value[method](item);
 
-	max && subtractQueue(max, fromStart);
+	if (itemMax || max) {
+		const display = itemMax || max;
+		subtractQueue(display || 0, fromStart);
+	}
 
 	setTimeout(() => {
 		const message = item as Message;
@@ -62,6 +66,8 @@ function post(item: string | Message) {
 			close.call(item as Message);
 		}, duration);
 	}
+
+	return close.bind(item);
 }
 
 function close(this: Message) {
@@ -85,7 +91,7 @@ function mixinMessage(item: string | Message): Message {
 	return reactive(
 		Object.assign({}, defaultConfig, item, {
 			active: false,
-			id: uuid(4),
+			id: crypto.randomUUID(),
 			close,
 		})
 	);
@@ -99,7 +105,8 @@ function subtractQueue(max: number, fromStart?: boolean) {
 		let i = 0;
 
 		for (; i <= l - max; i++) {
-			queue.value[method]();
+			const message = queue.value[method]();
+			clearTimeout(message?.timer);
 			heights[method]();
 		}
 	}

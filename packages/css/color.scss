@@ -92,12 +92,12 @@ $colors: (
 		.#{$name}-1 {
 			--background-hover: var(--#{$name}-slight);
 			--color: var(--#{$name}-1);
-			color: var(--color-1);
+			color: var(--color);
 		}
 		.#{$name}-2 {
 			--background-hover: var(--#{$name}-slight);
 			--color: var(--#{$name}-2);
-			color: var(--color-2);
+			color: var(--color);
 		}
 		.#{$name}-slight {
 			--color: var(--#{$name}-slight);

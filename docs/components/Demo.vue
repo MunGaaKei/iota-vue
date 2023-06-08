@@ -3,18 +3,29 @@
 		<div class="demo-widget flex justify-center">
 			<slot></slot>
 		</div>
-		<i-tab class="demo" click-toggle>
+		<i-tab
+			@tab-open="handleOpen"
+			class="demo"
+			click-toggle
+			:active="active"
+		>
 			<i-tab-item v-if="slots.config" key="config">
 				<template #title>
 					<i-icon :icon="AutoAwesomeMosaicTwotone"></i-icon>
 				</template>
 				<slot name="config"></slot>
 			</i-tab-item>
-			<i-tab-item key="code">
+			<i-tab-item key="html">
 				<template #title>
-					<i-icon :icon="CodeRound"></i-icon>
+					<b>Html</b>
 				</template>
-				<Codes type="html" :code="code"></Codes>
+				<Codes type="html" :code="html"></Codes>
+			</i-tab-item>
+			<i-tab-item v-if="js" key="js">
+				<template #title>
+					<b>Javascript</b>
+				</template>
+				<Codes type="js" :code="js"></Codes>
 			</i-tab-item>
 			<template #suffix>
 				<i-button @click="handleCopy" plain square class="color-4">
@@ -26,29 +37,42 @@
 </template>
 
 <script setup lang="ts">
-import { iButton, iIcon, iTab, iTabItem } from "@p/components";
-import {
-	AutoAwesomeMosaicTwotone,
-	CodeRound,
-	CopyAllTwotone,
-} from "@vicons/material";
-import { useSlots, withDefaults } from "vue";
+import { iButton, iIcon, iTab, iTabItem, useMessage } from "@p/index";
+import { AutoAwesomeMosaicTwotone, CopyAllTwotone } from "@vicons/material";
+import { ref, useSlots, withDefaults } from "vue";
 import Codes from "./Codes.vue";
 
 const slots = useSlots();
+const message = useMessage();
 
 const props = withDefaults(
 	defineProps<{
-		code?: string;
+		js?: string;
+		html?: string;
+		active?: string;
 	}>(),
 	{
-		code: "",
+		html: "",
+		js: "",
+		active: "",
 	}
 );
+const active = ref<string>(props.active);
+
+const handleOpen = (key: string) => {
+	active.value = key;
+};
 
 const handleCopy = async () => {
 	try {
-		navigator.clipboard.writeText(props.code);
+		navigator.clipboard.writeText(
+			active.value === "js" ? props.js : props.html
+		);
+		message({
+			content: "👌👌 已复制",
+			classname: "bg-blue",
+			max: 1,
+		});
 	} catch (err) {
 		console.log(err);
 	}
@@ -61,5 +85,6 @@ const handleCopy = async () => {
 }
 .demo-widget {
 	min-height: 120px;
+	padding: 40px 0;
 }
 </style>

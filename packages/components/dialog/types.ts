@@ -1,16 +1,11 @@
-import type { VNode } from "vue";
-
 export interface Dialog {
-	modelValue?: boolean;
+	modelValue: boolean;
 	closable?: boolean;
 	backdropClosable?: boolean;
-	title?: string | VNode;
-	width?: string;
-	height?: string;
 	customized?: boolean;
 	header?: boolean;
 	footer?: boolean;
-	closeBtn?: boolean;
+	closeButton?: boolean;
 	cancel?: string;
 	confirm?: string;
 }

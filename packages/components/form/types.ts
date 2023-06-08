@@ -3,6 +3,5 @@ export interface Form {
 	gap?: string;
 	labelInline?: boolean;
 	labelWidth?: string;
-	labelAlign?: string;
-	initialValue?: any;
+	labelAlign?: "left" | "center" | "right";
 }

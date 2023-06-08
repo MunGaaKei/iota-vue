@@ -149,11 +149,13 @@ const extra = computed(() => {
 });
 
 const prev = computed(() => {
+	if (props.prev === false) return;
 	if (props.prev) return props.prev;
 	return props.vertical ? KeyboardArrowUpRound : KeyboardArrowLeftRound;
 });
 
 const next = computed(() => {
+	if (props.next === false) return;
 	if (props.next) return props.next;
 	return props.vertical ? KeyboardArrowDownRound : KeyboardArrowRightRound;
 });
@@ -380,7 +382,7 @@ function swipeTo(i: number) {
 
 	setTimeout(() => {
 		swipable = true;
-	}, duration + 12);
+	}, duration + 16);
 
 	if (type === "fade") {
 		current.value = next;

@@ -1,9 +1,10 @@
 import { InputOption } from "../@types";
 
-type CheckboxType = "default" | "switch" | "button";
+export type CheckboxType = "default" | "switch" | "button";
 
 export interface Checkbox extends InputOption {
 	type?: CheckboxType;
+	round?: boolean;
 }
 
 export interface CheckboxItem {
