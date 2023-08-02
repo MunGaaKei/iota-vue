@@ -127,7 +127,7 @@
 import { iList, iListItem, iPopup } from "@p/index";
 import useValidation from "@p/js/useValidation";
 import { ClearRound, UnfoldMoreRound } from "@vicons/material";
-import { computed, inject, reactive, ref, withDefaults } from "vue";
+import { computed, inject, reactive, ref } from "vue";
 import { FormValidator, InputOptionValue, Option, ValidState } from "../@types";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./select.scss";

@@ -28,8 +28,6 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults } from "vue";
-
 export type IProps = {
 	name: string;
 	type?: string;

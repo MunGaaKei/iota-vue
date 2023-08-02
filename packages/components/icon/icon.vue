@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, withDefaults } from "vue";
+import { computed } from "vue";
 import "./icon.scss";
 import type { Icon } from "./types";
 

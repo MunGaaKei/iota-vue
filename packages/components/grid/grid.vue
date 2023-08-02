@@ -7,7 +7,7 @@
 <script lang="ts" setup>
 import { useState } from "@p/js/useState";
 import { throttle } from "lodash";
-import { computed, onMounted, onUnmounted, ref, withDefaults } from "vue";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import "./grid.scss";
 import type { Grid } from "./types";
 

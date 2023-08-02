@@ -14,11 +14,7 @@ import iIcon, { Icon } from "./components/icon";
 import iInput, { Input, Textarea, iTextarea } from "./components/input";
 import iList, { List, ListItem, iListItem } from "./components/list";
 import iMenu, { Menu, MenuItem } from "./components/menu";
-import iMessage, {
-	Message,
-	MessageConfig,
-	useMessage,
-} from "./components/message";
+import { Message, MessageConfig, useMessage } from "./components/message";
 import iPage, { Page } from "./components/page";
 import iPopup, { Popup } from "./components/popup";
 import iRadio, { Radio } from "./components/radio";
@@ -26,6 +22,8 @@ import iSelect, { Select } from "./components/select";
 import iSwiper, { Swiper } from "./components/swiper";
 import iTab, { Tab, TabItem, iTabItem } from "./components/tab";
 import iTable, { Table } from "./components/table";
+
+import { withInstall as install } from "@p/js/install";
 
 export {
 	iButton,
@@ -41,7 +39,6 @@ export {
 	iList,
 	iListItem,
 	iMenu,
-	iMessage,
 	iPage,
 	iPopup,
 	iRadio,
@@ -51,6 +48,7 @@ export {
 	iTabItem,
 	iTable,
 	iTextarea,
+	install,
 	useMessage,
 	vClickoutside,
 	vRipple,

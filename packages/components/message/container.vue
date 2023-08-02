@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, withDefaults } from "vue";
+import { Ref } from "vue";
 import iMessage from "./message.vue";
 import { Message } from "./types";
 

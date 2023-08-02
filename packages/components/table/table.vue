@@ -80,7 +80,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, withDefaults } from "vue";
+import { computed } from "vue";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./table.scss";
 import type { Table } from "./types";

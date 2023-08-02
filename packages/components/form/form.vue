@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { provide, ref, withDefaults } from "vue";
+import { provide, ref } from "vue";
 import { FormValidator } from "../@types";
 import "./form.scss";
 import type { Form } from "./types";

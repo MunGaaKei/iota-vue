@@ -39,7 +39,7 @@
 <script setup lang="ts">
 import { iButton, iIcon, iTab, iTabItem, useMessage } from "@p/index";
 import { AutoAwesomeMosaicTwotone, CopyAllTwotone } from "@vicons/material";
-import { ref, useSlots, withDefaults } from "vue";
+import { ref, useSlots } from "vue";
 import Codes from "./Codes.vue";
 
 const slots = useSlots();

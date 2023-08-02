@@ -7,7 +7,7 @@
 <script lang="ts" setup>
 import "@d/assets/prism-theme-one-dark.min.css";
 import { highlight, languages } from "prismjs";
-import { computed, withDefaults } from "vue";
+import { computed } from "vue";
 
 const props = withDefaults(
 	defineProps<{

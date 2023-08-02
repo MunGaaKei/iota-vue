@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import { iButton } from "@p/index";
 import { CloseRound } from "@vicons/material";
-import { ref, watchEffect, withDefaults } from "vue";
+import { ref, watchEffect } from "vue";
 import "./dialog.scss";
 import type { Dialog } from "./types";
 

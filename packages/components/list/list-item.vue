@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import { withDefaults } from "vue";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import type { ListItem } from "./types";
 
@@ -28,7 +27,7 @@ defineOptions({
 	name: "i-list-item",
 });
 
-const props = withDefaults(defineProps<ListItem>(), {
+withDefaults(defineProps<ListItem>(), {
 	type: "item",
 });
 </script>

@@ -16,12 +16,16 @@
 	</component>
 </template>
 
-<script lang="ts" setup name="i-button">
+<script lang="ts" setup>
 import { vRipple } from "@p/directives";
 import useLinkTag from "@p/js/useLinkTag";
-import { computed, ref, withDefaults } from "vue";
+import { computed, ref } from "vue";
 import "./button.scss";
 import { Button } from "./types";
+
+defineOptions({
+	name: "i-button",
+});
 
 const props = withDefaults(defineProps<Button>(), {
 	tag: "a",

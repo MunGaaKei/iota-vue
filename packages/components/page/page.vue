@@ -68,7 +68,7 @@ import {
 	KeyboardArrowRightRound,
 	MoreHorizRound,
 } from "@vicons/material";
-import { computed, withDefaults } from "vue";
+import { computed } from "vue";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./page.scss";
 import type { Page } from "./types";

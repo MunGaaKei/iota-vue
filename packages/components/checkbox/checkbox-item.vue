@@ -28,7 +28,6 @@
 </template>
 
 <script lang="ts" setup>
-import { withDefaults } from "vue";
 import { CheckboxItem } from "./types";
 
 defineOptions({

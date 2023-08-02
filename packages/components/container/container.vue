@@ -71,7 +71,7 @@
 <script setup lang="ts">
 import { vClickoutside } from "@p/directives";
 import { useState } from "@p/js/useState";
-import { computed, ref, useSlots, withDefaults } from "vue";
+import { computed, ref, useSlots } from "vue";
 import "./container.scss";
 import { Container } from "./types";
 

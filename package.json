@@ -1,7 +1,10 @@
 {
-	"name": "iota-vue",
+	"name": "iota-v",
 	"private": true,
 	"version": "1.0.0",
+	"main": "lib/index.esm.js",
+	"types": "lib/index.d.ts",
+	"module": "lib/index.esm.js",
 	"author": "Iann Man",
 	"type": "module",
 	"scripts": {
@@ -9,15 +12,16 @@
 		"build": "vue-tsc && vite build",
 		"preview": "vite preview",
 		"make": "node templates/index.js",
-		"pack": "npx rollup -c rollup.config.ts"
+		"pack": "npx rollup -c"
 	},
 	"dependencies": {
 		"pinia": "^2.0.32",
-		"rollup": "^3.24.0",
 		"vue": "^3.3.1",
 		"vue-router": "^4.1.6"
 	},
 	"devDependencies": {
+		"@rollup/plugin-commonjs": "^25.0.0",
+		"@rollup/plugin-node-resolve": "^15.1.0",
 		"@types/lodash": "^4.14.194",
 		"@types/mockjs": "^1.0.7",
 		"@types/node": "^18.13.0",
@@ -29,6 +33,10 @@
 		"mockjs": "^1.1.0",
 		"path": "^0.12.7",
 		"prismjs": "^1.29.0",
+		"rollup-plugin-postcss": "^4.0.2",
+		"rollup-plugin-terser": "^7.0.2",
+		"rollup-plugin-typescript2": "^0.34.1",
+		"rollup-plugin-vue": "^6.0.0",
 		"sass": "^1.58.0",
 		"typescript": "^4.9.3",
 		"vite": "^4.3.5",

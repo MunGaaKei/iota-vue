@@ -98,14 +98,7 @@ import useIntersectionObserver from "@p/js/useIntersectionObserver";
 import { warn } from "@p/js/useLog";
 import { useState } from "@p/js/useState";
 import { CloseRound, PaddingOutlined } from "@vicons/material";
-import {
-	computed,
-	nextTick,
-	onUnmounted,
-	ref,
-	watchEffect,
-	withDefaults,
-} from "vue";
+import { computed, nextTick, onUnmounted, ref, watchEffect } from "vue";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./tab.scss";
 import type { Tab, TabItem } from "./types";

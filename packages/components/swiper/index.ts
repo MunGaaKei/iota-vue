@@ -1,4 +1,7 @@
-import iSwiper from './swiper.vue';
+import { withInstall } from "@p/js/install";
+import swiper from "./swiper.vue";
 
-export type { Swiper } from './types';
+const iSwiper = withInstall(swiper);
+
+export type { Swiper } from "./types";
 export default iSwiper;

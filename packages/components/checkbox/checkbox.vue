@@ -67,12 +67,16 @@
 
 <script lang="ts" setup>
 import useValidation from "@p/js/useValidation";
-import { computed, inject, reactive, withDefaults } from "vue";
+import { computed, inject, reactive } from "vue";
 import { FormValidator, Option, ValidState } from "../@types";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import CheckboxItem from "./checkbox-item.vue";
 import "./checkbox.scss";
 import { Checkbox } from "./types";
+
+defineOptions({
+	name: "i-checkbox",
+});
 
 const props = withDefaults(defineProps<Checkbox>(), {
 	type: "default",
@@ -94,10 +98,6 @@ const validate = useValidation({
 if (props.name && formValidators && validate) {
 	formValidators[props.name] = validate;
 }
-
-defineOptions({
-	name: "i-checkbox",
-});
 
 const emits = defineEmits<{
 	(e: "update:modelValue", v: any): void;

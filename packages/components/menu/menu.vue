@@ -66,7 +66,7 @@ import { vRipple } from "@p/directives";
 import { iIcon } from "@p/index";
 import useLinkTag from "@p/js/useLinkTag";
 import { KeyboardArrowDownRound } from "@vicons/material";
-import { computed, ref, watchEffect, withDefaults } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import iMenu from "./index";
 import "./menu.scss";
 import type { Menu, MenuItem } from "./types";

@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { iList, iListItem, iPopup } from "@p/index";
-import { VNode, h, ref, withDefaults } from "vue";
+import { VNode, h, ref } from "vue";
 import { Option } from "../@types";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./dropdown.scss";

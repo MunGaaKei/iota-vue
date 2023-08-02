@@ -77,7 +77,7 @@ import {
 	KeyboardArrowUpRound,
 } from "@vicons/material";
 import { nextTick } from "process";
-import { VNode, computed, onUnmounted, ref, withDefaults } from "vue";
+import { VNode, computed, onUnmounted, ref } from "vue";
 import StringOrVNodeVue from "../common/StringOrVNode.vue";
 import "./swiper.scss";
 import type { Swiper } from "./types";

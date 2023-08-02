@@ -57,7 +57,7 @@
 
 <script setup lang="ts">
 import useValidation from "@p/js/useValidation";
-import { computed, inject, reactive, withDefaults } from "vue";
+import { computed, inject, reactive } from "vue";
 import type { FormValidator, Option, ValidState } from "../@types";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./radio.scss";

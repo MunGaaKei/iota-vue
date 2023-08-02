@@ -61,7 +61,7 @@
 <script lang="ts" setup>
 import useValidation from "@p/js/useValidation";
 import { AddRound, ClearRound, MinusRound } from "@vicons/material";
-import { computed, inject, reactive, ref, withDefaults } from "vue";
+import { computed, inject, reactive, ref } from "vue";
 import { FormValidator, ValidState } from "../@types";
 import StringOrVNode from "../common/StringOrVNode.vue";
 import "./input.scss";

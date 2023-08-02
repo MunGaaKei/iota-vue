@@ -42,7 +42,6 @@ import {
 	nextTick,
 	onBeforeUnmount,
 	ref,
-	withDefaults,
 	withModifiers,
 } from "vue";
 import "./popup.scss";
