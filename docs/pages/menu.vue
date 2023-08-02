@@ -114,26 +114,26 @@ const message = useMessage();
 const menus = ref([
 	{
 		title: "Components",
-		icon: () => h(DashboardTwotone),
+		icon: h(DashboardTwotone),
 		expanded: true,
 		children: [
 			{
 				title: "Button",
-				icon: () => h(SmartButtonRound),
+				icon: h(SmartButtonRound),
 			},
 			{
 				title: "Table",
-				icon: () => h(TableChartTwotone),
+				icon: h(TableChartTwotone),
 			},
 		],
 	},
 	{
 		title: "Directives",
-		icon: () => h(ApiRound),
+		icon: h(ApiRound),
 		children: [
 			{
 				title: "Ripple <b>1</b>",
-				icon: () => h(TripOriginRound),
+				icon: h(TripOriginRound),
 			},
 		],
 	},

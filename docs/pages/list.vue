@@ -62,8 +62,8 @@
 <script lang="ts" setup>
 import Demo from "@d/components/Demo.vue";
 import Props from "@d/components/Props.vue";
+import type { ListType } from "@p/components/list/types";
 import { iList, iListItem, iSelect } from "@p/index";
-import { ListType } from "@p/index/list/types";
 import { TagRound } from "@vicons/material";
 import { ref } from "vue";
 

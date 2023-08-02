@@ -57,8 +57,8 @@
 <script lang="ts" setup>
 import Demo from "@d/components/Demo.vue";
 import Props from "@d/components/Props.vue";
+import type { RadioType } from "@p/components/radio/types";
 import { iCheckbox, iGrid, iRadio, iSelect } from "@p/index";
-import { RadioType } from "@p/index/radio/types";
 import { reactive, ref } from "vue";
 
 const config = reactive({

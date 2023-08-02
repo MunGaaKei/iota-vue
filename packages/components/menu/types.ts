@@ -11,6 +11,6 @@ export interface Menu {
 export interface MenuItem {
 	type?: "title" | "node";
 	title: string;
-	icon?: VNode | Component;
+	icon?: VNode | Component | (() => VNode);
 	[key: string]: any;
 }

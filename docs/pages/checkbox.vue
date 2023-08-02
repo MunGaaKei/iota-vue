@@ -64,8 +64,8 @@
 <script lang="ts" setup>
 import Demo from "@d/components/Demo.vue";
 import Props from "@d/components/Props.vue";
+import type { CheckboxType } from "@p/components/checkbox/types";
 import { iCheckbox, iGrid, iSelect } from "@p/index";
-import { CheckboxType } from "@p/index/checkbox/types";
 import { reactive, ref } from "vue";
 
 const config = reactive({

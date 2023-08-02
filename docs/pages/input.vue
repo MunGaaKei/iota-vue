@@ -78,8 +78,8 @@
 <script setup lang="ts">
 import Demo from "@d/components/Demo.vue";
 import Props from "@d/components/Props.vue";
+import { InputStatus } from "@p/components/@types";
 import { iCheckbox, iGrid, iIcon, iInput, iSelect } from "@p/index";
-import { InputStatus } from "@p/index/@types";
 import { PersonalInjuryTwotone } from "@vicons/material";
 import { reactive, ref } from "vue";
 
